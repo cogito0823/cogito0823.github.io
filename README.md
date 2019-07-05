@@ -73,6 +73,14 @@ hexo d
 - [NexT](https://github.com/theme-next/hexo-theme-next)
 - [Yilia](https://github.com/litten/hexo-theme-yilia)
 ## 主题配置日志
+- 2019
+  - 07-05 
+    - 在右上角或者左上角实现fork me on github
+    - 修改作者
+    - 添加 busuanzi 访问量
+    - 设置网站的图标
+    - 隐藏网页底部 powered By Hexo / 强力驱动
+    - DaoVoice 在线联系
 ## 博文发布日志
 - 2019
   - 07-05 [使用PicGo搭建github图床](https://cogito0823.github.io/2019/07/05/%E4%BD%BF%E7%94%A8PicGo%E6%90%AD%E5%BB%BAgithub%E5%9B%BE%E5%BA%8A/)
