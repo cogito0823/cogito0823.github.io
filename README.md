@@ -74,8 +74,8 @@ hexo d
 - [Yilia](https://github.com/litten/hexo-theme-yilia)
 ## 主题配置日志
 ## 博文发布日志
-- 使用PicGo搭建github图床
-- 使用hexo+github搭建个人博客
+- [使用PicGo搭建github图床](https://cogito0823.github.io/2019/07/05/%E4%BD%BF%E7%94%A8PicGo%E6%90%AD%E5%BB%BAgithub%E5%9B%BE%E5%BA%8A/)
+- [使用hexo+github搭建个人博客](https://cogito0823.github.io/2019/07/05/%E4%BD%BF%E7%94%A8hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/)
 ## 参考
 - [reuixiy | 打造个性超赞博客 Hexo + NexT + GitHub Pages 的超深度优化](https://io-oi.me/tech/hexo-next-optimization.html)
 - [Moorez | hexo的next主题个性化教程:打造炫酷网站](http://shenzekun.cn/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E4%B8%AA%E6%80%A7%E5%8C%96%E9%85%8D%E7%BD%AE%E6%95%99%E7%A8%8B.html)
