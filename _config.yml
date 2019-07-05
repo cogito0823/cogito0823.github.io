@@ -3,20 +3,27 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
+title: COGITO
+subtitle: 落花人独立，微雨燕双飞
 description:
 keywords:
-author: John Doe
-language:
+author: cogito0823
+language: zh-CN
 timezone:
 
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
+        
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://yoursite.com
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
+
 
 # Directory
 source_dir: source
@@ -26,7 +33,13 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:
+skip_render: README.md
+
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -73,8 +86,8 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
-
+theme: next
+avatar: https://raw.githubusercontent.com/cogito0823/photos/master/img/6e.png
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
