@@ -7,6 +7,7 @@ kewords: [hexo,gitub,blog,hexo版本控制,nodejs,npm]
 ---
 *平台：ubuntu18.04*
 ![](https://raw.githubusercontent.com/cogito0823/photos/master/img/blog.jpg)
+<!--more-->
 ## 步骤
 - 准备
 - Nodejs 的安装
@@ -14,7 +15,6 @@ kewords: [hexo,gitub,blog,hexo版本控制,nodejs,npm]
 - 部署到 GitHub
 - 博客的版本控制
 
-<!--more-->
 ## 准备
 在开始之前，你已经：
 - **有一个github账号，账号配置了SSH Key**	

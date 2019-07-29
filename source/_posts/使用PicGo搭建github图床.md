@@ -5,6 +5,7 @@ tags: [picgo,github,images,hosting]
 categories: web
 ---
 ![](https://raw.githubusercontent.com/cogito0823/photos/master/img/picgo.jpg)
+<!--more-->
 ## 基本步骤
 - 注册 GitHub 账号
 - 创建一个 repository 作为图床
@@ -13,7 +14,6 @@ categories: web
 - PicGo的基本配置
 - 设置 PicGo 快捷方式
 - PicGo 的使用
-<!--more-->
 ## 注册 GitHub 账号
 **GitHub地址：[http://www.github.com](http://www.github.com)**
 ## 创建一个 repository 作为图床
