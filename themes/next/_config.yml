@@ -102,8 +102,8 @@ creative_commons:
 
 # `Follow me on GitHub` banner in the top-right corner.
 github_banner:
-  enable: false
-  permalink: https://github.com/yourname
+  enable: true
+  permalink: https://github.com/cogito0823
   title: Follow me on GitHub
 
 
@@ -120,7 +120,7 @@ disable_baidu_transformation: false
 canonical: true
 
 # Change headers hierarchy on site-subtitle (will be main site description) and on all post / page titles for better SEO-optimization.
-seo: false
+seo: true
 
 # If true, will add site-subtitle to index page, added in main hexo config.
 # subtitle: Subtitle
@@ -131,11 +131,11 @@ exturl: false
 
 # Google Webmaster tools verification.
 # See: https://www.google.com/webmasters
-#google_site_verification:
+google_site_verification: sJdWJve3OSkb7Rm82187FGR8SzlSdVGT4ng-QM3LlLA
 
 # Bing Webmaster tools verification.
 # See: https://www.bing.com/webmaster
-#bing_site_verification:
+bing_site_verification: 1539C35F24049A7FA072D5DAD40C4659
 
 # Yandex Webmaster tools verification.
 # See: https://webmaster.yandex.ru
@@ -355,21 +355,21 @@ codeblock:
 # Use icon instead of the symblo # to indicate the tag at the bottom of the post
 tag_icon: false
 
-# Wechat Subscriber
+#Wechat Subscriber
 wechat_subscriber:
-  enable: true
-  qcode: /images/wechat-qcode.jpg
-  description: 欢迎订阅我的公众号
+  enable: false
+# qcode: /images/wechat-qcode.jpg
+# description: 欢迎订阅我的公众号
 
 # Reward (Donate)
 reward_settings:
   # If true, reward would be displayed in every article by default.
   # You can show or hide reward in a specific article throuth `reward: true | false` in Front-matter.
-  enable: true
+  enable: false
   animation: false
   #comment: Thanks for donate
 
-reward:
+  reward:
   wechatpay: /images/wechatpay.png
   alipay: /images/alipay.jpg
   #bitcoin: /images/bitcoin.png
@@ -390,8 +390,8 @@ related_posts:
 # Post edit
 # Dependencies: https://github.com/hexojs/hexo-deployer-git
 post_edit:
-  enable: false
-  url: https://github.com/user-name/repo-name/tree/branch-name/subdirectory-name # Link for view source.
+  enable: true
+  url: https://github.com/cogito0823/cogito0823.github.io/tree/hexo/source/ # Link for view source.
   #url: https://github.com/user-name/repo-name/edit/branch-name/subdirectory-name # Link for fork & edit.
 
 
@@ -514,9 +514,9 @@ math:
   #engine: katex
 
   # hexo-renderer-pandoc (or hexo-renderer-kramed) needed to full MathJax support.
-  #mathjax: false
-  #cdn: https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default
-    #cdn: //cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML
+  mathjax:
+    #cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=default
+    cdn: //cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
     # See: https://mhchem.github.io/MathJax-mhchem/
     #mhchem: //cdn.jsdelivr.net/npm/mathjax-mhchem@3
@@ -524,7 +524,7 @@ math:
 
   # hexo-renderer-markdown-it-plus (or hexo-renderer-markdown-it with markdown-it-katex plugin) needed to full Katex support.
   katex:
-    cdn: //cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css
+    cdn: //cdn.jsdelivr.net/npm/katex@0.7.1/dist/katex.min.css
     #cdn: //cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css
 
     copy_tex:
@@ -536,7 +536,7 @@ math:
 # Pangu Support
 # Dependencies: https://github.com/theme-next/theme-next-pangu
 # For more information: https://github.com/vinta/pangu.js
-pangu: false
+pangu: true
 
 # Quicklink Support
 # Dependencies: https://github.com/theme-next/theme-next-quicklink
@@ -740,9 +740,9 @@ baidu_analytics: 29edc97ccad896a3cb1d7ad0517fa829
 #growingio_analytics: #your projectId
 
 # Google Analytics
-google_analytics: 143349147-1
-#  tracking_id:
-#  localhost_ignored: true
+google_analytics:
+  tracking_id: 143349147-2
+  localhost_ignored: true
 
 # CNZZ count
 #cnzz_siteid:
@@ -773,8 +773,8 @@ facebook_comments_plugin:
 # VKontakte API Support
 # To get your AppID visit https://vk.com/editapp?act=create
 vkontakte_api:
-  enable:       false
-  app_id:       #<app_id>
+  enable:       true
+  app_id:       7048541
   like:         true
   comments:     true
   num_of_posts: 10
@@ -821,7 +821,7 @@ busuanzi_count:
   post_views_icon: eye
 
 # Tencent analytics ID
-#tencent_analytics:
+tencent_analytics: 66449225
 
 # Tencent MTA ID
 #tencent_mta:
@@ -962,7 +962,7 @@ fancybox: false
 
 # Polyfill to remove click delays on browsers with touch UIs.
 # Dependencies: https://github.com/theme-next/theme-next-fastclick
-fastclick: false
+fastclick: true
 
 # Vanilla JavaScript plugin for lazyloading images.
 # Dependencies: https://github.com/theme-next/theme-next-jquery-lazyload
@@ -1119,7 +1119,7 @@ vendors:
   # Example:
   # pangu: //cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js
   # pangu: //cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js
-  pangu:
+  pangu: //cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js
 
   # Internal version: 1.0.0
   # See: https://github.com/GoogleChromeLabs/quicklink

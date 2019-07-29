@@ -19,9 +19,11 @@ search:
         
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://cogito0823.github.io
 root: /
-permalink: :year/:month/:day/:title/
+
+#permalink: :year/:month/:day/:title/
+permalink: :title.html
 permalink_defaults:
 
 
@@ -41,6 +43,13 @@ symbols_count_time:
   total_symbols: true
   total_time: true
 
+
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
+
+  
 # Writing
 new_post_name: :title.md # File name of new posts
 default_layout: post

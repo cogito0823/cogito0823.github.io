@@ -3,17 +3,23 @@ title: 使用hexo+github搭建个人博客
 date: 2019-07-05 14:05:53
 categories: web
 tags: [hexo,github,blog]
+kewords: [hexo,gitub,blog,hexo版本控制,nodejs,npm]
 ---
 *平台：ubuntu18.04*
+![](https://raw.githubusercontent.com/cogito0823/photos/master/img/blog.jpg)
+## 步骤
+- 准备
+- Nodejs 的安装
+- Hexo 的安装
+- 部署到 GitHub
+- 博客的版本控制
 
-## 1. 准备工作
+<!--more-->
+## 准备
 在开始之前，你已经：
-
 - **有一个github账号，账号配置了SSH Key**	
 - **本机操作系统git客户端与GitHub有ssh连接**
-<!--more-->
-
-## 2. 安装Nodejs
+## 安装Nodejs
 去 [nodejs官网](https://nodejs.org/en/download/current/ "nodejs")  查看最新版本的nodejs，根据你的操作系统类型，在该页面选择合适的版本，并右键复制该版本的下载连接，如：https://nodejs.org/dist/v12.5.0/node-v12.5.0-linux-x64.tar.xz
 目前最新：v12.5.0
 
@@ -43,7 +49,7 @@ v12.5.0
 $ npm -v
 6.9.0
 ```
-## 3. 安装HEXO
+## 安装HEXO
 ```
 $ npm config set registry https://registry.npm.taobao.org	#国内主机需要更换淘宝源
 $ sudo npm install -g hexo 	#安装hexo
@@ -69,6 +75,7 @@ INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.
 
 ![](https://i.imgur.com/PZW1DjG.jpg)
 
+## GitHub 部署
 添加一个hexo插件来deploy git
 ```
 $ npm install hexo-deployer-git --save
@@ -111,8 +118,9 @@ $ hexo d	#部署博客到github,即push
 ```
 
 这时浏览器输入 [http://username.github.io](http://username.github.io)可以看到github上的hexo页面已经部署好了
-
-## 4. 参考
+## hexo 的版本控制
+详见我的GitHub库 [cogito0823.github.io/README.md](https://github.com/cogito0823/cogito0823.github.io)
+## 参考
 - **[小茗同学的博客园>使用hexo+github搭建免费个人博客详细教程](https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html)**
 
 - **[飞翔的大马哈鱼>Ubuntu上用Hexo搭建博客托管到github](https://blog.csdn.net/lyb3b3b/article/details/78706077)**
