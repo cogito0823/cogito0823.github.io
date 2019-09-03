@@ -1,0 +1,55 @@
+<html>
+<head>
+  <title>IO编程</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1931"/>
+<h1>IO编程</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 3:05</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">IO编程</h4>
+    <div>
+    	<span>阅读: 2965588</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">IO在计算机中指Input/Output，也就是输入和输出。由于程序和运行时数据是在内存中驻留，由CPU这个超快的计算核心来执行，涉及到数据交换的地方，通常是磁盘、网络等，就需要IO接口。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">比如你打开浏览器，访问新浪首页，浏览器这个程序就需要通过网络IO获取新浪的网页。浏览器首先会发送数据给新浪服务器，告诉它我想要首页的HTML，这个动作是往外发数据，叫Output，随后新浪服务器把网页发过来，这个动作是从外面接收数据，叫Input。所以，通常，程序完成IO操作会有Input和Output两个数据流。当然也有只用一个的情况，比如，从磁盘读取文件到内存，就只有Input操作，反过来，把数据写到磁盘文件里，就只是一个Output操作。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">IO编程中，Stream（流）是一个很重要的概念，可以把流想象成一个水管，数据就是水管里的水，但是只能单向流动。Input Stream就是数据从外面（磁盘、网络）流进内存，Output Stream就是数据从内存流到外面去。对于浏览网页来说，浏览器和新浪服务器之间至少需要建立两根水管，才可以既能发数据，又能收数据。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">由于CPU和内存的速度远远高于外设的速度，所以，在IO编程中，就存在速度严重不匹配的问题。举个例子来说，比如要把100M的数据写入磁盘，CPU输出100M的数据只需要0.01秒，可是磁盘要接收这100M数据可能需要10秒，怎么办呢？有两种办法：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">第一种是CPU等着，也就是程序暂停执行后续代码，等100M的数据在10秒后写入磁盘，再接着往下执行，这种模式称为同步IO；</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">另一种方法是CPU不等待，只是告诉磁盘，“您老慢慢写，不着急，我接着干别的事去了”，于是，后续代码可以立刻接着执行，这种模式称为异步IO。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">同步和异步的区别就在于是否等待IO执行的结果。好比你去麦当劳点餐，你说“来个汉堡”，服务员告诉你，对不起，汉堡要现做，需要等5分钟，于是你站在收银台前面等了5分钟，拿到汉堡再去逛商场，这是同步IO。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">你说“来个汉堡”，服务员告诉你，汉堡需要等5分钟，你可以先去逛商场，等做好了，我们再通知你，这样你可以立刻去干别的事情（逛商场），这是异步IO。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">很明显，使用异步IO来编写程序性能会远远高于同步IO，但是异步IO的缺点是编程模型复杂。想想看，你得知道什么时候通知你“汉堡做好了”，而通知你的方法也各不相同。如果是服务员跑过来找到你，这是回调模式，如果服务员发短信通知你，你就得不停地检查手机，这是轮询模式。总之，异步IO的复杂度远远高于同步IO。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">操作IO的能力都是由操作系统提供的，每一种编程语言都会把操作系统提供的低级C接口封装起来方便使用，Python也不例外。我们后面会详细讨论Python的IO编程接口。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意，本章的IO编程都是同步模式，异步IO由于复杂度太高，后续涉及到服务器端程序开发时我们再讨论。</p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="IO编程_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="IO编程_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017606916795776#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017605739507840" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017607179232640" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

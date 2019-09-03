@@ -1,0 +1,175 @@
+<html>
+<head>
+  <title>TCP编程</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2183"/>
+<h1>TCP编程</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:26</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">TCP编程</h4>
+    <div>
+    	<span>阅读: 1796097</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">Socket是网络编程的一个抽象概念。通常我们用一个Socket表示“打开了一个网络链接”，而打开一个Socket需要知道目标计算机的IP地址和端口号，再指定协议类型即可。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">客户端</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">大多数连接都是可靠的TCP连接。创建TCP连接时，主动发起连接的叫客户端，被动响应连接的叫服务器。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">举个例子，当我们在浏览器中访问新浪时，我们自己的计算机就是客户端，浏览器会主动向新浪的服务器发起连接。如果一切顺利，新浪的服务器接受了我们的连接，一个TCP连接就建立起来的，后面的通信就是发送网页内容了。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">所以，我们要创建一个基于TCP连接的Socket，可以这样做：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 153, 136);font-style:italic;"># 导入socket库:</span>
+<span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> socket
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 创建一个socket:</span>
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 建立连接:</span>
+s.connect((<span style="color:rgb(221, 17, 68);">'www.sina.com.cn'</span>, <span style="color:rgb(0, 153, 153);">80</span>))
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">创建<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Socket</code>时，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">AF_INET</code>指定使用IPv4协议，如果要用更先进的IPv6，就指定为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">AF_INET6</code>。<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">SOCK_STREAM</code>指定使用面向流的TCP协议，这样，一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Socket</code>对象就创建成功，但是还没有建立连接。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">客户端要主动发起TCP连接，必须知道服务器的IP地址和端口号。新浪网站的IP地址可以用域名<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">www.sina.com.cn</code>自动转换到IP地址，但是怎么知道新浪服务器的端口号呢？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">答案是作为服务器，提供什么样的服务，端口号就必须固定下来。由于我们想要访问网页，因此新浪提供网页服务的服务器必须把端口号固定在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">80</code>端口，因为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">80</code>端口是Web服务的标准端口。其他服务都有对应的标准端口号，例如SMTP服务是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">25</code>端口，FTP服务是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">21</code>端口，等等。端口号小于1024的是Internet标准服务的端口，端口号大于1024的，可以任意使用。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">因此，我们连接新浪服务器的代码如下：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">s.connect(('www.sina.com.cn', 80))
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意参数是一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">tuple</code>，包含地址和端口号。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">建立TCP连接后，我们就可以向新浪服务器发送请求，要求返回首页的内容：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 153, 136);font-style:italic;"># 发送数据:</span>
+s.send(<span style="color:rgb(221, 17, 68);">b'GET / HTTP/1.1\r\nHost: www.sina.com.cn\r\nConnection: close\r\n\r\n'</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">TCP连接创建的是双向通道，双方都可以同时给对方发数据。但是谁先发谁后发，怎么协调，要根据具体的协议来决定。例如，HTTP协议规定客户端必须先发请求给服务器，服务器收到后才发数据给客户端。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">发送的文本格式必须符合HTTP标准，如果格式没问题，接下来就可以接收新浪服务器返回的数据了：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 153, 136);font-style:italic;"># 接收数据:</span>
+buffer = []
+<span style="color:rgb(51, 51, 51);font-weight:bold;">while</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">True</span>:
+    <span style="color:rgb(153, 153, 136);font-style:italic;"># 每次最多接收1k字节:</span>
+    d = s.recv(<span style="color:rgb(0, 153, 153);">1024</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> d:
+        buffer.append(d)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">else</span>:
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">break</span>
+data = <span style="color:rgb(221, 17, 68);">b''</span>.join(buffer)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">接收数据时，调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">recv(max)</code>方法，一次最多接收指定的字节数，因此，在一个while循环中反复接收，直到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">recv()</code>返回空数据，表示接收完毕，退出循环。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">当我们接收完数据后，调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">close()</code>方法关闭Socket，这样，一次完整的网络通信就结束了：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 153, 136);font-style:italic;"># 关闭连接:</span>
+s.close()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">接收到的数据包括HTTP头和网页本身，我们只需要把HTTP头和网页分离一下，把HTTP头打印出来，网页内容保存到文件：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">header, html = data.split(<span style="color:rgb(221, 17, 68);">b'\r\n\r\n'</span>, <span style="color:rgb(0, 153, 153);">1</span>)
+print(header.decode(<span style="color:rgb(221, 17, 68);">'utf-8'</span>))
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 把接收的数据写入文件:</span>
+<span style="color:rgb(51, 51, 51);font-weight:bold;">with</span> open(<span style="color:rgb(221, 17, 68);">'sina.html'</span>, <span style="color:rgb(221, 17, 68);">'wb'</span>) <span style="color:rgb(51, 51, 51);font-weight:bold;">as</span> f:
+    f.write(html)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">现在，只需要在浏览器中打开这个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sina.html</code>文件，就可以看到新浪的首页了。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">服务器</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">和客户端编程相比，服务器编程就要复杂一些。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">服务器进程首先要绑定一个端口并监听来自其他客户端的连接。如果某个客户端连接过来了，服务器就与该客户端建立Socket连接，随后的通信就靠这个Socket连接了。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">所以，服务器会打开固定端口（比如80）监听，每来一个客户端连接，就创建该Socket连接。由于服务器会有大量来自客户端的连接，所以，服务器要能够区分一个Socket连接是和哪个客户端绑定的。一个Socket依赖4项：服务器地址、服务器端口、客户端地址、客户端端口来唯一确定一个Socket。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">但是服务器还需要同时响应多个客户端的请求，所以，每个连接都需要一个新的进程或者新的线程来处理，否则，服务器一次就只能服务一个客户端了。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们来编写一个简单的服务器程序，它接收客户端连接，把客户端发过来的字符串加上<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Hello</code>再发回去。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">首先，创建一个基于IPv4和TCP协议的Socket：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>s = <span>socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">然后，我们要绑定监听的地址和端口。服务器可能有多块网卡，可以绑定到某一块网卡的IP地址上，也可以用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">0.0.0.0</code>绑定到所有的网络地址，还可以用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">127.0.0.1</code>绑定到本机地址。<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">127.0.0.1</code>是一个特殊的IP地址，表示本机地址，如果绑定到这个地址，客户端必须同时在本机运行才能连接，也就是说，外部的计算机无法连接进来。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">端口号需要预先指定。因为我们写的这个服务不是标准服务，所以用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">9999</code>这个端口号。请注意，小于<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">1024</code>的端口号必须要有管理员权限才能绑定：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 153, 136);font-style:italic;"># 监听端口:</span>
+s.bind((<span style="color:rgb(221, 17, 68);">'127.0.0.1'</span>, <span style="color:rgb(0, 153, 153);">9999</span>))
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">紧接着，调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">listen()</code>方法开始监听端口，传入的参数指定等待连接的最大数量：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">s.listen(<span style="color:rgb(0, 153, 153);">5</span>)
+<span style="color:rgb(51, 51, 51);font-weight:bold;">print</span>(<span style="color:rgb(221, 17, 68);">'Waiting for connection...'</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">接下来，服务器程序通过一个永久循环来接受来自客户端的连接，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">accept()</code>会等待并返回一个客户端的连接:</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(51, 51, 51);font-weight:bold;">while</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">True</span>:
+    <span style="color:rgb(153, 153, 136);font-style:italic;"># 接受一个新连接:</span>
+    sock, addr = s.accept()
+    <span style="color:rgb(153, 153, 136);font-style:italic;"># 创建新线程来处理TCP连接:</span>
+    t = threading.Thread(target=tcplink, args=(sock, addr))
+    t.start()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">每个连接都必须创建新线程（或进程）来处理，否则，单线程在处理连接的过程中，无法接受其他客户端的连接：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">tcplink</span><span>(sock, addr)</span>:</span>
+    print(<span style="color:rgb(221, 17, 68);">'Accept new connection from %s:%s...'</span> % addr)
+    sock.send(<span style="color:rgb(221, 17, 68);">b'Welcome!'</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">while</span> <span style="color:rgb(0, 134, 179);">True</span>:
+        data = sock.recv(<span style="color:rgb(0, 153, 153);">1024</span>)
+        time.sleep(<span style="color:rgb(0, 153, 153);">1</span>)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">not</span> data <span style="color:rgb(51, 51, 51);font-weight:bold;">or</span> data.decode(<span style="color:rgb(221, 17, 68);">'utf-8'</span>) == <span style="color:rgb(221, 17, 68);">'exit'</span>:
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">break</span>
+        sock.send((<span style="color:rgb(221, 17, 68);">'Hello, %s!'</span> % data.decode(<span style="color:rgb(221, 17, 68);">'utf-8'</span>)).encode(<span style="color:rgb(221, 17, 68);">'utf-8'</span>))
+    sock.close()
+    print(<span style="color:rgb(221, 17, 68);">'Connection from %s:%s closed.'</span> % addr)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">连接建立后，服务器首先发一条欢迎消息，然后等待客户端数据，并加上<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Hello</code>再发送给客户端。如果客户端发送了<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">exit</code>字符串，就直接关闭连接。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">要测试这个服务器程序，我们还需要编写一个客户端程序：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 建立连接:</span>
+s.connect((<span style="color:rgb(221, 17, 68);">'127.0.0.1'</span>, <span style="color:rgb(0, 153, 153);">9999</span>))
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 接收欢迎消息:</span>
+print(s.recv(<span style="color:rgb(0, 153, 153);">1024</span>).decode(<span style="color:rgb(221, 17, 68);">'utf-8'</span>))
+<span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> data <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> [<span style="color:rgb(221, 17, 68);">b'Michael'</span>, <span style="color:rgb(221, 17, 68);">b'Tracy'</span>, <span style="color:rgb(221, 17, 68);">b'Sarah'</span>]:
+    <span style="color:rgb(153, 153, 136);font-style:italic;"># 发送数据:</span>
+    s.send(data)
+    print(s.recv(<span style="color:rgb(0, 153, 153);">1024</span>).decode(<span style="color:rgb(221, 17, 68);">'utf-8'</span>))
+s.send(<span style="color:rgb(221, 17, 68);">b'exit'</span>)
+s.close()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们需要打开两个命令行窗口，一个运行服务器程序，另一个运行客户端程序，就可以看到效果了：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:none;border-radius:3px;font-size:12px;line-height:12px;white-space:pre;background-color:transparent;"><code style="white-space:pre-wrap;font-family:&quot;Courier New&quot;, Consolas, monospace;">┌────────────────────────────────────────────────────────┐
+│Command Prompt                                    - □ x │
+├────────────────────────────────────────────────────────┤
+│$ python echo_server.py                                 │
+│Waiting for connection...                               │
+│Accept new connection from 127.0.0.1:64398...           │
+│Connection from 127.0.0.1:64398 closed.                 │
+│                                                        │
+│       ┌────────────────────────────────────────────────┴───────┐
+│       │Command Prompt                                    - □ x │
+│       ├────────────────────────────────────────────────────────┤
+│       │$ python echo_client.py                                 │
+│       │Welcome!                                                │
+│       │Hello, Michael!                                         │
+└───────┤Hello, Tracy!                                           │
+        │Hello, Sarah!                                           │
+        │$                                                       │
+        │                                                        │
+        │                                                        │
+        └────────────────────────────────────────────────────────┘
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">需要注意的是，客户端程序运行完毕就退出了，而服务器程序会永远运行下去，必须按Ctrl+C退出程序。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">用TCP协议进行Socket编程在Python中十分简单，对于客户端，要主动连接服务器的IP和指定端口，对于服务器，要首先监听指定端口，然后，对每一个新的连接，创建一个线程或进程来处理。通常，服务器程序会无限运行下去。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">同一个端口，被一个Socket绑定了以后，就不能被别的Socket绑定了。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/socket/do_tcp.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">do_tcp.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="TCP编程_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="TCP编程_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017788916649408#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017787663253120" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017790181885952" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

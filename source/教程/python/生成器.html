@@ -1,0 +1,260 @@
+<html>
+<head>
+  <title>生成器</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1796"/>
+<h1>生成器</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 2:56</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div><div><p style="margin:0px 0px 15px;">通过列表生成式，我们可以直接创建一个列表。但是，受到内存限制，列表容量肯定是有限的。而且，创建一个包含100万个元素的列表，不仅占用很大的存储空间，如果我们仅仅需要访问前面几个元素，那后面绝大多数元素占用的空间都白白浪费了。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">所以，如果列表元素可以按照某种算法推算出来，那我们是否可以在循环的过程中不断推算出后续的元素呢？这样就不必创建完整的list，从而节省大量的空间。在Python中，这种一边循环一边计算的机制，称为生成器：generator。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">要创建一个generator，有很多种方法。第一种方法很简单，只要把一个列表生成式的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">[]</code>改成<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">()</code>，就创建了一个generator：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>L = [x * x <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> x <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">10</span>)]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>L
+[<span style="color:rgb(0, 153, 153);">0</span>, <span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">4</span>, <span style="color:rgb(0, 153, 153);">9</span>, <span style="color:rgb(0, 153, 153);">16</span>, <span style="color:rgb(0, 153, 153);">25</span>, <span style="color:rgb(0, 153, 153);">36</span>, <span style="color:rgb(0, 153, 153);">49</span>, <span style="color:rgb(0, 153, 153);">64</span>, <span style="color:rgb(0, 153, 153);">81</span>]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>g = (x * x <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> x <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">10</span>))
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>g
+&lt;generator object &lt;genexpr&gt; at <span style="color:rgb(0, 153, 153);">0x1022ef630</span>&gt;
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">创建<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">L</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">g</code>的区别仅在于最外层的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">[]</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">()</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">L</code>是一个list，而<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">g</code>是一个generator。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们可以直接打印出list的每一个元素，但我们怎么打印出generator的每一个元素呢？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果要一个一个打印出来，可以通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">next()</code>函数获得generator的下一个返回值：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">0</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">1</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">4</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">9</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">16</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">25</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">36</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">49</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">64</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">81</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(g)
+<span style="color:rgb(0, 153, 153);">Traceback</span> (most recent call last)<span style="color:rgb(153, 0, 115);">:</span>
+  <span style="color:rgb(0, 153, 153);">File</span> <span style="color:rgb(221, 17, 68);">&quot;&lt;stdin&gt;&quot;</span>, line <span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> &lt;<span style="color:rgb(51, 51, 51);font-weight:bold;">module</span>&gt;
+<span style="color:rgb(0, 153, 153);">StopIteration</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们讲过，generator保存的是算法，每次调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">next(g)</code>，就计算出<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">g</code>的下一个元素的值，直到计算到最后一个元素，没有更多的元素时，抛出<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">StopIteration</code>的错误。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">当然，上面这种不断调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">next(g)</code>实在是太变态了，正确的方法是使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>循环，因为generator也是可迭代对象：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>g = (x * x <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> x <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">10</span>))
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> n <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> g:
+<span style="color:rgb(153, 0, 115);">... </span>    print(n)
+<span style="color:rgb(153, 0, 115);">... </span>
+<span style="color:rgb(0, 153, 153);">0</span>
+<span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(0, 153, 153);">4</span>
+<span style="color:rgb(0, 153, 153);">9</span>
+<span style="color:rgb(0, 153, 153);">16</span>
+<span style="color:rgb(0, 153, 153);">25</span>
+<span style="color:rgb(0, 153, 153);">36</span>
+<span style="color:rgb(0, 153, 153);">49</span>
+<span style="color:rgb(0, 153, 153);">64</span>
+<span style="color:rgb(0, 153, 153);">81</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">所以，我们创建了一个generator后，基本上永远不会调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">next()</code>，而是通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>循环来迭代它，并且不需要关心<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">StopIteration</code>的错误。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">generator非常强大。如果推算的算法比较复杂，用类似列表生成式的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>循环无法实现的时候，还可以用函数来实现。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">比如，著名的斐波拉契数列（Fibonacci），除第一个和第二个数外，任意一个数都可由前两个数相加得到：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">1, 1, 2, 3, 5, 8, 13, 21, 34, ...</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">斐波拉契数列用列表生成式写不出来，但是，用函数把它打印出来却很容易：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">fib</span><span>(max)</span>:</span>
+    n, a, b = <span style="color:rgb(0, 153, 153);">0</span>, <span style="color:rgb(0, 153, 153);">0</span>, <span style="color:rgb(0, 153, 153);">1</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">while</span> n &lt; max:
+        print(b)
+        a, b = b, a + b
+        n = n + <span style="color:rgb(0, 153, 153);">1</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> <span style="color:rgb(221, 17, 68);">'done'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;"><em style="color:rgb(221, 0, 85);font-style:normal;">注意</em>，赋值语句：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">a, b = b, a + b
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">相当于：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>t = <span>(b, a + b) # t是一个tuple</span></span>
+<span>a = <span>t[<span style="color:rgb(0, 153, 153);">0</span>]</span></span>
+<span>b = <span>t[<span style="color:rgb(0, 153, 153);">1</span>]</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">但不必显式写出临时变量t就可以赋值。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">上面的函数可以输出斐波那契数列的前N个数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>fib(<span style="color:rgb(0, 153, 153);">6</span>)
+<span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(0, 153, 153);">2</span>
+<span style="color:rgb(0, 153, 153);">3</span>
+<span style="color:rgb(0, 153, 153);">5</span>
+<span style="color:rgb(0, 153, 153);">8</span>
+<span style="color:rgb(221, 17, 68);">'done'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">仔细观察，可以看出，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">fib</code>函数实际上是定义了斐波拉契数列的推算规则，可以从第一个元素开始，推算出后续任意的元素，这种逻辑其实非常类似generator。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">也就是说，上面的函数和generator仅一步之遥。要把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">fib</code>函数变成generator，只需要把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">print(b)</code>改为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield b</code>就可以了：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">fib</span><span>(max)</span>:</span>
+    n, a, b = <span style="color:rgb(0, 153, 153);">0</span>, <span style="color:rgb(0, 153, 153);">0</span>, <span style="color:rgb(0, 153, 153);">1</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">while</span> n &lt; max:
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> b
+        a, b = b, a + b
+        n = n + <span style="color:rgb(0, 153, 153);">1</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> <span style="color:rgb(221, 17, 68);">'done'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">这就是定义generator的另一种方法。如果一个函数定义中包含<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield</code>关键字，那么这个函数就不再是一个普通函数，而是一个generator：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; f = fib(6)
+&gt;&gt;&gt; f
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">generator</span> <span style="color:rgb(0, 128, 128);">object</span> <span style="color:rgb(0, 128, 128);">fib</span> <span style="color:rgb(0, 128, 128);">at</span> <span style="color:rgb(0, 128, 128);">0x104feaaa0</span>&gt;</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">这里，最难理解的就是generator和函数的执行流程不一样。函数是顺序执行，遇到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">return</code>语句或者最后一行函数语句就返回。而变成generator的函数，在每次调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">next()</code>的时候执行，遇到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield</code>语句返回，再次执行时从上次返回的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield</code>语句处继续执行。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">举个简单的例子，定义一个generator，依次返回数字1，3，5：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">odd</span><span>()</span>:</span>
+    print(<span style="color:rgb(221, 17, 68);">'step 1'</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(0, 153, 153);">1</span>
+    print(<span style="color:rgb(221, 17, 68);">'step 2'</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span>(<span style="color:rgb(0, 153, 153);">3</span>)
+    print(<span style="color:rgb(221, 17, 68);">'step 3'</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span>(<span style="color:rgb(0, 153, 153);">5</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">调用该generator时，首先要生成一个generator对象，然后用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">next()</code>函数不断获得下一个返回值：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; o = odd()
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(o)
+step <span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(0, 153, 153);">1</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(o)
+step <span style="color:rgb(0, 153, 153);">2</span>
+<span style="color:rgb(0, 153, 153);">3</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(o)
+step <span style="color:rgb(0, 153, 153);">3</span>
+<span style="color:rgb(0, 153, 153);">5</span>
+&gt;&gt;&gt; <span style="color:rgb(51, 51, 51);font-weight:bold;">next</span>(o)
+<span style="color:rgb(0, 153, 153);">Traceback</span> (most recent call last)<span style="color:rgb(153, 0, 115);">:</span>
+  <span style="color:rgb(0, 153, 153);">File</span> <span style="color:rgb(221, 17, 68);">&quot;&lt;stdin&gt;&quot;</span>, line <span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> &lt;<span style="color:rgb(51, 51, 51);font-weight:bold;">module</span>&gt;
+<span style="color:rgb(0, 153, 153);">StopIteration</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">可以看到，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">odd</code>不是普通函数，而是generator，在执行过程中，遇到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield</code>就中断，下次又继续执行。执行3次<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield</code>后，已经没有<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield</code>可以执行了，所以，第4次调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">next(o)</code>就报错。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">回到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">fib</code>的例子，我们在循环过程中不断调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield</code>，就会不断中断。当然要给循环设置一个条件来退出循环，不然就会产生一个无限数列出来。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">同样的，把函数改成generator后，我们基本上从来不会用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">next()</code>来获取下一个返回值，而是直接使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>循环来迭代：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> n <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> fib(<span style="color:rgb(0, 153, 153);">6</span>):
+<span style="color:rgb(153, 0, 115);">... </span>    print(n)
+...
+<span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(0, 153, 153);">2</span>
+<span style="color:rgb(0, 153, 153);">3</span>
+<span style="color:rgb(0, 153, 153);">5</span>
+<span style="color:rgb(0, 153, 153);">8</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">但是用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>循环调用generator时，发现拿不到generator的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">return</code>语句的返回值。如果想要拿到返回值，必须捕获<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">StopIteration</code>错误，返回值包含在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">StopIteration</code>的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">value</code>中：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>g = fib(<span style="color:rgb(0, 153, 153);">6</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">while</span> <span style="color:rgb(0, 134, 179);">True</span>:
+<span style="color:rgb(153, 0, 115);">... </span>    <span style="color:rgb(51, 51, 51);font-weight:bold;">try</span>:
+<span style="color:rgb(153, 0, 115);">... </span>        x = next(g)
+<span style="color:rgb(153, 0, 115);">... </span>        print(<span style="color:rgb(221, 17, 68);">'g:'</span>, x)
+<span style="color:rgb(153, 0, 115);">... </span>    <span style="color:rgb(51, 51, 51);font-weight:bold;">except</span> StopIteration <span style="color:rgb(51, 51, 51);font-weight:bold;">as</span> e:
+<span style="color:rgb(153, 0, 115);">... </span>        print(<span style="color:rgb(221, 17, 68);">'Generator return value:'</span>, e.value)
+<span style="color:rgb(153, 0, 115);">... </span>        <span style="color:rgb(51, 51, 51);font-weight:bold;">break</span>
+...
+g: <span style="color:rgb(0, 153, 153);">1</span>
+g: <span style="color:rgb(0, 153, 153);">1</span>
+g: <span style="color:rgb(0, 153, 153);">2</span>
+g: <span style="color:rgb(0, 153, 153);">3</span>
+g: <span style="color:rgb(0, 153, 153);">5</span>
+g: <span style="color:rgb(0, 153, 153);">8</span>
+Generator <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> value: done
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">关于如何捕获错误，后面的错误处理还会详细讲解。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">练习</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="http://baike.baidu.com/view/7804.htm" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">杨辉三角</a>定义如下：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:none;border-radius:3px;font-size:12px;line-height:12px;white-space:pre;background-color:transparent;"><code style="white-space:pre-wrap;font-family:&quot;Courier New&quot;, Consolas, monospace;">          1
+         / \
+        1   1
+       / \ / \
+      1   2   1
+     / \ / \ / \
+    1   3   3   1
+   / \ / \ / \ / \
+  1   4   6   4   1
+ / \ / \ / \ / \ / \
+1   5   10  10  5   1
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">把每一行看做一个list，试写一个generator，不断输出下一行的list：</p>
+<div style="margin-top:15px;margin-bottom:15px;"><pre style="margin:0px 0px 15px;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;margin-bottom:0px;border-bottom:none;border-bottom-left-radius:0px;border-bottom-right-radius:0px;"># -*- coding: utf-8 -*-
+
+def triangles():
+</pre><pre style="margin:0px 0px 15px;margin-top:0;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;"># 期待输出:
+# [1]
+# [1, 1]
+# [1, 2, 1]
+# [1, 3, 3, 1]
+# [1, 4, 6, 4, 1]
+# [1, 5, 10, 10, 5, 1]
+# [1, 6, 15, 20, 15, 6, 1]
+# [1, 7, 21, 35, 35, 21, 7, 1]
+# [1, 8, 28, 56, 70, 56, 28, 8, 1]
+# [1, 9, 36, 84, 126, 126, 84, 36, 9, 1]
+n = 0
+results = []
+for t in triangles():
+    results.append(t)
+    n = n + 1
+    if n == 10:
+        break
+
+for t in results:
+    print(t)
+
+if results == [
+    [1],
+    [1, 1],
+    [1, 2, 1],
+    [1, 3, 3, 1],
+    [1, 4, 6, 4, 1],
+    [1, 5, 10, 10, 5, 1],
+    [1, 6, 15, 20, 15, 6, 1],
+    [1, 7, 21, 35, 35, 21, 7, 1],
+    [1, 8, 28, 56, 70, 56, 28, 8, 1],
+    [1, 9, 36, 84, 126, 126, 84, 36, 9, 1]
+]:
+    print('测试通过!')
+else:
+    print('测试失败!')
+</pre></div>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">generator是非常强大的工具，在Python中，可以简单地把列表生成式改成generator，也可以通过函数实现复杂逻辑的generator。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">要理解generator的工作原理，它是在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>循环的过程中不断计算出下一个元素，并在适当的条件结束<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>循环。对于函数改成的generator来说，遇到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">return</code>语句或者执行到函数体最后一行语句，就是结束generator的指令，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>循环随之结束。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">请注意区分普通函数和generator函数，普通函数调用直接返回结果：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r = abs(<span style="color:rgb(0, 153, 153);">6</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r
+<span style="color:rgb(0, 153, 153);">6</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">generator函数的“调用”实际返回一个generator对象：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; g = fib(6)
+&gt;&gt;&gt; g
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">generator</span> <span style="color:rgb(0, 128, 128);">object</span> <span style="color:rgb(0, 128, 128);">fib</span> <span style="color:rgb(0, 128, 128);">at</span> <span style="color:rgb(0, 128, 128);">0x1022ef948</span>&gt;</span>
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/advance/do_generator.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">do_generator.py</a></p>
+</div></div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

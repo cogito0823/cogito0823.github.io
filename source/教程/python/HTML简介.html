@@ -1,0 +1,581 @@
+<html>
+<head>
+  <title>HTML简介</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2461"/>
+<h1>HTML简介</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:31</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:flex; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div>
+							<div>
+								
+																
+							</div>
+							<div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">HTML简介</h4>
+    <div>
+    	<span>阅读: 494427</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">网页就是HTML？这么理解大概没错。因为网页中不但包含文字，还有图片、视频、Flash小游戏，有复杂的排版、动画效果，所以，HTML定义了一套语法规则，来告诉浏览器如何把一个丰富多彩的页面显示出来。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">HTML长什么样？上次我们看了新浪首页的HTML源码，如果仔细数数，竟然有6000多行！</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">所以，学HTML，就不要指望从新浪入手了。我们来看看最简单的HTML长什么样：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">html</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">head</span>&gt;</span>
+  <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">title</span>&gt;</span>Hello<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">title</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">head</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">body</span>&gt;</span>
+  <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">h1</span>&gt;</span>Hello, world!<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">h1</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">body</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">html</span>&gt;</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">可以用文本编辑器编写HTML，然后保存为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">hello.html</code>，双击或者把文件拖到浏览器中，就可以看到效果：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="HTML简介_files/950569639986880" type="image/jpeg" data-filename="950569639986880" height="368" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="545"/></p>
+<p style="margin:0px 0px 15px;margin-top:15px;">HTML文档就是一系列的Tag组成，最外层的Tag是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">&lt;html&gt;</code>。规范的HTML也包含<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">&lt;head&gt;...&lt;/head&gt;</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">&lt;body&gt;...&lt;/body&gt;</code>（注意不要和HTTP的Header、Body搞混了），由于HTML是富文档模型，所以，还有一系列的Tag用来表示链接、图片、表格、表单等等。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">CSS简介</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">CSS是Cascading Style Sheets（层叠样式表）的简称，CSS用来控制HTML里的所有元素如何展现，比如，给标题元素<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">&lt;h1&gt;</code>加一个样式，变成48号字体，灰色，带阴影：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">html</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">head</span>&gt;</span>
+  <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">title</span>&gt;</span>Hello<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">title</span>&gt;</span>
+  <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">style</span>&gt;</span><span>
+    <span style="color:rgb(0, 0, 128);font-weight:normal;">h1</span> <span>{
+      <span><span style="color:rgb(0, 128, 128);">color</span>:<span> <span style="color:rgb(0, 153, 153);">#333333</span>;</span></span>
+      <span><span style="color:rgb(0, 128, 128);">font-size</span>:<span> <span style="color:rgb(0, 153, 153);">48</span>px;</span></span>
+      <span><span style="color:rgb(0, 128, 128);">text-shadow</span>:<span> <span style="color:rgb(0, 153, 153);">3</span>px <span style="color:rgb(0, 153, 153);">3</span>px <span style="color:rgb(0, 153, 153);">3</span>px <span style="color:rgb(0, 153, 153);">#666666</span>;</span></span>
+    <span>}</span></span>
+  </span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">style</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">head</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">body</span>&gt;</span>
+  <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">h1</span>&gt;</span>Hello, world!<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">h1</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">body</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">html</span>&gt;</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">效果如下：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="HTML简介_files/950571217609344" type="image/jpeg" data-filename="950571217609344" height="368" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="545"/></p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">JavaScript简介</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">JavaScript虽然名称有个Java，但它和Java真的一点关系没有。JavaScript是为了让HTML具有交互性而作为脚本语言添加的，JavaScript既可以内嵌到HTML中，也可以从外部链接到HTML中。如果我们希望当用户点击标题时把标题变成红色，就必须通过JavaScript来实现：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">html</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">head</span>&gt;</span>
+  <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">title</span>&gt;</span>Hello<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">title</span>&gt;</span>
+  <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">style</span>&gt;</span><span>
+    <span style="color:rgb(0, 0, 128);font-weight:normal;">h1</span> <span>{
+      <span><span style="color:rgb(0, 128, 128);">color</span>:<span> <span style="color:rgb(0, 153, 153);">#333333</span>;</span></span>
+      <span><span style="color:rgb(0, 128, 128);">font-size</span>:<span> <span style="color:rgb(0, 153, 153);">48</span>px;</span></span>
+      <span><span style="color:rgb(0, 128, 128);">text-shadow</span>:<span> <span style="color:rgb(0, 153, 153);">3</span>px <span style="color:rgb(0, 153, 153);">3</span>px <span style="color:rgb(0, 153, 153);">3</span>px <span style="color:rgb(0, 153, 153);">#666666</span>;</span></span>
+    <span>}</span></span>
+  </span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">style</span>&gt;</span>
+  <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">script</span>&gt;</span><span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span style="color:rgb(51, 51, 51);font-weight:normal;">change</span><span>()</span> {</span>
+      document.getElementsByTagName(<span style="color:rgb(221, 17, 68);">'h1'</span>)[<span style="color:rgb(0, 153, 153);">0</span>].style.color = <span style="color:rgb(221, 17, 68);">'#ff0000'</span>;
+    }
+  </span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">script</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">head</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">body</span>&gt;</span>
+  <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">h1</span> <span style="color:rgb(0, 128, 128);">onclick</span>=<span style="color:rgb(221, 17, 68);">&quot;change()&quot;</span>&gt;</span>Hello, world!<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">h1</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">body</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">html</span>&gt;</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">点击标题后效果如下：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="HTML简介_files/950572257640320" type="image/jpeg" data-filename="950572257640320" height="368" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="545"/></p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果要学习Web开发，首先要对HTML、CSS和JavaScript作一定的了解。HTML定义了页面的内容，CSS来控制页面元素的样式，而JavaScript负责页面的交互逻辑。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">讲解HTML、CSS和JavaScript就可以写3本书，对于优秀的Web开发人员来说，精通HTML、CSS和JavaScript是必须的，这里推荐一个在线学习网站w3schools：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="http://www.w3schools.com/" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">http://www.w3schools.com/</a></p>
+<p style="margin:0px 0px 15px;margin-top:15px;">以及一个对应的中文版本：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="http://www.w3school.com.cn/" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">http://www.w3school.com.cn/</a></p>
+<p style="margin:0px 0px 15px;margin-top:15px;">当我们用Python或者其他语言开发Web应用时，我们就是要在服务器端动态创建出HTML，这样，浏览器就会向不同的用户显示出不同的Web页面。</p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="HTML简介_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="HTML简介_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017805396770016#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017804782304672" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017805733037760" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div>
+							<div>
+								
+								
+								
+							</div>
+							<div>
+								    <h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:18px;line-height:24px;">评论</h3>
+
+    <ul style="margin:0px 0px 15px;margin-top:15px;padding:0px;list-style:none;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1293559409934370" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/1" type="image/gif" data-filename="1" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1298811785838625" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">本节打卡</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1293559409934370" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">侧步微凉</a>
+				created at August 17, 2019 9:48 AM, Last updated at August 17, 2019 9:48 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">打卡</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1298811785838625" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1298811785838625#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1227468067305152" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/006fouwHly8fgksnp38hjj30ro0rot9h.jpg" type="image/jpeg" data-filename="006fouwHly8fgksnp38hjj30ro0rot9h.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1227468520288800" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">我按照步骤用notepad++写html，为什么颜色没有变？</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1227468067305152" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">懵的一匹-</a>
+				created at July 19, 2018 4:03 PM, Last updated at June 7, 2019 5:03 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">这是代码：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Hello&lt;/title&gt;
+    &lt;style&gt;
+        h1 {
+            color: #333333;
+            font-size: 48px;
+            text-shadow: 3px 3px 3px #666666;
+        }
+    &lt;/style&gt;
+    &lt;script&gt;
+        function change() {
+            document.getElementByTagName('h1')[0].style.color = '#ff0000';
+        }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1 onclick=&quot;change()&quot;&gt;Hello, world!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1227467196985376" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/1 [1]" type="image/gif" data-filename="1" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1227467196985376" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">倒霉熊蛋蛋</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at July 19, 2018 4:19 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">一共有三种方法
+第一种
+        1、新建一个文本
+        2、随便写点内容，保存
+        3、保存格式为html格式
+        4、可以看到里面的代码开始有颜色的区别
+       这种我试过，但是效果不太理想
+第二种
+    设置----语言格式设置---在语言那栏找到 html
+    对应语言即可
+    然后自己喜欢什么颜色就改吧
+   这个我试的时候没有效果，不知道对不对</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">第三种
+    Step 1:安装Notepad++(当然,你也可以和我一样使用绿色版本).然后打开浏览器访问Textmate Theme Directory~</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">Step 2:找一个适合自己的theme,下载.tmTheme文件到本地.
+
+Step 3:用Notepad++打开这个.tmTheme文件并全选复制.
+
+Step 4:打开浏览器访问theme converter page,将.tmTheme中的内容全部复制到表单中,并点击下载按钮下载.
+
+Step 5:如果您是安装版的Notepad++,打开&quot;我的电脑&quot;,找到C:\Documents and Settings\user\Application Data\Notepad++文件夹(user表示当前您的系统用户); 如果您是绿色版的,直接打开程序文件夹即可.
+
+Step 6:在Step 5打开的文件夹里找到Stylers.xml文件,备份它. 然后把你刚才下载回来的xml文件重命名至stylers.xml,并复制进该文件夹.
+
+Step 7: 关闭Notepad++,然后重新运行...
+
+Step 8:进行以上操作后Notepad++的默认字体会消失,因此请打开菜单 - 设置 - 语言格式设置进行选定即可.
+</code></pre>
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1232425197762144" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/e83f8cf4jw8en63q12ckxj20f00f0wf0.jpg" type="image/jpeg" data-filename="e83f8cf4jw8en63q12ckxj20f00f0wf0.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1232425197762144" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">曾志文呵呵</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at August 22, 2018 10:26 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;"><strong style="font-weight:bold;">document.getElement(s)ByTagName，你的没有s</strong></p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1260994573629568" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/739076d3jw1e8qgp5bmzyj2050050aa8.jpg" type="image/jpeg" data-filename="739076d3jw1e8qgp5bmzyj2050050aa8.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1260994573629568" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">upbeat_peach</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at June 2, 2019 5:11 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">楼上看出缺个s的也是眼力一级棒……</p>
+<p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">but我用txt复制了老师的代码，也同样看不到颜色变化o(╥﹏╥)o</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1229183925612832" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/005tcdZijw8f4utvu9cc4j3050050wec.jpg" type="image/jpeg" data-filename="005tcdZijw8f4utvu9cc4j3050050wec.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1229183925612832" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Capus_孙泽钦</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at June 7, 2019 5:03 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">onclick事件，要点击helloworld才会变色</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1227468520288800" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1227468520288800#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1266437310117216" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/1 [2]" type="image/gif" data-filename="1" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1272816482951232" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">打卡</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1266437310117216" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">桂兴牛2号</a>
+				created at March 26, 2019 10:36 PM, Last updated at March 26, 2019 10:36 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">打卡，感觉这一章又可以单独拿出来写本书</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1272816482951232" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1272816482951232#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1178012494067040" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/1 [3]" type="image/gif" data-filename="1" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1179313478863456" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">学到这里,有点纠结了</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1178012494067040" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">用户6386657610</a>
+				created at October 26, 2017 9:41 PM, Last updated at March 4, 2019 2:43 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">python主要用于web吗,我的学校实践项目主要用到<strong style="font-weight:bold;">机器学习,图像识别</strong>方面,感觉和web关系不大,希望后面还有有关知识可以快速练习一下.</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1256663166218848" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/005O9aOBly8fe1uac2igkj30ro0ron0v.jpg" type="image/jpeg" data-filename="005O9aOBly8fe1uac2igkj30ro0ron0v.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1256663166218848" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">DeepEndBoo</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at March 4, 2019 2:43 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">Python主要用于web开发和机器学习</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1179313478863456" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1179313478863456#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1063865910242720" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/1 [4]" type="image/gif" data-filename="1" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1074214297664800" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">老师您好，想请教您一个问题</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1063865910242720" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">吴利民5705255624</a>
+				created at March 25, 2016 8:48 PM, Last updated at December 3, 2018 4:23 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">我用Mac的文本编辑器写HTML，在Safari中显示出来这个样子，不知道怎样解决，是编码的问题吗
+{\rtf1\ansi\ansicpg936\cocoartf1348\cocoasubrtf170 {\fonttbl\f0\fswiss\fcharset0 Helvetica;} {\colortbl;\red255\green255\blue255;} \paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural \f0\fs24 \cf0 \ \ \ \ \
+Hello,world!</p>
+<p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">\ \ }</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1063865910242720" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/1 [5]" type="image/gif" data-filename="1" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1063865910242720" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">吴利民5705255624</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at March 25, 2016 8:53 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">用纯文本文件编写就可以了</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1137403749625696" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/9a98f5b1jw1e8qgp5bmzyj2050050aa8.jpg" type="image/jpeg" data-filename="9a98f5b1jw1e8qgp5bmzyj2050050aa8.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1137403749625696" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">5080sy</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at March 22, 2017 10:16 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">mac开发html,css,js,也就是前端, 推荐sublime编辑器</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1250300543368128" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/0062VnlJjw8fdgeqkbbgkj30ku0l7myx.jpg" type="image/jpeg" data-filename="0062VnlJjw8fdgeqkbbgkj30ku0l7myx.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1250300543368128" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">金毛_西西</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at December 3, 2018 4:23 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">我是前端开发webstrom开发很方便</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1074214297664800" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1074214297664800#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1240877320069664" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/a154b9c5jw1e8qgp5bmzyj2050050aa8.jpg" type="image/jpeg" data-filename="a154b9c5jw1e8qgp5bmzyj2050050aa8.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1241220611308608" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">前端开发推荐几本书</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1240877320069664" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">独行冰海</a>
+				created at October 3, 2018 1:35 PM, Last updated at October 3, 2018 1:35 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">《HTML5布局之路》
+《Head First JavaScript程序设计》
+《JavaScript高级程序设计》</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1241220611308608" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1241220611308608#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1200129254096800" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/006Q2STIly8fg2njjycr5j302s02st8k.jpg" type="image/jpeg" data-filename="006Q2STIly8fg2njjycr5j302s02st8k.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1202645280747712" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">试过才知道原来用txt就能做网页。。。</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1200129254096800" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">风雾15151</a>
+				created at March 4, 2018 4:05 PM, Last updated at September 6, 2018 2:12 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">之前不知道浏览器自带js、css等语言的解析功能，原来只要语法正确可以直接在txt里开发网页。。。</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1202645280747712" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1202645280747712#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1123090081775584" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/8eeea342jw8evx9wn525aj20yi0yiwhc.jpg" type="image/jpeg" data-filename="8eeea342jw8evx9wn525aj20yi0yiwhc.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1163645532349888" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">web开发还得学这三样东西。。这路很长啊！！！</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1123090081775584" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">御蓝破</a>
+				created at August 1, 2017 10:23 AM, Last updated at January 15, 2018 10:36 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">web开发还得学这三样东西。。这路很长啊！！！</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1154438995637920" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/b2903061ly8fdkyaij2ndj20ro0rowhg.jpg" type="image/jpeg" data-filename="b2903061ly8fdkyaij2ndj20ro0rowhg.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1154438995637920" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">长胸毛的羊</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at September 18, 2017 9:56 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">如果不是要学的很精通的话，这三个东西很容易学习的</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1190856344204000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/6b610c68jw1e8qgp5bmzyj2050050aa8.jpg" type="image/jpeg" data-filename="6b610c68jw1e8qgp5bmzyj2050050aa8.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1190856344204000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">俊秀小郎君</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at December 29, 2017 2:35 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">不管是python开发web还是其他语言开发web，前端的这三个都是要有一点基础的</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1190108340192320" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/69d4185bjw8f9ph43x9hgj20hs0i7q3b.jpg" type="image/jpeg" data-filename="69d4185bjw8f9ph43x9hgj20hs0i7q3b.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1190108340192320" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">露秋</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at January 15, 2018 10:36 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">边开发边学就好了，不可能一次就能把所有的都学会</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1163645532349888" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1163645532349888#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1173103650536960" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="HTML简介_files/005tOS9oly8fgqqmi9fmaj30sg0lcjxe.jpg" type="image/jpeg" data-filename="005tOS9oly8fgqqmi9fmaj30sg0lcjxe.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1173103960967360" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">python也可以写数据表吗？</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1173103650536960" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">时光交错的影像</a>
+				created at September 22, 2017 3:12 PM, Last updated at September 22, 2017 3:12 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">老师您好，最近需将一段视频分成每次15s播放，那么用python写一个数据表然后导入，可以讲视频分成每次15s播放吗，另外python也可以写数据表吗？</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1173103960967360" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1173103960967360#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li></ul>
+
+    <h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">发表评论</h3>
+
+    
+
+    <div>
+	<div>
+		<p style="margin:0px 0px 15px;"></p>
+		
+	</div>
+</div>
+
+							</div>
+						</div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

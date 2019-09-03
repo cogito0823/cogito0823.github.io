@@ -1,0 +1,180 @@
+<html>
+<head>
+  <title>Day 12 - 编写日志列表页</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2593"/>
+<h1>Day 12 - 编写日志列表页</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:38</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">Day 12 - 编写日志列表页</h4>
+    <div>
+    	<span>阅读: 39678</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">MVVM模式不但可用于Form表单，在复杂的管理页面中也能大显身手。例如，分页显示Blog的功能，我们先把后端代码写出来：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">apis.py</code>中定义一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Page</code>类用于存储分页信息：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">Page</span><span>(object)</span>:</span>
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__init__</span><span>(self, item_count, page_index=<span style="color:rgb(0, 153, 153);">1</span>, page_size=<span style="color:rgb(0, 153, 153);">10</span>)</span>:</span>
+        self.item_count = item_count
+        self.page_size = page_size
+        self.page_count = item_count // page_size + (<span style="color:rgb(0, 153, 153);">1</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> item_count % page_size &gt; <span style="color:rgb(0, 153, 153);">0</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">else</span> <span style="color:rgb(0, 153, 153);">0</span>)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> (item_count == <span style="color:rgb(0, 153, 153);">0</span>) <span style="color:rgb(51, 51, 51);font-weight:bold;">or</span> (page_index &gt; self.page_count):
+            self.offset = <span style="color:rgb(0, 153, 153);">0</span>
+            self.limit = <span style="color:rgb(0, 153, 153);">0</span>
+            self.page_index = <span style="color:rgb(0, 153, 153);">1</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">else</span>:
+            self.page_index = page_index
+            self.offset = self.page_size * (page_index - <span style="color:rgb(0, 153, 153);">1</span>)
+            self.limit = self.page_size
+        self.has_next = self.page_index &lt; self.page_count
+        self.has_previous = self.page_index &gt; <span style="color:rgb(0, 153, 153);">1</span>
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__str__</span><span>(self)</span>:</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> <span style="color:rgb(221, 17, 68);">'item_count: %s, page_count: %s, page_index: %s, page_size: %s, offset: %s, limit: %s'</span> % (self.item_count, self.page_count, self.page_index, self.page_size, self.offset, self.limit)
+
+    __repr__ = __str__
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">handlers.py</code>中实现API：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@get('/api/blogs')</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">api_blogs</span><span>(*, page=<span style="color:rgb(221, 17, 68);">'1'</span>)</span>:</span>
+    page_index = get_page_index(page)
+    num = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> Blog.findNumber(<span style="color:rgb(221, 17, 68);">'count(id)'</span>)
+    p = Page(num, page_index)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> num == <span style="color:rgb(0, 153, 153);">0</span>:
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> dict(page=p, blogs=())
+    blogs = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> Blog.findAll(orderBy=<span style="color:rgb(221, 17, 68);">'created_at desc'</span>, limit=(p.offset, p.limit))
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> dict(page=p, blogs=blogs)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">管理页面：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@get('/manage/blogs')</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">manage_blogs</span><span>(*, page=<span style="color:rgb(221, 17, 68);">'1'</span>)</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> {
+        <span style="color:rgb(221, 17, 68);">'__template__'</span>: <span style="color:rgb(221, 17, 68);">'manage_blogs.html'</span>,
+        <span style="color:rgb(221, 17, 68);">'page_index'</span>: get_page_index(page)
+    }
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">模板页面首先通过API：<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">GET /api/blogs?page=?</code>拿到Model：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">{
+    &quot;<span style="color:rgb(0, 128, 128);">page</span>&quot;: <span>{
+        &quot;<span style="color:rgb(0, 128, 128);">has_next</span>&quot;: <span><span>true</span></span>,
+        &quot;<span style="color:rgb(0, 128, 128);">page_index</span>&quot;: <span><span style="color:rgb(0, 153, 153);">1</span></span>,
+        &quot;<span style="color:rgb(0, 128, 128);">page_count</span>&quot;: <span><span style="color:rgb(0, 153, 153);">2</span></span>,
+        &quot;<span style="color:rgb(0, 128, 128);">has_previous</span>&quot;: <span><span>false</span></span>,
+        &quot;<span style="color:rgb(0, 128, 128);">item_count</span>&quot;: <span><span style="color:rgb(0, 153, 153);">12</span>
+    }</span></span>,
+    &quot;<span style="color:rgb(0, 128, 128);">blogs</span>&quot;: <span>[...]
+}</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">然后，通过Vue初始化MVVM：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">script</span>&gt;</span><span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span style="color:rgb(51, 51, 51);font-weight:normal;">initVM</span><span>(data)</span> {</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">var</span> vm = <span style="color:rgb(51, 51, 51);font-weight:bold;">new</span> Vue({
+        el: <span style="color:rgb(221, 17, 68);">'#vm'</span>,
+        data: {
+            blogs: data.blogs,
+            page: data.page
+        },
+        methods: {
+            edit_blog: <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span>(blog)</span> {</span>
+                location.assign(<span style="color:rgb(221, 17, 68);">'/manage/blogs/edit?id='</span> + blog.id);
+            },
+            delete_blog: <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span>(blog)</span> {</span>
+                <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> (confirm(<span style="color:rgb(221, 17, 68);">'确认要删除“'</span> + blog.name + <span style="color:rgb(221, 17, 68);">'”？删除后不可恢复！'</span>)) {
+                    postJSON(<span style="color:rgb(221, 17, 68);">'/api/blogs/'</span> + blog.id + <span style="color:rgb(221, 17, 68);">'/delete'</span>, <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span>(err, r)</span> {</span>
+                        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> (err) {
+                            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> alert(err.message || err.error || err);
+                        }
+                        refresh();
+                    });
+                }
+            }
+        }
+    });
+    $(<span style="color:rgb(221, 17, 68);">'#vm'</span>).show();
+}
+$(<span style="color:rgb(51, 51, 51);font-weight:bold;">function</span>() {
+    getJSON(<span style="color:rgb(221, 17, 68);">'/api/blogs'</span>, {
+        page: {{ page_index }}
+    }, <span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span>(err, results)</span> {</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> (err) {
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> fatal(err);
+        }
+        $(<span style="color:rgb(221, 17, 68);">'#loading'</span>).hide();
+        initVM(results);
+    });
+});
+</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">script</span>&gt;</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">View的容器是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">#vm</code>，包含一个table，我们用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">v-repeat</code>可以把Model的数组<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">blogs</code>直接变成多行的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">&lt;tr&gt;</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">div</span> <span style="color:rgb(0, 128, 128);">id</span>=<span style="color:rgb(221, 17, 68);">&quot;vm&quot;</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-width-1-1&quot;</span>&gt;</span>
+    <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">a</span> <span style="color:rgb(0, 128, 128);">href</span>=<span style="color:rgb(221, 17, 68);">&quot;/manage/blogs/create&quot;</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-button uk-button-primary&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">i</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-icon-plus&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">i</span>&gt;</span> 新日志<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">a</span>&gt;</span>
+
+    <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">table</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-table uk-table-hover&quot;</span>&gt;</span>
+        <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">thead</span>&gt;</span>
+            <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">tr</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">th</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-width-5-10&quot;</span>&gt;</span>标题 / 摘要<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">th</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">th</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-width-2-10&quot;</span>&gt;</span>作者<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">th</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">th</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-width-2-10&quot;</span>&gt;</span>创建时间<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">th</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">th</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-width-1-10&quot;</span>&gt;</span>操作<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">th</span>&gt;</span>
+            <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">tr</span>&gt;</span>
+        <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">thead</span>&gt;</span>
+        <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">tbody</span>&gt;</span>
+            <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">tr</span> <span style="color:rgb(0, 128, 128);">v-repeat</span>=<span style="color:rgb(221, 17, 68);">&quot;blog: blogs&quot;</span> &gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">td</span>&gt;</span>
+                    <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">a</span> <span style="color:rgb(0, 128, 128);">target</span>=<span style="color:rgb(221, 17, 68);">&quot;_blank&quot;</span> <span style="color:rgb(0, 128, 128);">v-attr</span>=<span style="color:rgb(221, 17, 68);">&quot;href: '/blog/'+blog.id&quot;</span> <span style="color:rgb(0, 128, 128);">v-text</span>=<span style="color:rgb(221, 17, 68);">&quot;blog.name&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">a</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">td</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">td</span>&gt;</span>
+                    <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">a</span> <span style="color:rgb(0, 128, 128);">target</span>=<span style="color:rgb(221, 17, 68);">&quot;_blank&quot;</span> <span style="color:rgb(0, 128, 128);">v-attr</span>=<span style="color:rgb(221, 17, 68);">&quot;href: '/user/'+blog.user_id&quot;</span> <span style="color:rgb(0, 128, 128);">v-text</span>=<span style="color:rgb(221, 17, 68);">&quot;blog.user_name&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">a</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">td</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">td</span>&gt;</span>
+                    <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">span</span> <span style="color:rgb(0, 128, 128);">v-text</span>=<span style="color:rgb(221, 17, 68);">&quot;blog.created_at.toDateTime()&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">span</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">td</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">td</span>&gt;</span>
+                    <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">a</span> <span style="color:rgb(0, 128, 128);">href</span>=<span style="color:rgb(221, 17, 68);">&quot;#0&quot;</span> <span style="color:rgb(0, 128, 128);">v-on</span>=<span style="color:rgb(221, 17, 68);">&quot;click: edit_blog(blog)&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">i</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-icon-edit&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">i</span>&gt;</span>
+                    <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">a</span> <span style="color:rgb(0, 128, 128);">href</span>=<span style="color:rgb(221, 17, 68);">&quot;#0&quot;</span> <span style="color:rgb(0, 128, 128);">v-on</span>=<span style="color:rgb(221, 17, 68);">&quot;click: delete_blog(blog)&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">i</span> <span style="color:rgb(0, 128, 128);">class</span>=<span style="color:rgb(221, 17, 68);">&quot;uk-icon-trash-o&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">i</span>&gt;</span>
+                <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">td</span>&gt;</span>
+            <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">tr</span>&gt;</span>
+        <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">tbody</span>&gt;</span>
+    <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">table</span>&gt;</span>
+
+    <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">div</span> <span style="color:rgb(0, 128, 128);">v-component</span>=<span style="color:rgb(221, 17, 68);">&quot;pagination&quot;</span> <span style="color:rgb(0, 128, 128);">v-with</span>=<span style="color:rgb(221, 17, 68);">&quot;page&quot;</span>&gt;</span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">div</span>&gt;</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">div</span>&gt;</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">往Model的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">blogs</code>数组中增加一个Blog元素，table就神奇地增加了一行；把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">blogs</code>数组的某个元素删除，table就神奇地减少了一行。所有复杂的Model-View的映射逻辑全部由MVVM框架完成，我们只需要在HTML中写上<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">v-repeat</code>指令，就什么都不用管了。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">可以把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">v-repeat=&quot;blog: blogs&quot;</code>看成循环代码，所以，可以在一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">&lt;tr&gt;</code>内部引用循环变量<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">blog</code>。<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">v-text</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">v-attr</code>指令分别用于生成文本和DOM节点属性。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">完整的Blog列表页如下：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="Day 12 - 编写日志列表页_files/956084297542656" type="image/png" data-filename="956084297542656" height="539" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="497"/></p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/awesome-python3-webapp/tree/day-12" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">day-12</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="Day 12 - 编写日志列表页_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="Day 12 - 编写日志列表页_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491118848608#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491069001760" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491156860224" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

@@ -1,0 +1,90 @@
+<html>
+<head>
+  <title>hmac</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2057"/>
+<h1>hmac</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:22</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">hmac</h4>
+    <div>
+    	<span>阅读: 275858</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">通过哈希算法，我们可以验证一段数据是否有效，方法就是对比该数据的哈希值，例如，判断用户口令是否正确，我们用保存在数据库中的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">password_md5</code>对比计算<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">md5(password)</code>的结果，如果一致，用户输入的口令就是正确的。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">为了防止黑客通过彩虹表根据哈希值反推原始口令，在计算哈希的时候，不能仅针对原始输入计算，需要增加一个salt来使得相同的输入也能得到不同的哈希，这样，大大增加了黑客破解的难度。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果salt是我们自己随机生成的，通常我们计算MD5时采用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">md5(message + salt)</code>。但实际上，把salt看做一个“口令”，加salt的哈希就是：计算一段message的哈希时，根据不通口令计算出不同的哈希。要验证哈希值，必须同时提供正确的口令。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">这实际上就是Hmac算法：Keyed-Hashing for Message Authentication。它通过一个标准算法，在计算哈希的过程中，把key混入计算过程中。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">和我们自定义的加salt算法不同，Hmac算法针对所有哈希算法都通用，无论是MD5还是SHA-1。采用Hmac替代我们自己的salt算法，可以使程序算法更标准化，也更安全。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">Python自带的hmac模块实现了标准的Hmac算法。我们来看看如何使用hmac实现带key的哈希。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们首先需要准备待计算的原始消息message，随机key，哈希算法，这里采用MD5，使用hmac的代码如下：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> hmac
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>message = <span style="color:rgb(221, 17, 68);">b'Hello, world!'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>key = <span style="color:rgb(221, 17, 68);">b'secret'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>h = hmac.new(key, message, digestmod=<span style="color:rgb(221, 17, 68);">'MD5'</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(153, 153, 136);font-style:italic;"># 如果消息很长，可以多次调用h.update(msg)</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>h.hexdigest()
+<span style="color:rgb(221, 17, 68);">'fa4ee7d173f2d97ee79022d1a7355bcf'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">可见使用hmac和普通hash算法非常类似。hmac输出的长度和原始哈希算法的长度一致。需要注意传入的key和message都是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">bytes</code>类型，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">str</code>类型需要首先编码为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">bytes</code>。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">练习</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">将上一节的salt改为标准的hmac算法，验证用户口令：</p>
+<div style="margin-top:15px;margin-bottom:15px;"><pre style="margin:0px 0px 15px;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;margin-bottom:0px;border-bottom:none;border-bottom-left-radius:0px;border-bottom-right-radius:0px;"># -*- coding: utf-8 -*-
+import hmac, random
+
+def hmac_md5(key, s):
+    return hmac.new(key.encode('utf-8'), s.encode('utf-8'), 'MD5').hexdigest()
+
+class User(object):
+    def __init__(self, username, password):
+        self.username = username
+        self.key = ''.join([chr(random.randint(48, 122)) for i in range(20)])
+        self.password = hmac_md5(self.key, password)
+
+db = {
+    'michael': User('michael', '123456'),
+    'bob': User('bob', 'abc999'),
+    'alice': User('alice', 'alice2008')
+}
+</pre><pre style="margin:0px 0px 15px;margin-top:0;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;"># 测试:
+assert login('michael', '123456')
+assert login('bob', 'abc999')
+assert login('alice', 'alice2008')
+assert not login('michael', '1234567')
+assert not login('bob', '123456')
+assert not login('alice', 'Alice2008')
+print('ok')
+</pre></div>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">Python内置的hmac模块实现了标准的Hmac算法，它利用一个key对message计算“杂凑”后的hash，使用hmac算法比标准hash算法更安全，因为针对相同的message，不同的key会产生不同的hash。</p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="hmac_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="hmac_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1183198304823296#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017686752491744" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017783145987360" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

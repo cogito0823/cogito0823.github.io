@@ -1,0 +1,101 @@
+<html>
+<head>
+  <title>sorted</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1873"/>
+<h1>sorted</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 2:59</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">sorted</h4>
+    <div>
+    	<span>阅读: 3159873</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:18px;line-height:24px;">排序算法</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">排序也是在程序中经常用到的算法。无论使用冒泡排序还是快速排序，排序的核心是比较两个元素的大小。如果是数字，我们可以直接比较，但如果是字符串或者两个dict呢？直接比较数学上的大小是没有意义的，因此，比较的过程必须通过函数抽象出来。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">Python内置的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sorted()</code>函数就可以对list进行排序：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; <span style="color:rgb(0, 0, 128);font-weight:normal;">sorted</span>(<span>[36, 5, -12, 9, -21]</span>)
+<span>[-21, -12, 5, 9, 36]</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">此外，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sorted()</code>函数也是一个高阶函数，它还可以接收一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">key</code>函数来实现自定义的排序，例如按绝对值大小排序：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>sorted([<span style="color:rgb(0, 153, 153);">36</span>, <span style="color:rgb(0, 153, 153);">5</span>, -<span style="color:rgb(0, 153, 153);">12</span>, <span style="color:rgb(0, 153, 153);">9</span>, -<span style="color:rgb(0, 153, 153);">21</span>], key=abs)
+[<span style="color:rgb(0, 153, 153);">5</span>, <span style="color:rgb(0, 153, 153);">9</span>, -<span style="color:rgb(0, 153, 153);">12</span>, -<span style="color:rgb(0, 153, 153);">21</span>, <span style="color:rgb(0, 153, 153);">36</span>]
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">key指定的函数将作用于list的每一个元素上，并根据key函数返回的结果进行排序。对比原始的list和经过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">key=abs</code>处理过的list：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>list = <span>[<span style="color:rgb(0, 153, 153);">36</span>, <span style="color:rgb(0, 153, 153);">5</span>, -<span style="color:rgb(0, 153, 153);">12</span>, <span style="color:rgb(0, 153, 153);">9</span>, -<span style="color:rgb(0, 153, 153);">21</span>]</span></span>
+
+<span>keys = <span>[<span style="color:rgb(0, 153, 153);">36</span>, <span style="color:rgb(0, 153, 153);">5</span>,  <span style="color:rgb(0, 153, 153);">12</span>, <span style="color:rgb(0, 153, 153);">9</span>,  <span style="color:rgb(0, 153, 153);">21</span>]</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">然后<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sorted()</code>函数按照keys进行排序，并按照对应关系返回list相应的元素：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:none;border-radius:3px;font-size:12px;line-height:12px;white-space:pre;background-color:transparent;"><code style="white-space:pre-wrap;font-family:&quot;Courier New&quot;, Consolas, monospace;">keys排序结果 =&gt; [5, 9,  12,  21, 36]
+                |  |    |    |   |
+最终结果     =&gt; [5, 9, -12, -21, 36]
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们再看一个字符串排序的例子：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; <span style="color:rgb(0, 0, 128);font-weight:normal;">sorted</span>(<span>['bob', 'about', 'Zoo', 'Credit']</span>)
+<span>['Credit', 'Zoo', 'about', 'bob']</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">默认情况下，对字符串排序，是按照ASCII的大小比较的，由于<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'Z' &lt; 'a'</code>，结果，大写字母<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Z</code>会排在小写字母<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">a</code>的前面。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">现在，我们提出排序应该忽略大小写，按照字母序排序。要实现这个算法，不必对现有代码大加改动，只要我们能用一个key函数把字符串映射为忽略大小写排序即可。忽略大小写来比较两个字符串，实际上就是先把字符串都变成大写（或者都变成小写），再比较。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">这样，我们给<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sorted</code>传入key函数，即可实现忽略大小写的排序：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>sorted([<span style="color:rgb(221, 17, 68);">'bob'</span>, <span style="color:rgb(221, 17, 68);">'about'</span>, <span style="color:rgb(221, 17, 68);">'Zoo'</span>, <span style="color:rgb(221, 17, 68);">'Credit'</span>], key=str.lower)
+[<span style="color:rgb(221, 17, 68);">'about'</span>, <span style="color:rgb(221, 17, 68);">'bob'</span>, <span style="color:rgb(221, 17, 68);">'Credit'</span>, <span style="color:rgb(221, 17, 68);">'Zoo'</span>]
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">要进行反向排序，不必改动key函数，可以传入第三个参数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">reverse=True</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>sorted([<span style="color:rgb(221, 17, 68);">'bob'</span>, <span style="color:rgb(221, 17, 68);">'about'</span>, <span style="color:rgb(221, 17, 68);">'Zoo'</span>, <span style="color:rgb(221, 17, 68);">'Credit'</span>], key=str.lower, reverse=<span style="color:rgb(0, 134, 179);">True</span>)
+[<span style="color:rgb(221, 17, 68);">'Zoo'</span>, <span style="color:rgb(221, 17, 68);">'Credit'</span>, <span style="color:rgb(221, 17, 68);">'bob'</span>, <span style="color:rgb(221, 17, 68);">'about'</span>]
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">从上述例子可以看出，高阶函数的抽象能力是非常强大的，而且，核心代码可以保持得非常简洁。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sorted()</code>也是一个高阶函数。用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sorted()</code>排序的关键在于实现一个映射函数。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">练习</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">假设我们用一组tuple表示学生名字和成绩：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>L = <span>[('Bob', <span style="color:rgb(0, 153, 153);">75</span>), ('Adam', <span style="color:rgb(0, 153, 153);">92</span>), ('Bart', <span style="color:rgb(0, 153, 153);">66</span>), ('Lisa', <span style="color:rgb(0, 153, 153);">88</span>)]</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">请用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sorted()</code>对上述列表分别按名字排序：</p>
+<div style="margin-top:15px;margin-bottom:15px;"><pre style="margin:0px 0px 15px;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;margin-bottom:0px;border-bottom:none;border-bottom-left-radius:0px;border-bottom-right-radius:0px;"># -*- coding: utf-8 -*-
+
+L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
+</pre><pre style="margin:0px 0px 15px;margin-top:0;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;">L2 = sorted(L, key=by_name)
+print(L2)
+</pre></div>
+<p style="margin:0px 0px 15px;margin-top:15px;">再按成绩从高到低排序：</p>
+<div style="margin-top:15px;margin-bottom:15px;"><pre style="margin:0px 0px 15px;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;margin-bottom:0px;border-bottom:none;border-bottom-left-radius:0px;border-bottom-right-radius:0px;"># -*- coding: utf-8 -*-
+
+L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
+</pre><pre style="margin:0px 0px 15px;margin-top:0;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;">L2 = sorted(L, key=by_score)
+print(L2)
+</pre></div>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/functional/do_sorted.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">do_sorted.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="sorted_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="sorted_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017408670135712#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017404530360000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017434209254976" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

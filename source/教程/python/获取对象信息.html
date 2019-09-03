@@ -1,0 +1,222 @@
+<html>
+<head>
+  <title>获取对象信息</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1849"/>
+<h1>获取对象信息</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 3:02</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">获取对象信息</h4>
+    <div>
+    	<span>阅读: 3295093</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">当我们拿到一个对象的引用时，如何知道这个对象是什么类型、有哪些方法呢？</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">使用type()</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">首先，我们来判断对象类型，使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">type()</code>函数：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">基本类型都可以用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">type()</code>判断：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; type(<span style="color:rgb(0, 153, 153);">123</span>)
+&lt;<span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> '<span style="color:rgb(68, 85, 136);font-weight:bold;">int</span>'&gt;
+&gt;&gt;&gt; <span style="color:rgb(68, 85, 136);font-weight:bold;">type</span>('<span style="color:rgb(68, 85, 136);font-weight:bold;">str</span>')
+&lt;<span style="color:rgb(68, 85, 136);font-weight:bold;">class</span> '<span style="color:rgb(68, 85, 136);font-weight:bold;">str</span>'&gt;
+&gt;&gt;&gt; <span style="color:rgb(68, 85, 136);font-weight:bold;">type</span>(<span style="color:rgb(68, 85, 136);font-weight:bold;">None</span>)
+&lt;<span style="color:rgb(68, 85, 136);font-weight:bold;">type</span>(<span style="color:rgb(68, 85, 136);font-weight:bold;">None</span>) '<span style="color:rgb(68, 85, 136);font-weight:bold;">NoneType</span>'&gt;
+</span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果一个变量指向函数或者类，也可以用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">type()</code>判断：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; type(abs)
+&lt;<span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> '<span style="color:rgb(68, 85, 136);font-weight:bold;">builtin_function_or_method</span>'&gt;
+&gt;&gt;&gt; <span style="color:rgb(68, 85, 136);font-weight:bold;">type</span>(<span style="color:rgb(68, 85, 136);font-weight:bold;">a</span>)
+&lt;<span style="color:rgb(68, 85, 136);font-weight:bold;">class</span> '<span style="color:rgb(68, 85, 136);font-weight:bold;">__main__</span>.<span style="color:rgb(68, 85, 136);font-weight:bold;">Animal</span>'&gt;
+</span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">但是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">type()</code>函数返回的是什么类型呢？它返回对应的Class类型。如果我们要在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">if</code>语句中判断，就需要比较两个变量的type类型是否相同：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>type(<span style="color:rgb(0, 153, 153);">123</span>)==type(<span style="color:rgb(0, 153, 153);">456</span>)
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>type(<span style="color:rgb(0, 153, 153);">123</span>)==int
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>type(<span style="color:rgb(221, 17, 68);">'abc'</span>)==type(<span style="color:rgb(221, 17, 68);">'123'</span>)
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>type(<span style="color:rgb(221, 17, 68);">'abc'</span>)==str
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>type(<span style="color:rgb(221, 17, 68);">'abc'</span>)==type(<span style="color:rgb(0, 153, 153);">123</span>)
+<span style="color:rgb(0, 134, 179);">False</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">判断基本数据类型可以直接写<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">int</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">str</code>等，但如果要判断一个对象是否是函数怎么办？可以使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">types</code>模块中定义的常量：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> types
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">fn</span><span>()</span>:</span>
+<span style="color:rgb(153, 0, 115);">... </span>    <span style="color:rgb(51, 51, 51);font-weight:bold;">pass</span>
+...
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>type(fn)==types.FunctionType
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>type(abs)==types.BuiltinFunctionType
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>type(<span style="color:rgb(51, 51, 51);font-weight:bold;">lambda</span> x: x)==types.LambdaType
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>type((x <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> x <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">10</span>)))==types.GeneratorType
+<span style="color:rgb(0, 134, 179);">True</span>
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">使用isinstance()</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">对于class的继承关系来说，使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">type()</code>就很不方便。我们要判断class的类型，可以使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">isinstance()</code>函数。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们回顾上次的例子，如果继承关系是：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">object -&gt; Animal -&gt; Dog -&gt; Husky
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">那么，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">isinstance()</code>就可以告诉我们，一个对象是否是某种类型。先创建3种类型的对象：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>a = Animal()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d = Dog()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>h = Husky()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">然后，判断：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>isinstance(h, Husky)
+<span style="color:rgb(0, 134, 179);">True</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">没有问题，因为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">h</code>变量指向的就是Husky对象。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">再判断：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>isinstance(h, Dog)
+<span style="color:rgb(0, 134, 179);">True</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">h</code>虽然自身是Husky类型，但由于Husky是从Dog继承下来的，所以，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">h</code>也还是Dog类型。换句话说，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">isinstance()</code>判断的是一个对象是否是该类型本身，或者位于该类型的父继承链上。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">因此，我们可以确信，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">h</code>还是Animal类型：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>isinstance(h, Animal)
+<span style="color:rgb(0, 134, 179);">True</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">同理，实际类型是Dog的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">d</code>也是Animal类型：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>isinstance(d, Dog) <span style="color:rgb(51, 51, 51);font-weight:bold;">and</span> isinstance(d, Animal)
+<span style="color:rgb(0, 134, 179);">True</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">但是，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">d</code>不是Husky类型：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>isinstance(d, Husky)
+<span style="color:rgb(0, 134, 179);">False</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">能用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">type()</code>判断的基本类型也可以用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">isinstance()</code>判断：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>isinstance(<span style="color:rgb(221, 17, 68);">'a'</span>, str)
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>isinstance(<span style="color:rgb(0, 153, 153);">123</span>, int)
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>isinstance(<span style="color:rgb(221, 17, 68);">b'a'</span>, bytes)
+<span style="color:rgb(0, 134, 179);">True</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">并且还可以判断一个变量是否是某些类型中的一种，比如下面的代码就可以判断是否是list或者tuple：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; isinstance([<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>], (<span style="color:rgb(51, 51, 51);font-weight:bold;">list</span>, tuple))
+<span style="color:rgb(51, 51, 51);font-weight:bold;">True</span>
+&gt;&gt;&gt; isinstance((<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>), (<span style="color:rgb(51, 51, 51);font-weight:bold;">list</span>, tuple))
+<span style="color:rgb(51, 51, 51);font-weight:bold;">True</span>
+</code></pre>
+<div style="margin-bottom:15px;padding:10px;background:rgb(235, 247, 253);color:rgb(45, 112, 145);border:1px solid rgba(45, 112, 145, 0.3);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;margin-top:15px;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;margin-bottom:0px;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 总是优先使用isinstance()判断类型，可以将指定类型及其子类“一网打尽”。
+</div>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">使用dir()</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果要获得一个对象的所有属性和方法，可以使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">dir()</code>函数，它返回一个包含字符串的list，比如，获得一个str对象的所有属性和方法：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>dir(<span style="color:rgb(221, 17, 68);">'ABC'</span>)
+[<span style="color:rgb(221, 17, 68);">'__add__'</span>, <span style="color:rgb(221, 17, 68);">'__class__'</span>,..., <span style="color:rgb(221, 17, 68);">'__subclasshook__'</span>, <span style="color:rgb(221, 17, 68);">'capitalize'</span>, <span style="color:rgb(221, 17, 68);">'casefold'</span>,..., <span style="color:rgb(221, 17, 68);">'zfill'</span>]
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">类似<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__xxx__</code>的属性和方法在Python中都是有特殊用途的，比如<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__len__</code>方法返回长度。在Python中，如果你调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">len()</code>函数试图获取一个对象的长度，实际上，在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">len()</code>函数内部，它自动去调用该对象的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__len__()</code>方法，所以，下面的代码是等价的：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>len(<span style="color:rgb(221, 17, 68);">'ABC'</span>)
+<span style="color:rgb(0, 153, 153);">3</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(221, 17, 68);">'ABC'</span>.__len__()
+<span style="color:rgb(0, 153, 153);">3</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们自己写的类，如果也想用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">len(myObj)</code>的话，就自己写一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__len__()</code>方法：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">MyDog</span><span>(object)</span>:</span>
+<span style="color:rgb(153, 0, 115);">... </span>    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__len__</span><span>(self)</span>:</span>
+<span style="color:rgb(153, 0, 115);">... </span>        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> <span style="color:rgb(0, 153, 153);">100</span>
+...
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>dog = MyDog()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>len(dog)
+<span style="color:rgb(0, 153, 153);">100</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">剩下的都是普通属性或方法，比如<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">lower()</code>返回小写的字符串：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(221, 17, 68);">'ABC'</span>.lower()
+<span style="color:rgb(221, 17, 68);">'abc'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">仅仅把属性和方法列出来是不够的，配合<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">getattr()</code>、<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">setattr()</code>以及<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">hasattr()</code>，我们可以直接操作一个对象的状态：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">MyObject</span><span>(object)</span>:</span>
+<span style="color:rgb(153, 0, 115);">... </span>    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__init__</span><span>(self)</span>:</span>
+<span style="color:rgb(153, 0, 115);">... </span>        self.x = <span style="color:rgb(0, 153, 153);">9</span>
+<span style="color:rgb(153, 0, 115);">... </span>    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">power</span><span>(self)</span>:</span>
+<span style="color:rgb(153, 0, 115);">... </span>        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> self.x * self.x
+...
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>obj = MyObject()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">紧接着，可以测试该对象的属性：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>hasattr(obj, <span style="color:rgb(221, 17, 68);">'x'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 有属性'x'吗？</span>
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>obj.x
+<span style="color:rgb(0, 153, 153);">9</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>hasattr(obj, <span style="color:rgb(221, 17, 68);">'y'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 有属性'y'吗？</span>
+<span style="color:rgb(0, 134, 179);">False</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>setattr(obj, <span style="color:rgb(221, 17, 68);">'y'</span>, <span style="color:rgb(0, 153, 153);">19</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 设置一个属性'y'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>hasattr(obj, <span style="color:rgb(221, 17, 68);">'y'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 有属性'y'吗？</span>
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>getattr(obj, <span style="color:rgb(221, 17, 68);">'y'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 获取属性'y'</span>
+<span style="color:rgb(0, 153, 153);">19</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>obj.y <span style="color:rgb(153, 153, 136);font-style:italic;"># 获取属性'y'</span>
+<span style="color:rgb(0, 153, 153);">19</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果试图获取不存在的属性，会抛出AttributeError的错误：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; getattr(obj, 'z') # 获取属性'z'
+Traceback (most recent call last):
+  File &quot;<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">stdin</span>&gt;</span>&quot;, line 1, in <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">module</span>&gt;</span>
+AttributeError: 'MyObject' object has no attribute 'z'
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">可以传入一个default参数，如果属性不存在，就返回默认值：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>getattr(obj, <span style="color:rgb(221, 17, 68);">'z'</span>, <span style="color:rgb(0, 153, 153);">404</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 获取属性'z'，如果不存在，返回默认值404</span>
+<span style="color:rgb(0, 153, 153);">404</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">也可以获得对象的方法：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>hasattr(obj, <span style="color:rgb(221, 17, 68);">'power'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 有属性'power'吗？</span>
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>getattr(obj, <span style="color:rgb(221, 17, 68);">'power'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 获取属性'power'</span>
+&lt;bound method MyObject.power of &lt;__main__.MyObject object at <span style="color:rgb(0, 153, 153);">0x10077a6a0</span>&gt;&gt;
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>fn = getattr(obj, <span style="color:rgb(221, 17, 68);">'power'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 获取属性'power'并赋值到变量fn</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>fn <span style="color:rgb(153, 153, 136);font-style:italic;"># fn指向obj.power</span>
+&lt;bound method MyObject.power of &lt;__main__.MyObject object at <span style="color:rgb(0, 153, 153);">0x10077a6a0</span>&gt;&gt;
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>fn() <span style="color:rgb(153, 153, 136);font-style:italic;"># 调用fn()与调用obj.power()是一样的</span>
+<span style="color:rgb(0, 153, 153);">81</span>
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">通过内置的一系列函数，我们可以对任意一个Python对象进行剖析，拿到其内部的数据。要注意的是，只有在不知道对象信息的时候，我们才会去获取对象信息。如果可以直接写：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>sum = <span>obj.x + obj.y</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">就不要写：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>sum = <span>getattr(obj, 'x') + getattr(obj, 'y')</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">一个正确的用法的例子如下：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">readImage</span><span>(fp)</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> hasattr(fp, <span style="color:rgb(221, 17, 68);">'read'</span>):
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> readData(fp)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> <span style="color:rgb(0, 134, 179);">None</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">假设我们希望从文件流fp中读取图像，我们首先要判断该fp对象是否存在read方法，如果存在，则该对象是一个流，如果不存在，则无法读取。<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">hasattr()</code>就派上了用场。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">请注意，在Python这类动态语言中，根据鸭子类型，有<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">read()</code>方法，不代表该fp对象就是一个文件流，它也可能是网络流，也可能是内存中的一个字节流，但只要<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">read()</code>方法返回的是有效的图像数据，就不影响读取图像的功能。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/oop_basic/get_type.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">get_type.py</a></p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/oop_basic/attrs.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">attrs.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="获取对象信息_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="获取对象信息_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017499532944768#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017497232674368" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017594591051072" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

@@ -1,0 +1,1140 @@
+<html>
+<head>
+  <title>async/await</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2341"/>
+<h1>async/await</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:33</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:flex; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div>
+							<div>
+								
+																
+							</div>
+							<div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">async/await</h4>
+    <div>
+    	<span>阅读: 880497</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">asyncio</code>提供的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">@asyncio.coroutine</code>可以把一个generator标记为coroutine类型，然后在coroutine内部用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield from</code>调用另一个coroutine实现异步操作。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">为了简化并更好地标识异步IO，从Python 3.5开始引入了新的语法<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">async</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">await</code>，可以让coroutine的代码更简洁易读。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">请注意，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">async</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">await</code>是针对coroutine的新语法，要使用新的语法，只需要做两步简单的替换：</p>
+<ol style="margin:0px 0px 15px;margin-top:15px;padding-left:30px;">
+<li>把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">@asyncio.coroutine</code>替换为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">async</code>；</li>
+<li>把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield from</code>替换为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">await</code>。</li>
+</ol>
+<p style="margin:0px 0px 15px;margin-top:15px;">让我们对比一下上一节的代码：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@asyncio.coroutine</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">hello</span><span>()</span>:</span>
+    print(<span style="color:rgb(221, 17, 68);">&quot;Hello world!&quot;</span>)
+    r = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> asyncio.sleep(<span style="color:rgb(0, 153, 153);">1</span>)
+    print(<span style="color:rgb(221, 17, 68);">&quot;Hello again!&quot;</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">用新语法重新编写如下：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">async <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">hello</span><span>()</span>:</span>
+    print(<span style="color:rgb(221, 17, 68);">&quot;Hello world!&quot;</span>)
+    r = await asyncio.sleep(<span style="color:rgb(0, 153, 153);">1</span>)
+    print(<span style="color:rgb(221, 17, 68);">&quot;Hello again!&quot;</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">剩下的代码保持不变。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">Python从3.5版本开始为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">asyncio</code>提供了<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">async</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">await</code>的新语法；</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意新语法只能用在Python 3.5以及后续版本，如果使用3.4版本，则仍需使用上一节的方案。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">练习</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">将上一节的异步获取sina、sohu和163的网站首页源码用新语法重写并运行。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/async/async_hello2.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">async_hello2.py</a></p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/async/async_wget2.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">async_wget2.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="asyncawait_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="asyncawait_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1048430311230688#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017970488768640" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017985577429536" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div>
+							<div>
+								
+								
+								
+							</div>
+							<div>
+								    <h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:18px;line-height:24px;">评论</h3>
+
+    <ul style="margin:0px 0px 15px;margin-top:15px;padding:0px;list-style:none;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1293559409934370" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/default_avatar_male_50.gif" type="image/gif" data-filename="default_avatar_male_50.gif" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1298855471611938" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">本节打卡</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1293559409934370" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">侧步微凉</a>
+				created at August 17, 2019 3:35 PM, Last updated at August 17, 2019 3:35 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">打卡</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1298855471611938" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1298855471611938#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1199186125598272" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/0065UBqQly8fmty2ointij30ru0rutb5.jpg" type="image/jpeg" data-filename="0065UBqQly8fmty2ointij30ru0rutb5.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1199186452151200" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">await后面只能加asyncio.xxx的函数？</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1199186125598272" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">暗忧殇eee</a>
+				created at February 13, 2018 1:57 PM, Last updated at April 1, 2019 9:57 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">await后面只能加asyncio.xxx的函数？我尝试自己写了个生成器函数，但是放进去不能用，假如不能自定义，这个携程会不会显得有点鸡肋？</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1097720357974400" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/bf8a0927gw1euxhauezb1j203w03ujrf.jpg" type="image/jpeg" data-filename="bf8a0927gw1euxhauezb1j203w03ujrf.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1097720357974400" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Mr_RightMen</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at February 28, 2018 5:19 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">async def outer():
+    print('in outer')
+    print('waiting for result1')
+    result1 = await phase1()
+    print('waiting for result2')
+    result2 = await phase2(result1)
+    return (result1,result2)
+
+async def phase1():
+    print('in phase1')
+    return 'result1'
+
+async def phase2(arg):
+    print('in phase2')
+    return 'result2 derived from {}'.format(arg)
+
+loop = asyncio.get_event_loop()
+tasks = [outer()]
+return_value = loop.run_until_complete(asyncio.wait(tasks))
+print(return_value)
+loop.close()
+</code></pre>
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1201930422451072" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/default_avatar_male_50 [1].gif" type="image/gif" data-filename="default_avatar_male_50.gif" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1201930422451072" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">用户5976557702</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at March 2, 2018 2:39 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">大师你好像是演员</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1138843688992768" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/7dc9cf72gw1f1yp1hfq7vj20ku0dwdjd.jpg" type="image/jpeg" data-filename="7dc9cf72gw1f1yp1hfq7vj20ku0dwdjd.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1138843688992768" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">viper1090</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at July 25, 2018 11:06 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">好像可以跟 coroutine</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">@asyncio.coroutine
+def test():
+    n = &quot;1&quot;
+    return n
+
+async def hello():
+    print('Hello, world!')
+    r = await test()
+    print('Hello, again %s' % r)
+</code></pre>
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1229989991149952" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/005YdoHCjw8epce15jok1j303o03o745.jpg" type="image/jpeg" data-filename="005YdoHCjw8epce15jok1j303o03o745.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1229989991149952" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">宇少Jason</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at October 30, 2018 11:54 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">我试了半天好像确实是这样</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1256663166218848" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/005O9aOBly8fe1uac2igkj30ro0ron0v.jpg" type="image/jpeg" data-filename="005O9aOBly8fe1uac2igkj30ro0ron0v.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1256663166218848" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">DeepEndBoo</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at March 8, 2019 5:12 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">说了要跟coroutine类型的generator啦</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1249572116492832" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/d1d3f281ly8fjtnukf1m1j20ro0ro76c.jpg" type="image/jpeg" data-filename="d1d3f281ly8fjtnukf1m1j20ro0ro76c.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1249572116492832" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Gin阿金</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at April 1, 2019 9:57 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">asyncio.xxx的函数是把后面的操作定义为coroutine，所以只要是coroutine都可以，你把自己定义的生成器定义为coroutine，应该也是可以实现异步IO的</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1199186452151200" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1199186452151200#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1270950609141824" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/006ZZxDlly8flm146l73mj30im0qodhg.jpg" type="image/jpeg" data-filename="006ZZxDlly8flm146l73mj30im0qodhg.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1272960251853152" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">呃...所以说这就是一样的东西咯？</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1270950609141824" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">纸丶两面白</a>
+				created at March 27, 2019 5:39 PM, Last updated at March 27, 2019 5:39 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">┐(￣ー￣)┌</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1272960251853152" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1272960251853152#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1165115967284896" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/530169b2jw8eikhevumh7j20hs0htgmj.jpg" type="image/jpeg" data-filename="530169b2jw8eikhevumh7j20hs0htgmj.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1233236338077120" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">python3.5新概念 远程协程</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1165115967284896" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">sleepyRobin</a>
+				created at August 20, 2018 12:01 PM, Last updated at August 20, 2018 2:09 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">通过async定义的协程被称为远程协程跟
+通过@asyncio.coroutine定义的协程函数被称为基于生成器的协程 
+两者不是一个概念</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1165115967284896" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/530169b2jw8eikhevumh7j20hs0htgmj [1].jpg" type="image/jpeg" data-filename="530169b2jw8eikhevumh7j20hs0htgmj.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1165115967284896" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">sleepyRobin</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at August 20, 2018 2:09 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">是原生协程native coroutine 打错字了</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1233236338077120" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1233236338077120#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1090346087872864" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/d6c3de2ejw8ezw3lh6zusj20ro0rp7e4.jpg" type="image/jpeg" data-filename="d6c3de2ejw8ezw3lh6zusj20ro0rp7e4.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1232529753500224" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">作业</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1090346087872864" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">明日复明日-90后</a>
+				created at August 16, 2018 2:26 PM, Last updated at August 16, 2018 2:26 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;"># -*- coding: utf-8 -*-
+import asyncio
+
+
+async def wget(host):
+    print('wget %s...' % host)
+    connect = asyncio.open_connection(host, 80)
+    await connect
+    print('偷懒。。。')
+
+
+loop = asyncio.get_event_loop()
+tasks = [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()
+</code></pre>
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1232529753500224" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1232529753500224#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1138843688992768" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/7dc9cf72gw1f1yp1hfq7vj20ku0dwdjd [1].jpg" type="image/jpeg" data-filename="7dc9cf72gw1f1yp1hfq7vj20ku0dwdjd.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1228516523769440" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">answer</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1138843688992768" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">viper1090</a>
+				created at July 25, 2018 10:52 AM, Last updated at July 25, 2018 10:52 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">async def wget(host):
+    print('wget %s...' % host)
+    connect = asyncio.open_connection(host,80)
+    reader,writer = await connect
+    print('%s  111111111111111111' % host)
+    header = 'GET / HTTP/1.0\r\nHost: %s\r\n\r\n' % host
+    writer.write(header.encode('utf-8'))
+    await writer.drain()
+    print('%s  222222222222222222' % host)
+    while True:
+        line = await reader.readline()
+        if line == b'\r\n':
+            break
+        print('%s header &gt; %s' % (host,line.decode('utf-8').rstrip()))  
+    writer.close()  
+
+loop = asyncio.get_event_loop()
+tasks = [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']] 
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()
+</code></pre>
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1228516523769440" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1228516523769440#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1195774311235584" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/005C3m8Cly8fej3o4og2yj30e80e7754.jpg" type="image/jpeg" data-filename="005C3m8Cly8fej3o4og2yj30e80e7754.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1207499298436128" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Keep</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1195774311235584" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Lonely98夢</a>
+				created at March 31, 2018 11:02 AM, Last updated at March 31, 2018 11:02 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">import asyncio</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">async def wget(host):
+    print('wget %s...' %host)
+    connect = asyncio.open_connection(host, 80)
+    reader, writer = await connect
+    header = 'GET/ HTTP/1.0 \r\nHost: %s\r\n\r\n' % host
+    writer.write(header.encode())
+    await writer.drain()
+    while True:</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">    line = await reader.readline()
+    if line == b'\r\n':
+        break
+    print('%s header &gt; %s' % (host, line.decode('utf-8').rstrip()))
+writer.close()
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">loop = asyncio.get_event_loop()
+tasks = [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1207499298436128" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1207499298436128#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1184870011240352" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/bd0f53d2ly8fjuqw4566bj20yi0yngnn.jpg" type="image/jpeg" data-filename="bd0f53d2ly8fjuqw4566bj20yi0yngnn.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1207412902066688" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">3.6版本之后async修饰符支持yield关键字了</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1184870011240352" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">嘻嘻哈哈cmy</a>
+				created at March 30, 2018 11:35 PM, Last updated at March 30, 2018 11:35 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">在3.5过后，我们可以使用async修饰将普通函数和生成器函数包装成异步函数和异步生成器。
+比如这样，就是异步生成器</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">async def async_generator():
+    yield 1
+</code></pre>
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1207412902066688" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1207412902066688#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div style="position:relative;"><a name="COLLAPSE-1" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div><div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1200129254096800" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/006Q2STIly8fg2njjycr5j302s02st8k.jpg" type="image/jpeg" data-filename="006Q2STIly8fg2njjycr5j302s02st8k.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1202869314685824" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">有疑问</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1200129254096800" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">风雾15151</a>
+				created at March 5, 2018 9:46 PM, Last updated at March 5, 2018 9:46 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;max-height:400px;overflow:hidden;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">import asyncio
+
+@asyncio.coroutine
+async def wget(host):
+    print('wget %s...' % host)
+    connect = asyncio.open_connection(host, 80)
+    reader, writer = await connect
+    header = 'GET / HTTP/1.0\r\nHost: %s\r\n\r\n' % host
+    writer.write(header.encode('utf-8'))
+    await writer.drain()
+    while True:
+        line = await reader.readline()
+        #await asyncio.sleep(1)
+        if line == b'\r\n':
+            break
+        print('%s header &gt; %s' % (host, line.decode('utf-8').rstrip()))
+    # Ignore the body, close the socket
+    writer.close()
+
+loop = asyncio.get_event_loop()
+tasks = [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">为什么在line = await reader.readline()后面加上一行await asyncio.sleep(1)才能使while工作在协程下？是因为reader.readline()并没有阻塞线程，所以才没切换到其他消息中吗？</p>
+
+		</div><p style="margin:0px 0px 15px;margin-top:15px;padding-left:75px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1048430311230688#0" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Read More</a></p>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1202869314685824" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1202869314685824#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1143601793255264" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/b2bd5405jw8ezmdn4b6o2j20m80m8gsh.jpg" type="image/jpeg" data-filename="b2bd5405jw8ezmdn4b6o2j20m80m8gsh.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1143601128012000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">请问我的python版本是3.5，为什么它显示asyncio里没有get_event_loop函数呢？</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1143601793255264" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">_知之为知之_不知为不知_是知也_</a>
+				created at April 12, 2017 7:25 PM, Last updated at February 27, 2018 3:56 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">版本：Python 3.5.1 :: Anaconda 4.0.0 (64-bit)
+错误提示：
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;F:\pystudy\asyncio.py&quot;, line 11, in
+    loop = asyncio.get_event_loop()
+AttributeError: module 'asyncio' has no attribute 'get_event_loop'
+源代码：
+# -*- coding: utf-8 -*-</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">import threading
+import asyncio</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">async def hello():
+    print('Hello world! (%s)' % threading.currentThread())
+    await asyncio.sleep(1)
+    print('Hello again! (%s)' % threading.currentThread())</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">loop = asyncio.get_event_loop()
+tasks = [hello(), hello()]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()</p>
+<p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">请问这是什么原因呢？asyncio里怎么没有get_event_loop呢？</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1143601793255264" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/b2bd5405jw8ezmdn4b6o2j20m80m8gsh [1].jpg" type="image/jpeg" data-filename="b2bd5405jw8ezmdn4b6o2j20m80m8gsh.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1143601793255264" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">_知之为知之_不知为不知_是知也_</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at April 12, 2017 8:02 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">原来是因为我把文件名改为asyncio.py了。。</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1031925741384384" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/1" type="image/jpeg" data-filename="1" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1031925741384384" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">onion_4</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at February 27, 2018 3:56 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">我也纳闷呢，原来是这样。哈哈，握爪感谢</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1143601128012000" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1143601128012000#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div style="position:relative;"><a name="COLLAPSE-2" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div><div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1197219369710816" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/006LY8mbly8fn5pextapwj309q09qgmg.jpg" type="image/jpeg" data-filename="006LY8mbly8fn5pextapwj309q09qgmg.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1201606911586880" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">async/await-作业</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1197219369710816" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">我是田心水原</a>
+				created at February 26, 2018 10:33 PM, Last updated at February 26, 2018 10:33 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;max-height:400px;overflow:hidden;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">import asyncio
+
+
+# @asyncio.coroutine
+async def hello():
+    print('hello')
+    # r = yield from asyncio.sleep(5)
+    r = await asyncio.sleep(5)
+    print('hello again '.format(r))
+
+
+# @asyncio.coroutine
+async def wget(host):
+    print('wget host:{}'.format(host))
+    conn = asyncio.open_connection(host, 80)
+    # reader, writer = yield from conn
+    reader, writer = await conn
+    header = 'GET / HTTP/1.0\r\nHost: {}\r\n\r\n'.format(host)
+    writer.write(header.encode('utf-8'))
+    # yield from writer.drain()
+    await writer.drain()
+    while True:
+        # line = yield from reader.readline()
+        line = await reader.readline()
+        if line == b'\r\n':
+            break
+        print('{} header: {}'.format(host, line.decode('utf-8').rstrip()))
+    writer.close()
+
+
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    tasks = [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']]
+    loop.run_until_complete(asyncio.wait(tasks))
+    loop.close()
+</code></pre>
+		</div><p style="margin:0px 0px 15px;margin-top:15px;padding-left:75px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1048430311230688#0" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Read More</a></p>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1201606911586880" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1201606911586880#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1191935392113088" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/005RC7r4gw1embtn90wclj30hs0qodj9.jpg" type="image/jpeg" data-filename="005RC7r4gw1embtn90wclj30hs0qodj9.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1194319104059264" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">async/await</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1191935392113088" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">波皮皮虾</a>
+				created at January 17, 2018 5:15 PM, Last updated at January 17, 2018 5:15 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">有 <em style="color:rgb(221, 0, 85);font-style:normal;">C#</em> 基础，貌似 <em style="color:rgb(221, 0, 85);font-style:normal;">C#</em> 最早使用 <em style="color:rgb(221, 0, 85);font-style:normal;">async/await</em> 模式？异步编程模型以前基于事件、回调函数、协程什么的各种复杂麻烦，现在很多编程语言都引入了 <em style="color:rgb(221, 0, 85);font-style:normal;">async/await</em> 模式简化异步编程（函数声明时 +<em style="color:rgb(221, 0, 85);font-style:normal;">async</em> 前缀，调用函数时 +<em style="color:rgb(221, 0, 85);font-style:normal;">await</em> 前缀），现在的异步编程只要和同步编程一样了，甚至不需要知道原理和前面几章的内容，你只要知道哪些操作（函数）是异步的即可，现在编程普遍都是异步的，而 <em style="color:rgb(221, 0, 85);font-style:normal;">await</em> 又要配合 <em style="color:rgb(221, 0, 85);font-style:normal;">async</em> 签名，所以一旦某个函数内出现 <em style="color:rgb(221, 0, 85);font-style:normal;">await</em>，包容函数就要 <em style="color:rgb(221, 0, 85);font-style:normal;">async</em>，而调用者也要 <em style="color:rgb(221, 0, 85);font-style:normal;">await</em> 该函数，结果是调用者自身也要 <em style="color:rgb(221, 0, 85);font-style:normal;">async</em>。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">按照 <em style="color:rgb(221, 0, 85);font-style:normal;">C#</em> 的习惯，所有异步函数都以 <em style="color:rgb(221, 0, 85);font-style:normal;">Async</em> 作为后缀，不知道 <em style="color:rgb(221, 0, 85);font-style:normal;">Python</em> 是怎么样的。</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1194319104059264" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1194319104059264#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1186150639206336" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/default_avatar_male_50 [2].gif" type="image/gif" data-filename="default_avatar_male_50.gif" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1186562356280640" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">下面这个程序怎么理解？</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1186150639206336" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">很符合_72204</a>
+				created at December 5, 2017 9:50 PM, Last updated at January 15, 2018 9:35 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">import aiohttp
+import asyncio
+
+async def fetch(client):
+    async with client.get('https://github.com/') as resp:
+        return await resp.text()
+
+async def main(loop):
+    async with aiohttp.ClientSession(loop=loop) as client:
+        html = await fetch(client)
+        print(html)
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main(loop))
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">为什么函数里面 with 前面还要加上一个 async　？</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1183447288540064" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/93ebe2afjw1f15yhdpttrj205k05k3yl.jpg" type="image/jpeg" data-filename="93ebe2afjw1f15yhdpttrj205k05k3yl.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1183447288540064" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">可不可暂时未对话</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at December 27, 2017 10:27 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">async with 什么意思啊,有大神知道吗?</p>
+
+		</div>
+	</div>
+</li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1187071022592640" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/default_avatar_male_50 [3].gif" type="image/gif" data-filename="default_avatar_male_50.gif" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1187071022592640" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">手机用户3001914591</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at January 15, 2018 9:35 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">async只是修饰作用，表明那个东西是coroutine</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1186562356280640" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1186562356280640#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div style="position:relative;"><a name="COLLAPSE-3" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div><div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1182704926193600" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/c345a2c6jw1egex1o75ogj205c071mx9.jpg" type="image/jpeg" data-filename="c345a2c6jw1egex1o75ogj205c071mx9.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1190473955799680" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">总结</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1182704926193600" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">我是世外大帝</a>
+				created at December 27, 2017 11:56 AM, Last updated at December 27, 2017 12:00 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;max-height:400px;overflow:hidden;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Created by TaoYuan on 2017/12/27 0027.
+# @Link    : http://blog.csdn.net/lftaoyuan
+# Github   : https://github.com/seeways
+# @Remark  : Python学习群：315857408
+&quot;&quot;&quot;
+Python从3.5版本开始为asyncio提供了async和await的新语法
+
+用asyncio提供的@asyncio.coroutine可以把一个generator标记为coroutine类型
+然后在coroutine内部用yield from调用另一个coroutine实现异步操作
+
+为了简化并更好地标识异步IO，从Python 3.5开始引入了新的语法async和await，可以让coroutine的代码更简洁易读。
+
+请注意，async和await是针对coroutine的新语法，要使用新的语法，只需要做两步简单的替换：
+1. 把@asyncio.coroutine替换为async；
+2. 把yield from替换为await。
+
+注意新语法只能用在Python 3.5以及后续版本
+之前版本则仍需使用asyncio案例的方案。
+&quot;&quot;&quot;
+import asyncio
+
+
+# 之前代码
+@asyncio.coroutine
+def hello1():
+    print(&quot;hello1!&quot;)
+    # 异步调用asyncio.sleep(1)
+    r = yield from asyncio.sleep(1)
+    print(&quot;hello1等待结束，返回：&quot;, r)
+
+
+# 新代码 更加简洁易懂了
+async def hello2():
+    print(&quot;hello2!&quot;)
+    # 异步调用asyncio.sleep(1)
+    r = await asyncio.sleep(1)
+    print(&quot;hello2等待结束，返回：&quot;, r)
+
+
+# get EventLoop
+loop = asyncio.get_event_loop()
+# exec coroutine
+loop.run_until_complete(asyncio.wait([hello1(), hello2()]))
+loop.close()
+
+&quot;&quot;&quot;
+返回结果仍然是一致的，使用也不受影响
+
+hello1!
+hello2!
+hello1等待结束，返回： None
+hello2等待结束，返回： None
+&quot;&quot;&quot;
+</code></pre>
+
+		</div><p style="margin:0px 0px 15px;margin-top:15px;padding-left:75px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1048430311230688#0" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Read More</a></p>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div style="position:relative;"><a name="COLLAPSE-4" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div><div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1182704926193600" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/c345a2c6jw1egex1o75ogj205c071mx9 [1].jpg" type="image/jpeg" data-filename="c345a2c6jw1egex1o75ogj205c071mx9.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1182704926193600" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">我是世外大帝</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at December 27, 2017 12:00 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;max-height:400px;overflow:hidden;">
+			<p style="margin:0px 0px 15px;">练习作业</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Created by TaoYuan on 2017/12/27 0027.
+# @Link    : http://blog.csdn.net/lftaoyuan
+# Github   : https://github.com/seeways
+# @Remark  : Python学习群：315857408
+# 用asyncio的异步网络连接来获取sina、sohu和163的网站首页
+# 异步获取sina、sohu和163的网站首页源码用新语法重写并运行。
+import asyncio
+
+
+async def wget(host):
+    print(&quot;wget {}&quot;.format(host))
+    connect = asyncio.open_connection(host, 80)
+    reader, writer = await connect
+    header = 'GET / HTTP/1.0\r\nHost: {}\r\n\r\n'.format(host)
+    writer.write(header.encode(&quot;utf-8&quot;))
+    await writer.drain()
+    while True:
+        line = await reader.readline()
+        if line == b'\r\n':
+            break
+        print(&quot;{} header:{}&quot;.format(host, line.decode(&quot;utf-8&quot;).rstrip()))
+    # Ignore the body, close the socket
+    writer.close()
+
+
+loop = asyncio.get_event_loop()
+tasks = [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()
+</code></pre>
+
+		</div><p style="margin:0px 0px 15px;margin-top:15px;padding-left:75px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1048430311230688#0" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Read More</a></p>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1190473955799680" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1190473955799680#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1183059648967712" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/b68ad72fjw8ewa3f1ofg6j20i20i2jsl.jpg" type="image/jpeg" data-filename="b68ad72fjw8ewa3f1ofg6j20i20i2jsl.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1183059770605056" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">测试</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1183059648967712" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">ROBBIE史努比</a>
+				created at November 16, 2017 1:54 PM, Last updated at November 16, 2017 1:54 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<h1 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:36px;line-height:42px;">-<em style="color:rgb(221, 0, 85);font-style:normal;">- coding: utf-8 -</em>-</h1>
+<p style="margin:0px 0px 15px;margin-top:15px;">import threading
+import asyncio</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">async def hello():
+    print('Hello world!')
+    await asyncio.sleep(2)
+    print('Hello again!')</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">async def hello222():
+    print('Hello world!222')
+    result = await somework()
+    print('Hello again!222,result: ',result)</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">async def somework():
+    print('start doing job...')
+    await asyncio.sleep(3)
+    print(&quot;hi, I've done the job&quot;)
+    return(&quot;hi, I've done the job............&quot;)</p>
+<p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">loop = asyncio.get_event_loop()
+tasks = [hello(), hello222()]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1183059770605056" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1183059770605056#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1154638657962656" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/default_avatar_male_50 [4].gif" type="image/gif" data-filename="default_avatar_male_50.gif" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1166729052897952" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">前端终于感觉到熟悉了</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1154638657962656" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">用户5393841808</a>
+				created at August 18, 2017 10:49 AM, Last updated at August 18, 2017 10:49 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">原来闹了半天，@asyncio.coroutine + yield from就是es7里的async/await呀</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1166729052897952" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1166729052897952#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div style="position:relative;"><a name="COLLAPSE-5" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div><div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1101509664555520" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/4b5946c5jw8ex3v58nu13j20zk0sgqrv.jpg" type="image/jpeg" data-filename="4b5946c5jw8ex3v58nu13j20zk0sgqrv.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1157326793851968" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">作业</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1101509664555520" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">在下喻哥仔</a>
+				created at June 27, 2017 1:26 PM, Last updated at June 27, 2017 1:26 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;max-height:400px;overflow:hidden;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# Filename: async_wget.py
+# Author: Lxy
+# Create at 2017-06-27
+
+import asyncio
+
+async def wget(host):
+    print('wget %s...' % host)
+    conn = asyncio.open_connection(host, 80)
+    reader, writer = await conn
+    header = 'GET / HTTP/1.0\r\nHost:%s\r\n\r\n' % host
+    writer.write(header.encode('utf-8'))
+    await writer.drain()
+    while True:
+        line = await reader.readline()
+        if line == b'\r\n':
+            break
+        print('%s header &gt; %s' % (host, line.decode('utf-8').rstrip()))
+    writer.close()
+
+loop = asyncio.get_event_loop()
+tasks = [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()
+</code></pre>
+		</div><p style="margin:0px 0px 15px;margin-top:15px;padding-left:75px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1048430311230688#0" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Read More</a></p>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1157326793851968" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1157326793851968#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div style="position:relative;"><a name="COLLAPSE-6" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div><div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1137168175068320" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/c1551079jw8f7mgtzfy8dj20an07iweo.jpg" type="image/jpeg" data-filename="c1551079jw8f7mgtzfy8dj20an07iweo.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1149603871192256" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">await使用疑问</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1137168175068320" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">美工码农</a>
+				created at May 15, 2017 10:30 PM, Last updated at June 15, 2017 2:47 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;max-height:400px;overflow:hidden;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">import asyncio
+async def wget(hots):
+    print('wget %s...' % hots)
+    content=asyncio.open_connection(hots,80)
+    reader, writer = await content 
+    header='GET / HTTP / 1.0 \r\n Host:%s\r\n\n' % hots
+    await writer.write(header.encode('utf-8')) ################这里有问题#################
+    await writer.drain()
+    while True:
+        line = await reader.readline()
+        if line ==b'\r\n':
+            break
+        print('%s header &gt; %s' % (hots, line.decode('utf-8').rstrip()))
+    writer.close()
+loop = asyncio.get_event_loop()
+tasks= [wget(host) for host in ['www.sina.com.cn', 'www.sohu.com', 'www.163.com']]
+loop.run_until_complete(asyncio.wait(tasks))
+loop.close()
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;">我理解的是 await 可以在任何地方进行等待。但是运行到这里会报错</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">await writer.write(header.encode('utf-8')) ################这里有问题#################
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;">如果进行如下修改就不会报错</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">writer.write(header.encode('utf-8')) ################这里有问题#################
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">问题：
+1.主要是想问一下await可以用在那些情况下
+2.为什么我这种情况下会报错</p>
+
+		</div><p style="margin:0px 0px 15px;margin-top:15px;padding-left:75px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1048430311230688#0" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> Read More</a></p>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1154069328104960" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/bca37c7djw8ebeok82rwoj20k00k0my6.jpg" type="image/jpeg" data-filename="bca37c7djw8ebeok82rwoj20k00k0my6.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1154069328104960" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">手是冰冷的</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at June 15, 2017 2:47 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">await如果不是任意地方都可以等待
+如果你用yield from 会出现这个异常
+r = yield from time.sleep(1)
+TypeError: 'NoneType' object is not iterable
+所以后面是需要跟着一个生成器或者至少是一个可迭代对象
+await是用来替换yield from的，应该也要满足这个吧</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">writer.write刚好不是这样的一个方法
+reader.readline()如果你直接这样去掉await调用返回的是一个生成器对象，而不是前面文件io文章里面file.readline()返回一行字符串
+如果await什么地方都可以用，何必大费周章写这些看起来都差不多的方法？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我的理解是生成器可以将执行一半的代码暂时挂起，而asyncio有分配执行的代码执行的权利，</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">tasks = [wget(host) for host in [&quot;www.sina.com.cn&quot;,&quot;www.sohu.com&quot;,&quot;www.163.com&quot;]]
+loop.run_until_complete(asyncio.wait(tasks))
+</code></pre><p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">他可以在一个task执行到yield时决定接下来继续执行的是哪一个task。这种感觉跟多线程争夺cpu很类似</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1149603871192256" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1149603871192256#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1126545173248224" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/7a04bbb3jw8f9usa7hz06j20ku0kzmy0.jpg" type="image/jpeg" data-filename="7a04bbb3jw8f9usa7hz06j20ku0kzmy0.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1143161671017440" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">感觉await是个更接地气的解释</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1126545173248224" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">BIN6167</a>
+				created at April 10, 2017 9:12 AM, Last updated at April 10, 2017 9:12 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">看到这一篇介绍<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">await</code>，个人认为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">await</code>从英文意思上更接地气的解释方法的用途和目的，消除了<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield from</code>玄乎的感觉。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">之前受<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">generator</code>里<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield</code>使用方法的影响，看到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield from</code>不习惯，总是联想到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield</code>的另一个用法。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">赞一个！:)</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1143161671017440" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1143161671017440#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1141362904791040" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="asyncawait_files/9e34638bjw8ee58o3rzsbj20k00k075i.jpg" type="image/jpeg" data-filename="9e34638bjw8ee58o3rzsbj20k00k075i.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1142303670399680" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">看到这里，终于觉得 es 算是跟上了潮流了</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1141362904791040" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">0浪矢杂货店0</a>
+				created at April 5, 2017 3:33 PM, Last updated at April 5, 2017 3:33 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">ES2017 刚刚定稿的 async/await 语法，和这个简直一样一样的。es 终于跟上了时代步伐了，学Python这么久，发现很多东西都是差不多的。</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1142303670399680" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1142303670399680#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li></ul>
+
+    <h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">发表评论</h3>
+
+    
+
+    <div>
+	<div>
+		<p style="margin:0px 0px 15px;"></p>
+		
+	</div>
+</div>
+
+							</div>
+						</div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

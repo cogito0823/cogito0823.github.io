@@ -1,0 +1,112 @@
+<html>
+<head>
+  <title>使用__slots__</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1841"/>
+<h1>使用__slots__</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 3:03</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">使用__slots__</h4>
+    <div>
+    	<span>阅读: 3628204</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">正常情况下，当我们定义了一个class，创建了一个class的实例后，我们可以给该实例绑定任何属性和方法，这就是动态语言的灵活性。先定义class：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">Student</span><span>(object)</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">pass</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">然后，尝试给实例绑定一个属性：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s = Student()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.name = <span style="color:rgb(221, 17, 68);">'Michael'</span> <span style="color:rgb(153, 153, 136);font-style:italic;"># 动态给实例绑定一个属性</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>print(s.name)
+Michael
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">还可以尝试给实例绑定一个方法：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">set_age</span><span>(self, age)</span>:</span> <span style="color:rgb(153, 153, 136);font-style:italic;"># 定义一个函数作为实例方法</span>
+<span style="color:rgb(153, 0, 115);">... </span>    self.age = age
+...
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> types <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> MethodType
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.set_age = MethodType(set_age, s) <span style="color:rgb(153, 153, 136);font-style:italic;"># 给实例绑定一个方法</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.set_age(<span style="color:rgb(0, 153, 153);">25</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 调用实例方法</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.age <span style="color:rgb(153, 153, 136);font-style:italic;"># 测试结果</span>
+<span style="color:rgb(0, 153, 153);">25</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">但是，给一个实例绑定的方法，对另一个实例是不起作用的：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; s2 = Student() # 创建新的实例
+&gt;&gt;&gt; s2.set_age(25) # 尝试调用方法
+Traceback (most recent call last):
+  File &quot;<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">stdin</span>&gt;</span>&quot;, line 1, in <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">module</span>&gt;</span>
+AttributeError: 'Student' object has no attribute 'set_age'
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">为了给所有实例都绑定方法，可以给class绑定方法：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">set_score</span><span>(self, score)</span>:</span>
+<span style="color:rgb(153, 0, 115);">... </span>    self.score = score
+...
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>Student.set_score = set_score
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">给class绑定方法后，所有实例均可调用：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.set_score(<span style="color:rgb(0, 153, 153);">100</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.score
+<span style="color:rgb(0, 153, 153);">100</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s2.set_score(<span style="color:rgb(0, 153, 153);">99</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s2.score
+<span style="color:rgb(0, 153, 153);">99</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">通常情况下，上面的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">set_score</code>方法可以直接定义在class中，但动态绑定允许我们在程序运行的过程中动态给class加上功能，这在静态语言中很难实现。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">使用__slots__</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">但是，如果我们想要限制实例的属性怎么办？比如，只允许对Student实例添加<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">name</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">age</code>属性。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">为了达到限制的目的，Python允许在定义class的时候，定义一个特殊的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__slots__</code>变量，来限制该class实例能添加的属性：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">Student</span><span>(object)</span>:</span>
+    __slots__ = (<span style="color:rgb(221, 17, 68);">'name'</span>, <span style="color:rgb(221, 17, 68);">'age'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 用tuple定义允许绑定的属性名称</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">然后，我们试试：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s = Student() <span style="color:rgb(153, 153, 136);font-style:italic;"># 创建新的实例</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.name = <span style="color:rgb(221, 17, 68);">'Michael'</span> <span style="color:rgb(153, 153, 136);font-style:italic;"># 绑定属性'name'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.age = <span style="color:rgb(0, 153, 153);">25</span> <span style="color:rgb(153, 153, 136);font-style:italic;"># 绑定属性'age'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.score = <span style="color:rgb(0, 153, 153);">99</span> <span style="color:rgb(153, 153, 136);font-style:italic;"># 绑定属性'score'</span>
+Traceback (most recent call last):
+  File <span style="color:rgb(221, 17, 68);">&quot;&lt;stdin&gt;&quot;</span>, line <span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> &lt;module&gt;
+AttributeError: <span style="color:rgb(221, 17, 68);">'Student'</span> object has no attribute <span style="color:rgb(221, 17, 68);">'score'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">由于<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'score'</code>没有被放到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__slots__</code>中，所以不能绑定<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">score</code>属性，试图绑定<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">score</code>将得到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">AttributeError</code>的错误。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__slots__</code>要注意，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__slots__</code>定义的属性仅对当前类实例起作用，对继承的子类是不起作用的：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">GraduateStudent</span><span>(Student)</span>:</span>
+<span style="color:rgb(153, 0, 115);">... </span>    <span style="color:rgb(51, 51, 51);font-weight:bold;">pass</span>
+...
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>g = GraduateStudent()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>g.score = <span style="color:rgb(0, 153, 153);">9999</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">除非在子类中也定义<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__slots__</code>，这样，子类实例允许定义的属性就是自身的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__slots__</code>加上父类的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__slots__</code>。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/oop_advance/use_slots.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">use_slots.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="使用__slots___files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="使用__slots___files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017501655757856#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017501628721248" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017502538658208" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

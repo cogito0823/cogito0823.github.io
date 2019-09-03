@@ -1,0 +1,132 @@
+<html>
+<head>
+  <title>Day 14 - 完成Web App</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2587"/>
+<h1>Day 14 - 完成Web App</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:39</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">Day 14 - 完成Web App</h4>
+    <div>
+    	<span>阅读: 214600</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">在Web App框架和基本流程跑通后，剩下的工作全部是体力活了：在Debug开发模式下完成后端所有API、前端所有页面。我们需要做的事情包括：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">把当前用户绑定到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">request</code>上，并对URL<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">/manage/</code>进行拦截，检查当前用户是否是管理员身份：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@asyncio.coroutine</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">auth_factory</span><span>(app, handler)</span>:</span>
+    <span>@asyncio.coroutine</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">auth</span><span>(request)</span>:</span>
+        logging.info(<span style="color:rgb(221, 17, 68);">'check user: %s %s'</span> % (request.method, request.path))
+        request.__user__ = <span style="color:rgb(0, 134, 179);">None</span>
+        cookie_str = request.cookies.get(COOKIE_NAME)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> cookie_str:
+            user = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> cookie2user(cookie_str)
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> user:
+                logging.info(<span style="color:rgb(221, 17, 68);">'set current user: %s'</span> % user.email)
+                request.__user__ = user
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> request.path.startswith(<span style="color:rgb(221, 17, 68);">'/manage/'</span>) <span style="color:rgb(51, 51, 51);font-weight:bold;">and</span> (request.__user__ <span style="color:rgb(51, 51, 51);font-weight:bold;">is</span> <span style="color:rgb(0, 134, 179);">None</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">or</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">not</span> request.__user__.admin):
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> web.HTTPFound(<span style="color:rgb(221, 17, 68);">'/signin'</span>)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> (<span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> handler(request))
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> auth
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">后端API包括：</p>
+<ul style="margin:0px 0px 15px;margin-top:15px;padding-left:30px;">
+<li>
+<p style="margin:0px 0px 15px;">获取日志：GET /api/blogs</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">创建日志：POST /api/blogs</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">修改日志：POST /api/blogs/:blog_id</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">删除日志：POST /api/blogs/:blog_id/delete</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">获取评论：GET /api/comments</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">创建评论：POST /api/blogs/:blog_id/comments</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">删除评论：POST /api/comments/:comment_id/delete</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">创建新用户：POST /api/users</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">获取用户：GET /api/users</p>
+</li>
+</ul>
+<p style="margin:0px 0px 15px;margin-top:15px;">管理页面包括：</p>
+<ul style="margin:0px 0px 15px;margin-top:15px;padding-left:30px;">
+<li>
+<p style="margin:0px 0px 15px;">评论列表页：GET /manage/comments</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">日志列表页：GET /manage/blogs</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">创建日志页：GET /manage/blogs/create</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">修改日志页：GET /manage/blogs/</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">用户列表页：GET /manage/users</p>
+</li>
+</ul>
+<p style="margin:0px 0px 15px;margin-top:15px;">用户浏览页面包括：</p>
+<ul style="margin:0px 0px 15px;margin-top:15px;padding-left:30px;">
+<li>
+<p style="margin:0px 0px 15px;">注册页：GET /register</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">登录页：GET /signin</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">注销页：GET /signout</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">首页：GET /</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">日志详情页：GET /blog/:blog_id</p>
+</li>
+</ul>
+<p style="margin:0px 0px 15px;margin-top:15px;">把所有的功能实现，我们第一个Web App就宣告完成！</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/awesome-python3-webapp/tree/day-14" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">day-14</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="Day 14 - 完成Web App_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="Day 14 - 完成Web App_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491195171744#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491156860224" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491264935776" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

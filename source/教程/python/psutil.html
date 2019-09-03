@@ -1,0 +1,216 @@
+<html>
+<head>
+  <title>psutil</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1999"/>
+<h1>psutil</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:25</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">psutil</h4>
+    <div>
+    	<span>阅读: 527298</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">用Python来编写脚本简化日常的运维工作是Python的一个重要用途。在Linux下，有许多系统命令可以让我们时刻监控系统运行的状态，如<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">ps</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">top</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">free</code>等等。要获取这些系统信息，Python可以通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">subprocess</code>模块调用并获取结果。但这样做显得很麻烦，尤其是要写很多解析代码。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">在Python中获取系统信息的另一个好办法是使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">psutil</code>这个第三方模块。顾名思义，psutil = process and system utilities，它不仅可以通过一两行代码实现系统监控，还可以跨平台使用，支持Linux／UNIX／OSX／Windows等，是系统管理员和运维小伙伴不可或缺的必备模块。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">安装psutil</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果安装了Anaconda，psutil就已经可用了。否则，需要在命令行下通过pip安装：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 128, 128);">$ </span>pip install psutil
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果遇到Permission denied安装失败，请加上sudo重试。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">获取CPU信息</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们先来获取CPU的信息：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> psutil
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>psutil.cpu_count() <span style="color:rgb(153, 153, 136);font-style:italic;"># CPU逻辑数量</span>
+<span style="color:rgb(0, 153, 153);">4</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>psutil.cpu_count(logical=<span style="color:rgb(0, 134, 179);">False</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># CPU物理核心</span>
+<span style="color:rgb(0, 153, 153);">2</span>
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 2说明是双核超线程, 4则是4核非超线程</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">统计CPU的用户／系统／空闲时间：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>psutil.cpu_times()
+scputimes(user=<span style="color:rgb(0, 153, 153);">10963.31</span>, nice=<span style="color:rgb(0, 153, 153);">0.0</span>, system=<span style="color:rgb(0, 153, 153);">5138.67</span>, idle=<span style="color:rgb(0, 153, 153);">356102.45</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">再实现类似<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">top</code>命令的CPU使用率，每秒刷新一次，累计10次：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> x <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">10</span>):
+<span style="color:rgb(153, 0, 115);">... </span>    psutil.cpu_percent(interval=<span style="color:rgb(0, 153, 153);">1</span>, percpu=<span style="color:rgb(0, 134, 179);">True</span>)
+<span style="color:rgb(153, 0, 115);">... </span>
+[<span style="color:rgb(0, 153, 153);">14.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>]
+[<span style="color:rgb(0, 153, 153);">12.0</span>, <span style="color:rgb(0, 153, 153);">3.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>, <span style="color:rgb(0, 153, 153);">3.0</span>]
+[<span style="color:rgb(0, 153, 153);">8.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>, <span style="color:rgb(0, 153, 153);">3.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>]
+[<span style="color:rgb(0, 153, 153);">12.0</span>, <span style="color:rgb(0, 153, 153);">3.0</span>, <span style="color:rgb(0, 153, 153);">3.0</span>, <span style="color:rgb(0, 153, 153);">3.0</span>]
+[<span style="color:rgb(0, 153, 153);">18.8</span>, <span style="color:rgb(0, 153, 153);">5.1</span>, <span style="color:rgb(0, 153, 153);">5.9</span>, <span style="color:rgb(0, 153, 153);">5.0</span>]
+[<span style="color:rgb(0, 153, 153);">10.9</span>, <span style="color:rgb(0, 153, 153);">5.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>, <span style="color:rgb(0, 153, 153);">3.0</span>]
+[<span style="color:rgb(0, 153, 153);">12.0</span>, <span style="color:rgb(0, 153, 153);">5.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>, <span style="color:rgb(0, 153, 153);">5.0</span>]
+[<span style="color:rgb(0, 153, 153);">15.0</span>, <span style="color:rgb(0, 153, 153);">5.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>]
+[<span style="color:rgb(0, 153, 153);">19.0</span>, <span style="color:rgb(0, 153, 153);">5.0</span>, <span style="color:rgb(0, 153, 153);">5.0</span>, <span style="color:rgb(0, 153, 153);">4.0</span>]
+[<span style="color:rgb(0, 153, 153);">9.0</span>, <span style="color:rgb(0, 153, 153);">3.0</span>, <span style="color:rgb(0, 153, 153);">2.0</span>, <span style="color:rgb(0, 153, 153);">3.0</span>]
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">获取内存信息</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">使用psutil获取物理内存和交换内存信息，分别使用：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>psutil.virtual_memory()
+svmem(total=<span style="color:rgb(0, 153, 153);">8589934592</span>, available=<span style="color:rgb(0, 153, 153);">2866520064</span>, percent=<span style="color:rgb(0, 153, 153);">66.6</span>, used=<span style="color:rgb(0, 153, 153);">7201386496</span>, free=<span style="color:rgb(0, 153, 153);">216178688</span>, active=<span style="color:rgb(0, 153, 153);">3342192640</span>, inactive=<span style="color:rgb(0, 153, 153);">2650341376</span>, wired=<span style="color:rgb(0, 153, 153);">1208852480</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>psutil.swap_memory()
+sswap(total=<span style="color:rgb(0, 153, 153);">1073741824</span>, used=<span style="color:rgb(0, 153, 153);">150732800</span>, free=<span style="color:rgb(0, 153, 153);">923009024</span>, percent=<span style="color:rgb(0, 153, 153);">14.0</span>, sin=<span style="color:rgb(0, 153, 153);">10705981440</span>, sout=<span style="color:rgb(0, 153, 153);">40353792</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">返回的是字节为单位的整数，可以看到，总内存大小是8589934592 = 8 GB，已用7201386496 = 6.7 GB，使用了66.6%。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">而交换区大小是1073741824 = 1 GB。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">获取磁盘信息</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">可以通过psutil获取磁盘分区、磁盘使用率和磁盘IO信息：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>psutil.disk_partitions() <span style="color:rgb(153, 153, 136);font-style:italic;"># 磁盘分区信息</span>
+[sdiskpart(device=<span style="color:rgb(221, 17, 68);">'/dev/disk1'</span>, mountpoint=<span style="color:rgb(221, 17, 68);">'/'</span>, fstype=<span style="color:rgb(221, 17, 68);">'hfs'</span>, opts=<span style="color:rgb(221, 17, 68);">'rw,local,rootfs,dovolfs,journaled,multilabel'</span>)]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>psutil.disk_usage(<span style="color:rgb(221, 17, 68);">'/'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 磁盘使用情况</span>
+sdiskusage(total=<span style="color:rgb(0, 153, 153);">998982549504</span>, used=<span style="color:rgb(0, 153, 153);">390880133120</span>, free=<span style="color:rgb(0, 153, 153);">607840272384</span>, percent=<span style="color:rgb(0, 153, 153);">39.1</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>psutil.disk_io_counters() <span style="color:rgb(153, 153, 136);font-style:italic;"># 磁盘IO</span>
+sdiskio(read_count=<span style="color:rgb(0, 153, 153);">988513</span>, write_count=<span style="color:rgb(0, 153, 153);">274457</span>, read_bytes=<span style="color:rgb(0, 153, 153);">14856830464</span>, write_bytes=<span style="color:rgb(0, 153, 153);">17509420032</span>, read_time=<span style="color:rgb(0, 153, 153);">2228966</span>, write_time=<span style="color:rgb(0, 153, 153);">1618405</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">可以看到，磁盘<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'/'</code>的总容量是998982549504 = 930 GB，使用了39.1%。文件格式是HFS，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">opts</code>中包含<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">rw</code>表示可读写，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">journaled</code>表示支持日志。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">获取网络信息</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">psutil可以获取网络接口和网络连接信息：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; psutil.net_io_counters() # 获取网络读写字节／包的个数
+snetio(bytes_sent=<span style="color:rgb(0, 153, 153);">3885744870</span>, bytes_recv=<span style="color:rgb(0, 153, 153);">10357676702</span>, packets_sent=<span style="color:rgb(0, 153, 153);">10613069</span>, packets_recv=<span style="color:rgb(0, 153, 153);">10423357</span>, errin=<span style="color:rgb(0, 153, 153);">0</span>, errout=<span style="color:rgb(0, 153, 153);">0</span>, dropin=<span style="color:rgb(0, 153, 153);">0</span>, dropout=<span style="color:rgb(0, 153, 153);">0</span>)
+&gt;&gt;&gt; psutil.net_if_addrs() # 获取网络接口信息
+{
+  <span style="color:rgb(221, 17, 68);">'lo0'</span>: [snic(family=<span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET:</span> <span style="color:rgb(0, 128, 128);">2</span>&gt;</span>, address='127.0.0.1', netmask='255.0.0.0'), ...],
+  'en1': [snic(family=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET:</span> <span style="color:rgb(0, 128, 128);">2</span>&gt;</span>, address='10.0.1.80', netmask='255.255.255.0'), ...],
+  'en0': [...],
+  'en2': [...],
+  'bridge0': [...]
+}
+&gt;&gt;&gt; psutil.net_if_stats() # 获取网络接口状态
+{
+  'lo0': snicstats(isup=True, duplex=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">NicDuplex.NIC_DUPLEX_UNKNOWN:</span> <span style="color:rgb(0, 128, 128);">0</span>&gt;</span>, speed=0, mtu=16384),
+  'en0': snicstats(isup=True, duplex=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">NicDuplex.NIC_DUPLEX_UNKNOWN:</span> <span style="color:rgb(0, 128, 128);">0</span>&gt;</span>, speed=0, mtu=1500),
+  'en1': snicstats(...),
+  'en2': snicstats(...),
+  'bridge0': snicstats(...)
+}
+</span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">要获取当前网络连接信息，使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">net_connections()</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; psutil.net_connections()
+Traceback (most recent <span><span style="color:rgb(51, 51, 51);font-weight:bold;">call</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">last</span>):
+  ...
+PermissionError: [Errno <span style="color:rgb(0, 153, 153);">1</span>] Operation <span style="color:rgb(51, 51, 51);font-weight:bold;">not</span> permitted
+
+During handling <span style="color:rgb(51, 51, 51);font-weight:bold;">of</span> the above <span style="color:rgb(51, 51, 51);font-weight:bold;">exception</span>, another <span style="color:rgb(51, 51, 51);font-weight:bold;">exception</span> occurred:
+
+Traceback (most recent <span style="color:rgb(51, 51, 51);font-weight:bold;">call</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">last</span>):
+  ...
+psutil.AccessDenied: psutil.AccessDenied (pid=<span style="color:rgb(0, 153, 153);">3847</span>)
+</span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">你可能会得到一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">AccessDenied</code>错误，原因是psutil获取信息也是要走系统接口，而获取网络连接信息需要root权限，这种情况下，可以退出Python交互环境，用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sudo</code>重新启动：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">$ sudo python3
+Password: ******
+Python <span style="color:rgb(0, 153, 153);">3.6</span><span style="color:rgb(0, 153, 153);">.3</span> ... on darwin
+Type <span style="color:rgb(221, 17, 68);">&quot;help&quot;</span>, ... <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> more information.
+&gt;&gt;&gt; import psutil
+&gt;&gt;&gt; psutil.net_connections()
+[
+    sconn(fd=<span style="color:rgb(0, 153, 153);">83</span>, family=<span><span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET6:</span> <span style="color:rgb(0, 128, 128);">30</span>&gt;</span>, type=1, laddr=addr(ip='::127.0.0.1', port=62911), raddr=addr(ip='::127.0.0.1', port=3306), status='ESTABLISHED', pid=3725),
+    sconn(fd=84, family=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET6:</span> <span style="color:rgb(0, 128, 128);">30</span>&gt;</span>, type=1, laddr=addr(ip='::127.0.0.1', port=62905), raddr=addr(ip='::127.0.0.1', port=3306), status='ESTABLISHED', pid=3725),
+    sconn(fd=93, family=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET6:</span> <span style="color:rgb(0, 128, 128);">30</span>&gt;</span>, type=1, laddr=addr(ip='::', port=8080), raddr=(), status='LISTEN', pid=3725),
+    sconn(fd=103, family=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET6:</span> <span style="color:rgb(0, 128, 128);">30</span>&gt;</span>, type=1, laddr=addr(ip='::127.0.0.1', port=62918), raddr=addr(ip='::127.0.0.1', port=3306), status='ESTABLISHED', pid=3725),
+    sconn(fd=105, family=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET6:</span> <span style="color:rgb(0, 128, 128);">30</span>&gt;</span>, type=1, ..., pid=3725),
+    sconn(fd=106, family=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET6:</span> <span style="color:rgb(0, 128, 128);">30</span>&gt;</span>, type=1, ..., pid=3725),
+    sconn(fd=107, family=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET6:</span> <span style="color:rgb(0, 128, 128);">30</span>&gt;</span>, type=1, ..., pid=3725),
+    ...
+    sconn(fd=27, family=<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">AddressFamily.AF_INET:</span> <span style="color:rgb(0, 128, 128);">2</span>&gt;</span>, type=2, ..., pid=1)
+]
+</span></code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">获取进程信息</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">通过psutil可以获取到所有进程的详细信息：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>psutil.pids() <span style="color:rgb(153, 153, 136);font-style:italic;"># 所有进程ID</span>
+[<span style="color:rgb(0, 153, 153);">3865</span>, <span style="color:rgb(0, 153, 153);">3864</span>, <span style="color:rgb(0, 153, 153);">3863</span>, <span style="color:rgb(0, 153, 153);">3856</span>, <span style="color:rgb(0, 153, 153);">3855</span>, <span style="color:rgb(0, 153, 153);">3853</span>, <span style="color:rgb(0, 153, 153);">3776</span>, ..., <span style="color:rgb(0, 153, 153);">45</span>, <span style="color:rgb(0, 153, 153);">44</span>, <span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">0</span>]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p = psutil.Process(<span style="color:rgb(0, 153, 153);">3776</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 获取指定进程ID=3776，其实就是当前Python交互环境</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.name() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程名称</span>
+<span style="color:rgb(221, 17, 68);">'python3.6'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.exe() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程exe路径</span>
+<span style="color:rgb(221, 17, 68);">'/Users/michael/anaconda3/bin/python3.6'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.cwd() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程工作目录</span>
+<span style="color:rgb(221, 17, 68);">'/Users/michael'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.cmdline() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程启动的命令行</span>
+[<span style="color:rgb(221, 17, 68);">'python3'</span>]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.ppid() <span style="color:rgb(153, 153, 136);font-style:italic;"># 父进程ID</span>
+<span style="color:rgb(0, 153, 153);">3765</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.parent() <span style="color:rgb(153, 153, 136);font-style:italic;"># 父进程</span>
+&lt;psutil.Process(pid=<span style="color:rgb(0, 153, 153);">3765</span>, name=<span style="color:rgb(221, 17, 68);">'bash'</span>) at <span style="color:rgb(0, 153, 153);">4503144040</span>&gt;
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.children() <span style="color:rgb(153, 153, 136);font-style:italic;"># 子进程列表</span>
+[]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.status() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程状态</span>
+<span style="color:rgb(221, 17, 68);">'running'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.username() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程用户名</span>
+<span style="color:rgb(221, 17, 68);">'michael'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.create_time() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程创建时间</span>
+<span style="color:rgb(0, 153, 153);">1511052731.120333</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.terminal() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程终端</span>
+<span style="color:rgb(221, 17, 68);">'/dev/ttys002'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.cpu_times() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程使用的CPU时间</span>
+pcputimes(user=<span style="color:rgb(0, 153, 153);">0.081150144</span>, system=<span style="color:rgb(0, 153, 153);">0.053269812</span>, children_user=<span style="color:rgb(0, 153, 153);">0.0</span>, children_system=<span style="color:rgb(0, 153, 153);">0.0</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.memory_info() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程使用的内存</span>
+pmem(rss=<span style="color:rgb(0, 153, 153);">8310784</span>, vms=<span style="color:rgb(0, 153, 153);">2481725440</span>, pfaults=<span style="color:rgb(0, 153, 153);">3207</span>, pageins=<span style="color:rgb(0, 153, 153);">18</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.open_files() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程打开的文件</span>
+[]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.connections() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程相关网络连接</span>
+[]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.num_threads() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程的线程数量</span>
+<span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.threads() <span style="color:rgb(153, 153, 136);font-style:italic;"># 所有线程信息</span>
+[pthread(id=<span style="color:rgb(0, 153, 153);">1</span>, user_time=<span style="color:rgb(0, 153, 153);">0.090318</span>, system_time=<span style="color:rgb(0, 153, 153);">0.062736</span>)]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.environ() <span style="color:rgb(153, 153, 136);font-style:italic;"># 进程环境变量</span>
+{<span style="color:rgb(221, 17, 68);">'SHELL'</span>: <span style="color:rgb(221, 17, 68);">'/bin/bash'</span>, <span style="color:rgb(221, 17, 68);">'PATH'</span>: <span style="color:rgb(221, 17, 68);">'/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:...'</span>, <span style="color:rgb(221, 17, 68);">'PWD'</span>: <span style="color:rgb(221, 17, 68);">'/Users/michael'</span>, <span style="color:rgb(221, 17, 68);">'LANG'</span>: <span style="color:rgb(221, 17, 68);">'zh_CN.UTF-8'</span>, ...}
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>p.terminate() <span style="color:rgb(153, 153, 136);font-style:italic;"># 结束进程</span>
+Terminated: <span style="color:rgb(0, 153, 153);">15</span> &lt;-- 自己把自己结束了
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">和获取网络连接类似，获取一个root用户的进程需要root权限，启动Python交互环境或者<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">.py</code>文件时，需要<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sudo</code>权限。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">psutil还提供了一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">test()</code>函数，可以模拟出<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">ps</code>命令的效果：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">$ <span style="color:rgb(0, 0, 128);font-weight:normal;">sudo</span> <span style="color:rgb(0, 0, 128);font-weight:normal;">python3</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">Password</span>: ******
+<span style="color:rgb(0, 0, 128);font-weight:normal;">Python</span> 3<span style="color:rgb(68, 85, 136);font-weight:bold;">.6</span><span style="color:rgb(68, 85, 136);font-weight:bold;">.3</span> ... <span style="color:rgb(0, 0, 128);font-weight:normal;">on</span> <span style="color:rgb(0, 0, 128);font-weight:normal;">darwin</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">Type</span> &quot;<span style="color:rgb(0, 0, 128);font-weight:normal;">help</span>&quot;, ... <span style="color:rgb(0, 0, 128);font-weight:normal;">for</span> <span style="color:rgb(0, 0, 128);font-weight:normal;">more</span> <span style="color:rgb(0, 0, 128);font-weight:normal;">information</span>.
+&gt;&gt;&gt; <span style="color:rgb(0, 0, 128);font-weight:normal;">import</span> <span style="color:rgb(0, 0, 128);font-weight:normal;">psutil</span>
+&gt;&gt;&gt; <span style="color:rgb(0, 0, 128);font-weight:normal;">psutil</span><span style="color:rgb(68, 85, 136);font-weight:bold;">.test</span>()
+<span style="color:rgb(0, 0, 128);font-weight:normal;">USER</span>         <span style="color:rgb(0, 0, 128);font-weight:normal;">PID</span> %<span style="color:rgb(0, 0, 128);font-weight:normal;">MEM</span>     <span style="color:rgb(0, 0, 128);font-weight:normal;">VSZ</span>     <span style="color:rgb(0, 0, 128);font-weight:normal;">RSS</span> <span style="color:rgb(0, 0, 128);font-weight:normal;">TTY</span>           <span style="color:rgb(0, 0, 128);font-weight:normal;">START</span>    <span style="color:rgb(0, 0, 128);font-weight:normal;">TIME</span>  <span style="color:rgb(0, 0, 128);font-weight:normal;">COMMAND</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">root</span>           0 24<span style="color:rgb(68, 85, 136);font-weight:bold;">.0</span> 74270628 2016380 ?             <span style="color:rgb(0, 0, 128);font-weight:normal;">Nov18</span>   40<span>:51</span>  <span style="color:rgb(0, 0, 128);font-weight:normal;">kernel_task</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">root</span>           1  0<span style="color:rgb(68, 85, 136);font-weight:bold;">.1</span> 2494140    9484 ?             <span style="color:rgb(0, 0, 128);font-weight:normal;">Nov18</span>   01<span>:39</span>  <span style="color:rgb(0, 0, 128);font-weight:normal;">launchd</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">root</span>          44  0<span style="color:rgb(68, 85, 136);font-weight:bold;">.4</span> 2519872   36404 ?             <span style="color:rgb(0, 0, 128);font-weight:normal;">Nov18</span>   02<span>:02</span>  <span style="color:rgb(0, 0, 128);font-weight:normal;">UserEventAgent</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">root</span>          45    ? 2474032    1516 ?             <span style="color:rgb(0, 0, 128);font-weight:normal;">Nov18</span>   00<span>:14</span>  <span style="color:rgb(0, 0, 128);font-weight:normal;">syslogd</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">root</span>          47  0<span style="color:rgb(68, 85, 136);font-weight:bold;">.1</span> 2504768    8912 ?             <span style="color:rgb(0, 0, 128);font-weight:normal;">Nov18</span>   00<span>:03</span>  <span style="color:rgb(0, 0, 128);font-weight:normal;">kextd</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">root</span>          48  0<span style="color:rgb(68, 85, 136);font-weight:bold;">.1</span> 2505544    4720 ?             <span style="color:rgb(0, 0, 128);font-weight:normal;">Nov18</span>   00<span>:19</span>  <span style="color:rgb(0, 0, 128);font-weight:normal;">fseventsd</span>
+_<span style="color:rgb(0, 0, 128);font-weight:normal;">appleeven</span>    52  0<span style="color:rgb(68, 85, 136);font-weight:bold;">.1</span> 2499748    5024 ?             <span style="color:rgb(0, 0, 128);font-weight:normal;">Nov18</span>   00<span>:00</span>  <span style="color:rgb(0, 0, 128);font-weight:normal;">appleeventsd</span>
+<span style="color:rgb(0, 0, 128);font-weight:normal;">root</span>          53  0<span style="color:rgb(68, 85, 136);font-weight:bold;">.1</span> 2500592    6132 ?             <span style="color:rgb(0, 0, 128);font-weight:normal;">Nov18</span>   00<span>:02</span>  <span style="color:rgb(0, 0, 128);font-weight:normal;">configd</span>
+...
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">psutil使得Python程序获取系统信息变得易如反掌。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">psutil还可以获取用户信息、Windows服务等很多有用的系统信息，具体请参考psutil的官网：<a href="https://github.com/giampaolo/psutil" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">https://github.com/giampaolo/psutil</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="psutil_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="psutil_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1183565811281984#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1183255880134144" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1019273143120480" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

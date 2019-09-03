@@ -1,0 +1,142 @@
+<html>
+<head>
+  <title>返回函数</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1870"/>
+<h1>返回函数</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 3:00</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">返回函数</h4>
+    <div>
+    	<span>阅读: 6945934</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:18px;line-height:24px;">函数作为返回值</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">高阶函数除了可以接受函数作为参数外，还可以把函数作为结果值返回。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们来实现一个可变参数的求和。通常情况下，求和的函数是这样定义的：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">calc_sum</span><span>(*args)</span>:</span>
+    ax = <span style="color:rgb(0, 153, 153);">0</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> n <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> args:
+        ax = ax + n
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> ax
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">但是，如果不需要立刻求和，而是在后面的代码中，根据需要再计算怎么办？可以不返回求和的结果，而是返回求和的函数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">lazy_sum</span><span>(*args)</span>:</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">sum</span><span>()</span>:</span>
+        ax = <span style="color:rgb(0, 153, 153);">0</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> n <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> args:
+            ax = ax + n
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> ax
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> sum
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">当我们调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">lazy_sum()</code>时，返回的并不是求和结果，而是求和函数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; f = lazy_sum(<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">5</span>, <span style="color:rgb(0, 153, 153);">7</span>, <span style="color:rgb(0, 153, 153);">9</span>)
+&gt;&gt;&gt; f
+&lt;<span><span style="color:rgb(51, 51, 51);font-weight:bold;">function</span> <span style="color:rgb(51, 51, 51);font-weight:normal;">lazy_sum</span>.&lt;<span style="color:rgb(51, 51, 51);font-weight:normal;">locals</span>&gt;.<span style="color:rgb(51, 51, 51);font-weight:normal;">sum</span> <span style="color:rgb(51, 51, 51);font-weight:normal;">at</span> 0<span style="color:rgb(51, 51, 51);font-weight:normal;">x101c6ed90</span>&gt;
+</span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">调用函数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">f</code>时，才真正计算求和的结果：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f()
+<span style="color:rgb(0, 153, 153);">25</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">在这个例子中，我们在函数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">lazy_sum</code>中又定义了函数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sum</code>，并且，内部函数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sum</code>可以引用外部函数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">lazy_sum</code>的参数和局部变量，当<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">lazy_sum</code>返回函数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sum</code>时，相关参数和变量都保存在返回的函数中，这种称为“闭包（Closure）”的程序结构拥有极大的威力。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">请再注意一点，当我们调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">lazy_sum()</code>时，每次调用都会返回一个新的函数，即使传入相同的参数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f1 = lazy_sum(<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">5</span>, <span style="color:rgb(0, 153, 153);">7</span>, <span style="color:rgb(0, 153, 153);">9</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f2 = lazy_sum(<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">5</span>, <span style="color:rgb(0, 153, 153);">7</span>, <span style="color:rgb(0, 153, 153);">9</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f1==f2
+<span style="color:rgb(0, 134, 179);">False</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">f1()</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">f2()</code>的调用结果互不影响。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">闭包</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意到返回的函数在其定义内部引用了局部变量<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">args</code>，所以，当一个函数返回了一个函数后，其内部的局部变量还被新函数引用，所以，闭包用起来简单，实现起来可不容易。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">另一个需要注意的问题是，返回的函数并没有立刻执行，而是直到调用了<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">f()</code>才执行。我们来看一个例子：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">count</span><span>()</span>:</span>
+    fs = []
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> i <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">4</span>):
+        <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">f</span><span>()</span>:</span>
+             <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> i*i
+        fs.append(f)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> fs
+
+f1, f2, f3 = count()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">在上面的例子中，每次循环，都创建了一个新的函数，然后，把创建的3个函数都返回了。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">你可能认为调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">f1()</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">f2()</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">f3()</code>结果应该是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">1</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">4</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">9</code>，但实际结果是：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f1()
+<span style="color:rgb(0, 153, 153);">9</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f2()
+<span style="color:rgb(0, 153, 153);">9</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f3()
+<span style="color:rgb(0, 153, 153);">9</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">全部都是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">9</code>！原因就在于返回的函数引用了变量<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">i</code>，但它并非立刻执行。等到3个函数都返回时，它们所引用的变量<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">i</code>已经变成了<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">3</code>，因此最终结果为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">9</code>。</p>
+<div style="margin-bottom:15px;padding:10px;border:1px solid rgba(45, 112, 145, 0.3);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;margin-top:15px;border-color:rgba(216, 80, 48, 0.3);background:rgb(255, 241, 240);color:rgb(216, 80, 48);"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;margin-bottom:0px;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 返回闭包时牢记一点：返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+</div>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果一定要引用循环变量怎么办？方法是再创建一个函数，用该函数的参数绑定循环变量当前的值，无论该循环变量后续如何更改，已绑定到函数参数的值不变：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">count</span><span>()</span>:</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">f</span><span>(j)</span>:</span>
+        <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">g</span><span>()</span>:</span>
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> j*j
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> g
+    fs = []
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> i <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">4</span>):
+        fs.append(f(i)) <span style="color:rgb(153, 153, 136);font-style:italic;"># f(i)立刻被执行，因此i的当前值被传入f()</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> fs
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">再看看结果：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f1, f2, f3 = count()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f1()
+<span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f2()
+<span style="color:rgb(0, 153, 153);">4</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>f3()
+<span style="color:rgb(0, 153, 153);">9</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">缺点是代码较长，可利用lambda函数缩短代码。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">练习</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">利用闭包返回一个计数器函数，每次调用它返回递增整数：</p>
+<div style="margin-top:15px;margin-bottom:15px;"><pre style="margin:0px 0px 15px;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;margin-bottom:0px;border-bottom:none;border-bottom-left-radius:0px;border-bottom-right-radius:0px;"># -*- coding: utf-8 -*-
+</pre><pre style="margin:0px 0px 15px;margin-top:0;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;"># 测试:
+counterA = createCounter()
+print(counterA(), counterA(), counterA(), counterA(), counterA()) # 1 2 3 4 5
+counterB = createCounter()
+if [counterB(), counterB(), counterB(), counterB()] == [1, 2, 3, 4]:
+    print('测试通过!')
+else:
+    print('测试失败!')
+</pre></div>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">一个函数可以返回一个计算结果，也可以返回一个函数。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">返回一个函数时，牢记该函数并未执行，返回函数中不要引用任何可能会变化的变量。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/functional/return_func.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">return_func.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="返回函数_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="返回函数_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017434209254976#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017408670135712" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017451447842528" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

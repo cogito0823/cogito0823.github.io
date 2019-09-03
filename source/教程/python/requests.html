@@ -1,0 +1,116 @@
+<html>
+<head>
+  <title>requests</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2005"/>
+<h1>requests</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:24</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">requests</h4>
+    <div>
+    	<span>阅读: 1034883</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">我们已经讲解了Python内置的urllib模块，用于访问网络资源。但是，它用起来比较麻烦，而且，缺少很多实用的高级功能。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">更好的方案是使用requests。它是一个Python第三方库，处理URL资源特别方便。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">安装requests</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果安装了Anaconda，requests就已经可用了。否则，需要在命令行下通过pip安装：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 128, 128);">$ </span>pip install requests
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果遇到Permission denied安装失败，请加上sudo重试。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">使用requests</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">要通过GET访问一个页面，只需要几行代码：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; import requests
+&gt;&gt;&gt; r = requests.get('https://www.douban.com/') # 豆瓣首页
+&gt;&gt;&gt; r.status_code
+200
+&gt;&gt;&gt; r.text
+r.text
+'<span style="color:rgb(153, 153, 153);font-weight:bold;">&lt;!DOCTYPE HTML&gt;</span>\n<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">html</span>&gt;</span>\n<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">head</span>&gt;</span>\n<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">meta</span> <span style="color:rgb(0, 128, 128);">name</span>=<span style="color:rgb(221, 17, 68);">&quot;description&quot;</span> <span style="color:rgb(0, 128, 128);">content</span>=<span style="color:rgb(221, 17, 68);">&quot;提供图书、电影、音乐唱片的推荐、评论和...'
+</span></span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">对于带参数的URL，传入一个dict作为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">params</code>参数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r = requests.get(<span style="color:rgb(221, 17, 68);">'https://www.douban.com/search'</span>, params={<span style="color:rgb(221, 17, 68);">'q'</span>: <span style="color:rgb(221, 17, 68);">'python'</span>, <span style="color:rgb(221, 17, 68);">'cat'</span>: <span style="color:rgb(221, 17, 68);">'1001'</span>})
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r.url <span style="color:rgb(153, 153, 136);font-style:italic;"># 实际请求的URL</span>
+<span style="color:rgb(221, 17, 68);">'https://www.douban.com/search?q=python&amp;cat=1001'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">requests自动检测编码，可以使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">encoding</code>属性查看：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r.encoding
+<span style="color:rgb(221, 17, 68);">'utf-8'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">无论响应是文本还是二进制内容，我们都可以用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">content</code>属性获得<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">bytes</code>对象：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; r.content
+b'<span style="color:rgb(153, 153, 153);font-weight:bold;">&lt;!DOCTYPE html&gt;</span>\n<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">html</span>&gt;</span>\n<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">head</span>&gt;</span>\n<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">meta</span> <span style="color:rgb(0, 128, 128);">http-equiv</span>=<span style="color:rgb(221, 17, 68);">&quot;Content-Type&quot;</span> <span style="color:rgb(0, 128, 128);">content</span>=<span style="color:rgb(221, 17, 68);">&quot;text/html; charset=utf-8&quot;</span>&gt;</span>\n...'
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">requests的方便之处还在于，对于特定类型的响应，例如JSON，可以直接获取：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; r = requests.get('https://query.yahooapis.com/v1/public/yql?q=<span><span style="color:rgb(51, 51, 51);font-weight:bold;">select</span>%<span style="color:rgb(0, 153, 153);">20</span>*%<span style="color:rgb(0, 153, 153);">20</span><span style="color:rgb(51, 51, 51);font-weight:bold;">from</span>%<span style="color:rgb(0, 153, 153);">20</span>weather.forecast%<span style="color:rgb(0, 153, 153);">20</span><span style="color:rgb(51, 51, 51);font-weight:bold;">where</span>%<span style="color:rgb(0, 153, 153);">20</span>woeid%<span style="color:rgb(0, 153, 153);">20</span>%<span style="color:rgb(0, 153, 153);">3</span>D%<span style="color:rgb(0, 153, 153);">202151330</span>&amp;format=json<span style="color:rgb(221, 17, 68);">')
+&gt;&gt;&gt; r.json()
+{'</span>query<span style="color:rgb(221, 17, 68);">': {'</span><span>count</span><span style="color:rgb(221, 17, 68);">': 1, '</span>created<span style="color:rgb(221, 17, 68);">': '</span><span style="color:rgb(0, 153, 153);">2017</span>-<span style="color:rgb(0, 153, 153);">11</span>-<span style="color:rgb(0, 153, 153);">17</span>T07:<span style="color:rgb(0, 153, 153);">14</span>:<span style="color:rgb(0, 153, 153);">12</span>Z<span style="color:rgb(221, 17, 68);">', ...
+</span></span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">需要传入HTTP Header时，我们传入一个dict作为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">headers</code>参数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; r = requests.get('https://www.douban.com/', headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit'})
+&gt;&gt;&gt; r.text
+'<span style="color:rgb(153, 153, 153);font-weight:bold;">&lt;!DOCTYPE html&gt;</span>\n<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">html</span>&gt;</span>\n<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">head</span>&gt;</span>\n<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">meta</span> <span style="color:rgb(0, 128, 128);">charset</span>=<span style="color:rgb(221, 17, 68);">&quot;UTF-8&quot;</span>&gt;</span>\n <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">title</span>&gt;</span>豆瓣(手机版)<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;/<span style="color:rgb(0, 0, 128);font-weight:normal;">title</span>&gt;</span>...'
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">要发送POST请求，只需要把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">get()</code>方法变成<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">post()</code>，然后传入<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">data</code>参数作为POST请求的数据：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r = requests.post(<span style="color:rgb(221, 17, 68);">'https://accounts.douban.com/login'</span>, data={<span style="color:rgb(221, 17, 68);">'form_email'</span>: <span style="color:rgb(221, 17, 68);">'abc@example.com'</span>, <span style="color:rgb(221, 17, 68);">'form_password'</span>: <span style="color:rgb(221, 17, 68);">'123456'</span>})
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">requests默认使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">application/x-www-form-urlencoded</code>对POST数据编码。如果要传递JSON数据，可以直接传入json参数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>params = <span>{'key': 'value'}</span></span>
+<span>r = <span>requests.post(url, json=params) # 内部自动序列化为JSON</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">类似的，上传文件需要更复杂的编码格式，但是requests把它简化成<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">files</code>参数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>upload_files = {<span style="color:rgb(221, 17, 68);">'file'</span>: open(<span style="color:rgb(221, 17, 68);">'report.xls'</span>, <span style="color:rgb(221, 17, 68);">'rb'</span>)}
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r = requests.post(url, files=upload_files)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">在读取文件时，注意务必使用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'rb'</code>即二进制模式读取，这样获取的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">bytes</code>长度才是文件的长度。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">post()</code>方法替换为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">put()</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">delete()</code>等，就可以以PUT或DELETE方式请求资源。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">除了能轻松获取响应内容外，requests对获取HTTP响应的其他信息也非常简单。例如，获取响应头：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; r.headers
+{Content-Type': 'text/html; char<span><span style="color:rgb(51, 51, 51);font-weight:bold;">set</span>=utf-<span style="color:rgb(0, 153, 153);">8</span><span style="color:rgb(221, 17, 68);">', '</span>Transfer-Encoding<span style="color:rgb(221, 17, 68);">': '</span>chunked<span style="color:rgb(221, 17, 68);">', '</span>Content-Encoding<span style="color:rgb(221, 17, 68);">': '</span>gzip<span style="color:rgb(221, 17, 68);">', ...}
+&gt;&gt;&gt; r.headers['</span>Content-Type<span style="color:rgb(221, 17, 68);">']
+'</span>text/html;</span> char<span><span style="color:rgb(51, 51, 51);font-weight:bold;">set</span>=utf-<span style="color:rgb(0, 153, 153);">8</span><span style="color:rgb(221, 17, 68);">'
+</span></span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">requests对Cookie做了特殊处理，使得我们不必解析Cookie就可以轻松获取指定的Cookie：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r.cookies[<span style="color:rgb(221, 17, 68);">'ts'</span>]
+<span style="color:rgb(221, 17, 68);">'example_cookie_12345'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">要在请求中传入Cookie，只需准备一个dict传入<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">cookies</code>参数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cs = {<span style="color:rgb(221, 17, 68);">'token'</span>: <span style="color:rgb(221, 17, 68);">'12345'</span>, <span style="color:rgb(221, 17, 68);">'status'</span>: <span style="color:rgb(221, 17, 68);">'working'</span>}
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r = requests.get(url, cookies=cs)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">最后，要指定超时，传入以秒为单位的timeout参数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>r = requests.get(url, timeout=<span style="color:rgb(0, 153, 153);">2.5</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 2.5秒后超时</span>
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">用requests获取URL资源，就是这么简单！</p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="requests_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="requests_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1183249464292448#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017785454949568" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1183255880134144" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

@@ -1,0 +1,168 @@
+<html>
+<head>
+  <title>海龟绘图</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2217"/>
+<h1>海龟绘图</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:26</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">海龟绘图</h4>
+    <div>
+    	<span>阅读: 3402992</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">在1966年，Seymour Papert和Wally Feurzig发明了一种专门给儿童学习编程的语言——<a href="https://baike.baidu.com/item/logo/4689862" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">LOGO语言</a>，它的特色就是通过编程指挥一个小海龟（turtle）在屏幕上绘图。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">海龟绘图（Turtle Graphics）后来被移植到各种高级语言中，Python内置了turtle库，基本上100%复制了原始的Turtle Graphics的所有功能。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们来看一个指挥小海龟绘制一个长方形的简单代码：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 153, 136);font-style:italic;"># 导入turtle包的所有内容:</span>
+<span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> turtle <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> *
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 设置笔刷宽度:</span>
+width(<span style="color:rgb(0, 153, 153);">4</span>)
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 前进:</span>
+forward(<span style="color:rgb(0, 153, 153);">200</span>)
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 右转90度:</span>
+right(<span style="color:rgb(0, 153, 153);">90</span>)
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 笔刷颜色:</span>
+pencolor(<span style="color:rgb(221, 17, 68);">'red'</span>)
+forward(<span style="color:rgb(0, 153, 153);">100</span>)
+right(<span style="color:rgb(0, 153, 153);">90</span>)
+
+pencolor(<span style="color:rgb(221, 17, 68);">'green'</span>)
+forward(<span style="color:rgb(0, 153, 153);">200</span>)
+right(<span style="color:rgb(0, 153, 153);">90</span>)
+
+pencolor(<span style="color:rgb(221, 17, 68);">'blue'</span>)
+forward(<span style="color:rgb(0, 153, 153);">100</span>)
+right(<span style="color:rgb(0, 153, 153);">90</span>)
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 调用done()使得窗口等待被关闭，否则将立刻关闭窗口:</span>
+done()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">在命令行运行上述代码，会自动弹出一个绘图窗口，然后绘制出一个长方形：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="海龟绘图_files/l" type="image/jpeg" data-filename="l" height="246" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="489"/></p>
+<p style="margin:0px 0px 15px;margin-top:15px;">从程序代码可以看出，海龟绘图就是指挥海龟前进、转向，海龟移动的轨迹就是绘制的线条。要绘制一个长方形，只需要让海龟前进、右转90度，反复4次。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">width()</code>函数可以设置笔刷宽度，调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">pencolor()</code>函数可以设置颜色。更多操作请参考<a href="https://docs.python.org/3.3/library/turtle.html#turtle-methods" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">turtle库</a>的说明。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">绘图完成后，记得调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">done()</code>函数，让窗口进入消息循环，等待被关闭。否则，由于Python进程会立刻结束，将导致窗口被立刻关闭。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">turtle</code>包本身只是一个绘图库，但是配合Python代码，就可以绘制各种复杂的图形。例如，通过循环绘制5个五角星：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> turtle <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> *
+
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">drawStar</span><span>(x, y)</span>:</span>
+    pu()
+    goto(x, y)
+    pd()
+    <span style="color:rgb(153, 153, 136);font-style:italic;"># set heading: 0</span>
+    seth(<span style="color:rgb(0, 153, 153);">0</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> i <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">5</span>):
+        fd(<span style="color:rgb(0, 153, 153);">40</span>)
+        rt(<span style="color:rgb(0, 153, 153);">144</span>)
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> x <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">0</span>, <span style="color:rgb(0, 153, 153);">250</span>, <span style="color:rgb(0, 153, 153);">50</span>):
+    drawStar(x, <span style="color:rgb(0, 153, 153);">0</span>)
+
+done()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">程序执行效果如下：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="海龟绘图_files/l [1]" type="image/jpeg" data-filename="l" height="52" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="256"/></p>
+<p style="margin:0px 0px 15px;margin-top:15px;">使用递归，可以绘制出非常复杂的图形。例如，下面的代码可以绘制一棵分型树：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> turtle <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> *
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 设置色彩模式是RGB:</span>
+colormode(<span style="color:rgb(0, 153, 153);">255</span>)
+
+lt(<span style="color:rgb(0, 153, 153);">90</span>)
+
+lv = <span style="color:rgb(0, 153, 153);">14</span>
+l = <span style="color:rgb(0, 153, 153);">120</span>
+s = <span style="color:rgb(0, 153, 153);">45</span>
+
+width(lv)
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 初始化RGB颜色:</span>
+r = <span style="color:rgb(0, 153, 153);">0</span>
+g = <span style="color:rgb(0, 153, 153);">0</span>
+b = <span style="color:rgb(0, 153, 153);">0</span>
+pencolor(r, g, b)
+
+penup()
+bk(l)
+pendown()
+fd(l)
+
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">draw_tree</span><span>(l, level)</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">global</span> r, g, b
+    <span style="color:rgb(153, 153, 136);font-style:italic;"># save the current pen width</span>
+    w = width()
+
+    <span style="color:rgb(153, 153, 136);font-style:italic;"># narrow the pen width</span>
+    width(w * <span style="color:rgb(0, 153, 153);">3.0</span> / <span style="color:rgb(0, 153, 153);">4.0</span>)
+    <span style="color:rgb(153, 153, 136);font-style:italic;"># set color:</span>
+    r = r + <span style="color:rgb(0, 153, 153);">1</span>
+    g = g + <span style="color:rgb(0, 153, 153);">2</span>
+    b = b + <span style="color:rgb(0, 153, 153);">3</span>
+    pencolor(r % <span style="color:rgb(0, 153, 153);">200</span>, g % <span style="color:rgb(0, 153, 153);">200</span>, b % <span style="color:rgb(0, 153, 153);">200</span>)
+
+    l = <span style="color:rgb(0, 153, 153);">3.0</span> / <span style="color:rgb(0, 153, 153);">4.0</span> * l
+
+    lt(s)
+    fd(l)
+
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> level &lt; lv:
+        draw_tree(l, level + <span style="color:rgb(0, 153, 153);">1</span>)
+    bk(l)
+    rt(<span style="color:rgb(0, 153, 153);">2</span> * s)
+    fd(l)
+
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> level &lt; lv:
+        draw_tree(l, level + <span style="color:rgb(0, 153, 153);">1</span>)
+    bk(l)
+    lt(s)
+
+    <span style="color:rgb(153, 153, 136);font-style:italic;"># restore the previous pen width</span>
+    width(w)
+
+speed(<span style="color:rgb(221, 17, 68);">&quot;fastest&quot;</span>)
+
+draw_tree(l, <span style="color:rgb(0, 153, 153);">4</span>)
+
+done()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">执行上述程序需要花费一定的时间，最后的效果如下：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="海龟绘图_files/l [2]" type="image/jpeg" data-filename="l" height="629" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="612"/></p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/gui/turtle/rect.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">rect.py</a></p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/gui/turtle/starts.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">starts.py</a></p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/gui/turtle/tree.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">tree.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="海龟绘图_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="海龟绘图_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1249593505347328#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017786914566560" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017787560490144" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

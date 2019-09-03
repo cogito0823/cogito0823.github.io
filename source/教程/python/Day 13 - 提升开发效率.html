@@ -1,0 +1,145 @@
+<html>
+<head>
+  <title>Day 13 - 提升开发效率</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2590"/>
+<h1>Day 13 - 提升开发效率</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:38</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">Day 13 - 提升开发效率</h4>
+    <div>
+    	<span>阅读: 78604</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">现在，我们已经把一个Web App的框架完全搭建好了，从后端的API到前端的MVVM，流程已经跑通了。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">在继续工作前，注意到每次修改Python代码，都必须在命令行先Ctrl-C停止服务器，再重启，改动才能生效。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">在开发阶段，每天都要修改、保存几十次代码，每次保存都手动来这么一下非常麻烦，严重地降低了我们的开发效率。有没有办法让服务器检测到代码修改后自动重新加载呢？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">Django的开发环境在Debug模式下就可以做到自动重新加载，如果我们编写的服务器也能实现这个功能，就能大大提升开发效率。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">可惜的是，Django没把这个功能独立出来，不用Django就享受不到，怎么办？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">其实Python本身提供了重新载入模块的功能，但不是所有模块都能被重新载入。另一种思路是检测<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">www</code>目录下的代码改动，一旦有改动，就自动重启服务器。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">按照这个思路，我们可以编写一个辅助程序<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">pymonitor.py</code>，让它启动<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">wsgiapp.py</code>，并时刻监控<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">www</code>目录下的代码改动，有改动时，先把当前<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">wsgiapp.py</code>进程杀掉，再重启，就完成了服务器进程的自动重启。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">要监控目录文件的变化，我们也无需自己手动定时扫描，Python的第三方库<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">watchdog</code>可以利用操作系统的API来监控目录文件的变化，并发送通知。我们先用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">pip</code>安装：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 128, 128);">$ </span>pip3 install watchdog
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">利用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">watchdog</code>接收文件变化的通知，如果是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">.py</code>文件，就自动重启<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">wsgiapp.py</code>进程。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">利用Python自带的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">subprocess</code>实现进程的启动和终止，并把输入输出重定向到当前进程的输入输出中：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 153, 136);font-style:italic;">#!/usr/bin/env python3</span>
+<span style="color:rgb(153, 153, 136);font-style:italic;"># -*- coding: utf-8 -*-</span>
+
+__author__ = <span style="color:rgb(221, 17, 68);">'Michael Liao'</span>
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> os, sys, time, subprocess
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> watchdog.observers <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> Observer
+<span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> watchdog.events <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> FileSystemEventHandler
+
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">log</span><span>(s)</span>:</span>
+    print(<span style="color:rgb(221, 17, 68);">'[Monitor] %s'</span> % s)
+
+<span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">MyFileSystemEventHander</span><span>(FileSystemEventHandler)</span>:</span>
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__init__</span><span>(self, fn)</span>:</span>
+        super(MyFileSystemEventHander, self).__init__()
+        self.restart = fn
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">on_any_event</span><span>(self, event)</span>:</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> event.src_path.endswith(<span style="color:rgb(221, 17, 68);">'.py'</span>):
+            log(<span style="color:rgb(221, 17, 68);">'Python source file changed: %s'</span> % event.src_path)
+            self.restart()
+
+command = [<span style="color:rgb(221, 17, 68);">'echo'</span>, <span style="color:rgb(221, 17, 68);">'ok'</span>]
+process = <span style="color:rgb(0, 134, 179);">None</span>
+
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">kill_process</span><span>()</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">global</span> process
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> process:
+        log(<span style="color:rgb(221, 17, 68);">'Kill process [%s]...'</span> % process.pid)
+        process.kill()
+        process.wait()
+        log(<span style="color:rgb(221, 17, 68);">'Process ended with code %s.'</span> % process.returncode)
+        process = <span style="color:rgb(0, 134, 179);">None</span>
+
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">start_process</span><span>()</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">global</span> process, command
+    log(<span style="color:rgb(221, 17, 68);">'Start process %s...'</span> % <span style="color:rgb(221, 17, 68);">' '</span>.join(command))
+    process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr)
+
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">restart_process</span><span>()</span>:</span>
+    kill_process()
+    start_process()
+
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">start_watch</span><span>(path, callback)</span>:</span>
+    observer = Observer()
+    observer.schedule(MyFileSystemEventHander(restart_process), path, recursive=<span style="color:rgb(0, 134, 179);">True</span>)
+    observer.start()
+    log(<span style="color:rgb(221, 17, 68);">'Watching directory %s...'</span> % path)
+    start_process()
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">try</span>:
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">while</span> <span style="color:rgb(0, 134, 179);">True</span>:
+            time.sleep(<span style="color:rgb(0, 153, 153);">0.5</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">except</span> KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> __name__ == <span style="color:rgb(221, 17, 68);">'__main__'</span>:
+    argv = sys.argv[<span style="color:rgb(0, 153, 153);">1</span>:]
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">not</span> argv:
+        print(<span style="color:rgb(221, 17, 68);">'Usage: ./pymonitor your-script.py'</span>)
+        exit(<span style="color:rgb(0, 153, 153);">0</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> argv[<span style="color:rgb(0, 153, 153);">0</span>] != <span style="color:rgb(221, 17, 68);">'python3'</span>:
+        argv.insert(<span style="color:rgb(0, 153, 153);">0</span>, <span style="color:rgb(221, 17, 68);">'python3'</span>)
+    command = argv
+    path = os.path.abspath(<span style="color:rgb(221, 17, 68);">'.'</span>)
+    start_watch(path, <span style="color:rgb(0, 134, 179);">None</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">一共70行左右的代码，就实现了Debug模式的自动重新加载。用下面的命令启动服务器：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 128, 128);">$ </span>python3 pymonitor.py wsgiapp.py
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">或者给<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">pymonitor.py</code>加上可执行权限，启动服务器：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">$ ./pymonitor.py app.py
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">在编辑器中打开一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">.py</code>文件，修改后保存，看看命令行输出，是不是自动重启了服务器：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">$ ./pymonitor.py app.py 
+[Monitor] Watching directory /Users/michael/Github/awesome-python3-webapp/www...
+[Monitor] <span><span style="color:rgb(51, 51, 51);font-weight:bold;">Start</span> process python app.py...
+...
+INFO:root:application (/Users/michael/Github/awesome-python3-webapp/www) will <span style="color:rgb(51, 51, 51);font-weight:bold;">start</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">at</span> <span style="color:rgb(0, 153, 153);">0.0</span><span style="color:rgb(0, 153, 153);">.0</span><span style="color:rgb(0, 153, 153);">.0</span>:<span style="color:rgb(0, 153, 153);">9000.</span>..
+[Monitor] Python source file changed: /Users/michael/Github/awesome-python-webapp/www/handlers.py
+[Monitor] Kill process [<span style="color:rgb(0, 153, 153);">2747</span>]...
+[Monitor] Process ended <span style="color:rgb(51, 51, 51);font-weight:bold;">with</span> code -<span style="color:rgb(0, 153, 153);">9.</span>
+[Monitor] <span style="color:rgb(51, 51, 51);font-weight:bold;">Start</span> process python app.py...
+...
+INFO:root:application (/Users/michael/Github/awesome-python3-webapp/www) will <span style="color:rgb(51, 51, 51);font-weight:bold;">start</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">at</span> <span style="color:rgb(0, 153, 153);">0.0</span><span style="color:rgb(0, 153, 153);">.0</span><span style="color:rgb(0, 153, 153);">.0</span>:<span style="color:rgb(0, 153, 153);">9000.</span>..
+</span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">现在，只要一保存代码，就可以刷新浏览器看到效果，大大提升了开发效率。</p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="Day 13 - 提升开发效率_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="Day 13 - 提升开发效率_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491156860224#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491118848608" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491195171744" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

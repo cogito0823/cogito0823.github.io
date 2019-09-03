@@ -1,0 +1,310 @@
+<html>
+<head>
+  <title>Day 16 - 编写移动App</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2538"/>
+<h1>Day 16 - 编写移动App</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:39</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:flex; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div>
+							<div>
+								
+																
+							</div>
+							<div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">Day 16 - 编写移动App</h4>
+    <div>
+    	<span>阅读: 542910</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">网站部署上线后，还缺点啥呢？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">在移动互联网浪潮席卷而来的今天，一个网站没有上线移动App，出门根本不好意思跟人打招呼。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">所以，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">awesome-python3-webapp</code>必须得有一个移动App版本！</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">开发iPhone版本</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们首先来看看如何开发iPhone App。前置条件：一台Mac电脑，安装XCode和最新的iOS SDK。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">在使用MVVM编写前端页面时，我们就能感受到，用REST API封装网站后台的功能，不但能清晰地分离前端页面和后台逻辑，现在这个好处更加明显，移动App也可以通过REST API从后端拿到数据。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们来设计一个简化版的iPhone App，包含两个屏幕：列出最新日志和阅读日志的详细内容：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="Day 16 - 编写移动App_files/956198702546240" type="image/jpeg" data-filename="956198702546240" height="417" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="424"/></p>
+<p style="margin:0px 0px 15px;margin-top:15px;">只需要调用API：<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">/api/blogs</code>。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">在XCode中完成App编写：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="Day 16 - 编写移动App_files/956198878703904" type="image/jpeg" data-filename="956198878703904" height="274" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="520"/></p>
+<p style="margin:0px 0px 15px;margin-top:15px;">由于我们的教程是Python，关于如何开发iOS，请移步<a href="https://developer.apple.com/technologies/ios/" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Develop Apps for iOS</a>。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/awesome-python3-webapp/tree/day-16/ios" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">点击下载iOS App源码</a>。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">如何编写Android App？这个当成作业了。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/awesome-python3-webapp/tree/day-16" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">day-16</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="Day 16 - 编写移动App_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="Day 16 - 编写移动App_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491370993600#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018491264935776" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1019418790329088" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div>
+							<div>
+								
+								
+								
+							</div>
+							<div>
+								    <h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:18px;line-height:24px;">评论</h3>
+
+    <ul style="margin:0px 0px 15px;margin-top:15px;padding:0px;list-style:none;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1250259915606464" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/8fa29de9jw8f4qlbxff1sj20ro0rogql.jpg" type="image/jpeg" data-filename="8fa29de9jw8f4qlbxff1sj20ro0rogql.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1250264147136096" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">500</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1250259915606464" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Runnerisme</a>
+				created at November 22, 2018 11:26 AM, Last updated at April 22, 2019 1:12 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">500 Internal Server Error</p>
+<p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">Server got itself in trouble</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1277547086876352" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/65dd772fjw8ed2zozb8zpj20e80e8mxk.jpg" type="image/jpeg" data-filename="65dd772fjw8ed2zozb8zpj20e80e8mxk.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1277547086876352" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">卡斯帕骑士</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at April 22, 2019 1:12 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">请问这个问题你解决了吗？我也遇到了这个问题，我用的Mac.</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1250264147136096" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1250264147136096#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1086458219687456" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/66c69212jw1e8qgp5bmzyj2050050aa8.jpg" type="image/jpeg" data-filename="66c69212jw1e8qgp5bmzyj2050050aa8.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1090304932094592" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">还好我就是干iOS的</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1086458219687456" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">三千院夜一</a>
+				created at June 22, 2016 4:05 PM, Last updated at September 15, 2018 3:12 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">还好我就是干iOS的</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1237072540182816" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/006TqGokly8fhi6oici8nj30hs0hsgmk.jpg" type="image/jpeg" data-filename="006TqGokly8fhi6oici8nj30hs0hsgmk.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1237072540182816" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">AnshayM</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at September 11, 2018 10:45 AM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;">曾经被领导安排看了三个月的ios，然而换公司后没有ios设备，虚拟机又太卡需要各种配置。还是算了。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;margin-bottom:0px;">廖老师都不推荐开发安卓端APP的吗？？</p>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1090304932094592" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1090304932094592#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1203045171982944" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/bcb450efjw8f71plbqnpzj20ku0ku0tb.jpg" type="image/jpeg" data-filename="bcb450efjw8f71plbqnpzj20ku0ku0tb.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1203044960652032" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">请问orm中Model中FindAll方法最后一句为何要把rs转化一下，我用的 tormysql, 为何aiomysql需要这种</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1203045171982944" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">野沐沐</a>
+				created at March 6, 2018 9:02 PM, Last updated at March 6, 2018 9:08 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">return [cls(**r) for r in rs]</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;"><li>
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1203045171982944" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/bcb450efjw8f71plbqnpzj20ku0ku0tb [1].jpg" type="image/jpeg" data-filename="bcb450efjw8f71plbqnpzj20ku0ku0tb.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);"><a href="https://www.liaoxuefeng.com/user/1203045171982944" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">野沐沐</a></div>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				Created at March 6, 2018 9:08 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<h1 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:36px;line-height:42px;margin-bottom:0px;">**r 是关键字参数，构成了一个cls类的列表，其实就是每一条记录对应的类实例</h1>
+
+		</div>
+	</div>
+</li>
+	<li style="margin-top:25px;">
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1203044960652032" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1203044960652032#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1189802003133152" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/803d3617ly8fmd6ecxfhlj20yi0zl425.jpg" type="image/jpeg" data-filename="803d3617ly8fmd6ecxfhlj20yi0zl425.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1189801912957888" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">感觉屌屌的</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1189802003133152" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">过客壹眼太匆匆</a>
+				created at December 23, 2017 6:56 PM, Last updated at December 23, 2017 6:56 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">感觉屌屌的</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1189801912957888" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1189801912957888#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1141733775697184" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/eb129739tw1ebkdd4eokej20b40b475r.jpg" type="image/jpeg" data-filename="eb129739tw1ebkdd4eokej20b40b475r.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1176363230819808" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">受益匪浅</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1141733775697184" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">渊博的MISS小白</a>
+				created at October 10, 2017 2:54 PM, Last updated at October 10, 2017 2:54 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">感谢分享！ 对Web端的处理和理解更深了一步~~</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1176363230819808" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1176363230819808#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1144273586161696" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/7b47e4f5jw8f8pt4xwlblj20ku0lp0un.jpg" type="image/jpeg" data-filename="7b47e4f5jw8f8pt4xwlblj20ku0lp0un.jpg" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1144705513420288" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">iOS飘过,哈哈哈哈</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1144273586161696" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">koreadragon</a>
+				created at April 18, 2017 9:42 PM, Last updated at April 18, 2017 9:42 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<pre style="margin:0px 0px 15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;margin-bottom:0px;"><code style="white-space:pre-wrap;">            —— by koreadragon
+</code></pre>
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1144705513420288" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1144705513420288#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li><li style="margin-top:25px;">
+	<div>
+		<div style="margin-bottom:0;background:transparent;padding:10px;border-right:none;border-bottom:none;border-left:none;border-image:initial;border-top:1px solid rgb(221, 221, 221);border-radius:0px;"><span style="display:table;"></span>
+			<a href="https://www.liaoxuefeng.com/user/1060727477727008" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank"><img src="Day 16 - 编写移动App_files/1" type="image/gif" data-filename="1" height="50" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;margin-right:15px;float:left;border-radius:50%;border:1px solid rgb(221, 221, 221);" width="50"/></a>
+			<h4 style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin:5px 0px 0px;font-size:16px;line-height:22px;"><a href="https://www.liaoxuefeng.com/discuss/969955749132672/1091771901670848" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">哈哈 赞 赞 赞！</a></h4>
+			<div style="margin:2px 0px 0px;font-size:11px;line-height:16px;color:rgb(153, 153, 153);">
+				<a href="https://www.liaoxuefeng.com/user/1060727477727008" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">往事随风vc</a>
+				created at June 30, 2016 6:23 PM, Last updated at June 30, 2016 6:23 PM
+				
+			</div>
+		<span style="display:table;clear:both;"></span></div>
+		<div style="padding-right:10px;padding-left:75px;word-break:break-all;">
+			<p style="margin:0px 0px 15px;margin-bottom:0px;">哈哈 赞 赞 赞！</p>
+
+		</div>
+	</div>
+<ul style="list-style:none;margin:25px 0px 0px;padding-left:75px;">
+	<li>
+		<div>
+			<hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1091771901670848" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 全部讨论</a>
+			 
+			<a href="https://www.liaoxuefeng.com/discuss/969955749132672/1091771901670848#reply" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;vertical-align:middle;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;text-shadow:rgb(255, 255, 255) 0px 1px 0px;background:rgb(245, 245, 245);color:rgb(68, 68, 68);text-decoration:none;padding:0px 10px;line-height:23px;min-height:25px;font-size:12px;cursor:pointer;" target="_blank"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 回复</a>
+		</div>
+	</li>
+</ul></li></ul>
+
+    <h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">发表评论</h3>
+
+    
+
+    <div>
+	<div>
+		<p style="margin:0px 0px 15px;"></p>
+		
+	</div>
+</div>
+
+							</div>
+						</div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

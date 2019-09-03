@@ -1,0 +1,195 @@
+<html>
+<head>
+  <title>使用dict和set</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1701"/>
+<h1>使用dict和set</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 2:21</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">使用dict和set</h4>
+    <div>
+    	<span>阅读: 30112393</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:18px;line-height:24px;">dict</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">Python内置了字典：dict的支持，dict全称dictionary，在其他语言中也称为map，使用键-值（key-value）存储，具有极快的查找速度。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">举个例子，假设要根据同学的名字查找对应的成绩，如果用list实现，需要两个list：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>names = <span>['Michael', 'Bob', 'Tracy']</span></span>
+<span>scores = <span>[<span style="color:rgb(0, 153, 153);">95</span>, <span style="color:rgb(0, 153, 153);">75</span>, <span style="color:rgb(0, 153, 153);">85</span>]</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">给定一个名字，要查找对应的成绩，就先要在names中找到对应的位置，再从scores取出对应的成绩，list越长，耗时越长。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果用dict实现，只需要一个“名字”-“成绩”的对照表，直接根据名字查找成绩，无论这个表有多大，查找速度都不会变慢。用Python写一个dict如下：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d = {<span style="color:rgb(221, 17, 68);">'Michael'</span>: <span style="color:rgb(0, 153, 153);">95</span>, <span style="color:rgb(221, 17, 68);">'Bob'</span>: <span style="color:rgb(0, 153, 153);">75</span>, <span style="color:rgb(221, 17, 68);">'Tracy'</span>: <span style="color:rgb(0, 153, 153);">85</span>}
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d[<span style="color:rgb(221, 17, 68);">'Michael'</span>]
+<span style="color:rgb(0, 153, 153);">95</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">为什么dict查找速度这么快？因为dict的实现原理和查字典是一样的。假设字典包含了1万个汉字，我们要查某一个字，一个办法是把字典从第一页往后翻，直到找到我们想要的字为止，这种方法就是在list中查找元素的方法，list越大，查找越慢。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">第二种方法是先在字典的索引表里（比如部首表）查这个字对应的页码，然后直接翻到该页，找到这个字。无论找哪个字，这种查找速度都非常快，不会随着字典大小的增加而变慢。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">dict就是第二种实现方式，给定一个名字，比如<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'Michael'</code>，dict在内部就可以直接计算出<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Michael</code>对应的存放成绩的“页码”，也就是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">95</code>这个数字存放的内存地址，直接取出来，所以速度非常快。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">你可以猜到，这种key-value存储方式，在放进去的时候，必须根据key算出value的存放位置，这样，取的时候才能根据key直接拿到value。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">把数据放入dict的方法，除了初始化时指定外，还可以通过key放入：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d[<span style="color:rgb(221, 17, 68);">'Adam'</span>] = <span style="color:rgb(0, 153, 153);">67</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d[<span style="color:rgb(221, 17, 68);">'Adam'</span>]
+<span style="color:rgb(0, 153, 153);">67</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">由于一个key只能对应一个value，所以，多次对一个key放入value，后面的值会把前面的值冲掉：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d[<span style="color:rgb(221, 17, 68);">'Jack'</span>] = <span style="color:rgb(0, 153, 153);">90</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d[<span style="color:rgb(221, 17, 68);">'Jack'</span>]
+<span style="color:rgb(0, 153, 153);">90</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d[<span style="color:rgb(221, 17, 68);">'Jack'</span>] = <span style="color:rgb(0, 153, 153);">88</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d[<span style="color:rgb(221, 17, 68);">'Jack'</span>]
+<span style="color:rgb(0, 153, 153);">88</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果key不存在，dict就会报错：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; d['Thomas']
+Traceback (most recent call last):
+  File &quot;<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">stdin</span>&gt;</span>&quot;, line 1, in <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">module</span>&gt;</span>
+KeyError: 'Thomas'
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">要避免key不存在的错误，有两种办法，一是通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">in</code>判断key是否存在：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(221, 17, 68);">'Thomas'</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> d
+<span style="color:rgb(0, 134, 179);">False</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">二是通过dict提供的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">get()</code>方法，如果key不存在，可以返回<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">None</code>，或者自己指定的value：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d.get(<span style="color:rgb(221, 17, 68);">'Thomas'</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d.get(<span style="color:rgb(221, 17, 68);">'Thomas'</span>, -<span style="color:rgb(0, 153, 153);">1</span>)
+-<span style="color:rgb(0, 153, 153);">1</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意：返回<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">None</code>的时候Python的交互环境不显示结果。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">要删除一个key，用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">pop(key)</code>方法，对应的value也会从dict中删除：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d.pop(<span style="color:rgb(221, 17, 68);">'Bob'</span>)
+<span style="color:rgb(0, 153, 153);">75</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>d
+{<span style="color:rgb(221, 17, 68);">'Michael'</span>: <span style="color:rgb(0, 153, 153);">95</span>, <span style="color:rgb(221, 17, 68);">'Tracy'</span>: <span style="color:rgb(0, 153, 153);">85</span>}
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">请务必注意，dict内部存放的顺序和key放入的顺序是没有关系的。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">和list比较，dict有以下几个特点：</p>
+<ol style="margin:0px 0px 15px;margin-top:15px;padding-left:30px;">
+<li>查找和插入的速度极快，不会随着key的增加而变慢；</li>
+<li>需要占用大量的内存，内存浪费多。</li>
+</ol>
+<p style="margin:0px 0px 15px;margin-top:15px;">而list相反：</p>
+<ol style="margin:0px 0px 15px;margin-top:15px;padding-left:30px;">
+<li>查找和插入的时间随着元素的增加而增加；</li>
+<li>占用空间小，浪费内存很少。</li>
+</ol>
+<p style="margin:0px 0px 15px;margin-top:15px;">所以，dict是用空间来换取时间的一种方法。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">dict可以用在需要高速查找的很多地方，在Python代码中几乎无处不在，正确使用dict非常重要，需要牢记的第一条就是dict的key必须是<strong style="font-weight:bold;">不可变对象</strong>。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">这是因为dict根据key来计算value的存储位置，如果每次计算相同的key得出的结果不同，那dict内部就完全混乱了。这个通过key计算位置的算法称为哈希算法（Hash）。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">要保证hash的正确性，作为key的对象就不能变。在Python中，字符串、整数等都是不可变的，因此，可以放心地作为key。而list是可变的，就不能作为key：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">&gt;&gt;&gt; key = [1, 2, 3]
+&gt;&gt;&gt; d[key] = 'a list'
+Traceback (most recent call last):
+  File &quot;<span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">stdin</span>&gt;</span>&quot;, line 1, in <span style="color:rgb(0, 0, 128);font-weight:normal;">&lt;<span style="color:rgb(0, 0, 128);font-weight:normal;">module</span>&gt;</span>
+TypeError: unhashable type: 'list'
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">set</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">set和dict类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在set中，没有重复的key。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">要创建一个set，需要提供一个list作为输入集合：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s = set([<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>])
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s
+{<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>}
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意，传入的参数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">[1, 2, 3]</code>是一个list，而显示的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">{1, 2, 3}</code>只是告诉你这个set内部有1，2，3这3个元素，显示的顺序也不表示set是有序的。。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">重复元素在set中自动被过滤：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s = set([<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">3</span>])
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s
+{<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>}
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">add(key)</code>方法可以添加元素到set中，可以重复添加，但不会有效果：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.add(<span style="color:rgb(0, 153, 153);">4</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s
+{<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">4</span>}
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.add(<span style="color:rgb(0, 153, 153);">4</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s
+{<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">4</span>}
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">remove(key)</code>方法可以删除元素：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s.remove(<span style="color:rgb(0, 153, 153);">4</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s
+{<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>}
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">set可以看成数学意义上的无序和无重复元素的集合，因此，两个set可以做数学意义上的交集、并集等操作：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s1 = set([<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>])
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s2 = set([<span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">4</span>])
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s1 &amp; s2
+{<span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>}
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>s1 | s2
+{<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">4</span>}
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">set和dict的唯一区别仅在于没有存储对应的value，但是，set的原理和dict一样，所以，同样不可以放入可变对象，因为无法判断两个可变对象是否相等，也就无法保证set内部“不会有重复元素”。试试把list放入set，看看是否会报错。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">再议不可变对象</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">上面我们讲了，str是不变对象，而list是可变对象。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">对于可变对象，比如list，对list进行操作，list内部的内容是会变化的，比如：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>a = [<span style="color:rgb(221, 17, 68);">'c'</span>, <span style="color:rgb(221, 17, 68);">'b'</span>, <span style="color:rgb(221, 17, 68);">'a'</span>]
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>a.sort()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>a
+[<span style="color:rgb(221, 17, 68);">'a'</span>, <span style="color:rgb(221, 17, 68);">'b'</span>, <span style="color:rgb(221, 17, 68);">'c'</span>]
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">而对于不可变对象，比如str，对str进行操作呢：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>a = <span style="color:rgb(221, 17, 68);">'abc'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>a.replace(<span style="color:rgb(221, 17, 68);">'a'</span>, <span style="color:rgb(221, 17, 68);">'A'</span>)
+<span style="color:rgb(221, 17, 68);">'Abc'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>a
+<span style="color:rgb(221, 17, 68);">'abc'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">虽然字符串有个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">replace()</code>方法，也确实变出了<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'Abc'</code>，但变量<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">a</code>最后仍是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'abc'</code>，应该怎么理解呢？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们先把代码改成下面这样：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>a = <span style="color:rgb(221, 17, 68);">'abc'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>b = a.replace(<span style="color:rgb(221, 17, 68);">'a'</span>, <span style="color:rgb(221, 17, 68);">'A'</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>b
+<span style="color:rgb(221, 17, 68);">'Abc'</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>a
+<span style="color:rgb(221, 17, 68);">'abc'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">要始终牢记的是，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">a</code>是变量，而<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'abc'</code>才是字符串对象！有些时候，我们经常说，对象<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">a</code>的内容是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'abc'</code>，但其实是指，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">a</code>本身是一个变量，它指向的对象的内容才是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'abc'</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:none;border-radius:3px;font-size:12px;line-height:12px;white-space:pre;background-color:transparent;"><code style="white-space:pre-wrap;font-family:&quot;Courier New&quot;, Consolas, monospace;">┌───┐                  ┌───────┐
+│ a │─────────────────&gt;│ 'abc' │
+└───┘                  └───────┘
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">当我们调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">a.replace('a', 'A')</code>时，实际上调用方法<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">replace</code>是作用在字符串对象<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'abc'</code>上的，而这个方法虽然名字叫<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">replace</code>，但却没有改变字符串<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'abc'</code>的内容。相反，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">replace</code>方法创建了一个新字符串<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'Abc'</code>并返回，如果我们用变量<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">b</code>指向该新字符串，就容易理解了，变量<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">a</code>仍指向原有的字符串<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'abc'</code>，但变量<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">b</code>却指向新字符串<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'Abc'</code>了：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:none;border-radius:3px;font-size:12px;line-height:12px;white-space:pre;background-color:transparent;"><code style="white-space:pre-wrap;font-family:&quot;Courier New&quot;, Consolas, monospace;">┌───┐                  ┌───────┐
+│ a │─────────────────&gt;│ 'abc' │
+└───┘                  └───────┘
+┌───┐                  ┌───────┐
+│ b │─────────────────&gt;│ 'Abc' │
+└───┘                  └───────┘
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">所以，对于不变对象来说，调用对象自身的任意方法，也不会改变该对象自身的内容。相反，这些方法会创建新的对象并返回，这样，就保证了不可变对象本身永远是不可变的。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">使用key-value存储结构的dict在Python中非常有用，选择不可变对象作为key很重要，最常用的key是字符串。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">tuple虽然是不变对象，但试试把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">(1, 2, 3)</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">(1, [2, 3])</code>放入dict或set中，并解释结果。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/basic/the_dict.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">the_dict.py</a></p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/basic/the_set.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">the_set.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="使用dict和set_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="使用dict和set_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017104324028448#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017100774566304" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017105145133280" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

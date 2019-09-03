@@ -1,0 +1,130 @@
+<html>
+<head>
+  <title>Pillow</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2008"/>
+<h1>Pillow</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:24</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">Pillow</h4>
+    <div>
+    	<span>阅读: 2949225</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">PIL：Python Imaging Library，已经是Python平台事实上的图像处理标准库了。PIL功能非常强大，但API却非常简单易用。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">由于PIL仅支持到Python 2.7，加上年久失修，于是一群志愿者在PIL的基础上创建了兼容的版本，名字叫<a href="https://github.com/python-pillow/Pillow" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Pillow</a>，支持最新Python 3.x，又加入了许多新特性，因此，我们可以直接安装使用Pillow。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">安装Pillow</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果安装了Anaconda，Pillow就已经可用了。否则，需要在命令行下通过pip安装：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 128, 128);">$ </span>pip install pillow
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果遇到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Permission denied</code>安装失败，请加上<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">sudo</code>重试。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">操作图像</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">来看看最常见的图像缩放操作，只需三四行代码：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">from PIL import Image
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 打开一个jpg图像文件，注意是当前路径:</span>
+im = Image.open(<span style="color:rgb(221, 17, 68);">'test.jpg'</span>)
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 获得图像尺寸:</span>
+w, h = im.size
+<span style="color:rgb(51, 51, 51);font-weight:bold;">print</span>(<span style="color:rgb(221, 17, 68);">'Original image size: %sx%s'</span> % (w, h))
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 缩放到50%:</span>
+im.thumbnail((w<span style="color:rgb(153, 153, 136);font-style:italic;">//2, h//2))</span>
+<span style="color:rgb(51, 51, 51);font-weight:bold;">print</span>(<span style="color:rgb(221, 17, 68);">'Resize image to: %sx%s'</span> % (w<span style="color:rgb(153, 153, 136);font-style:italic;">//2, h//2))</span>
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 把缩放后的图像用jpeg格式保存:</span>
+im.save(<span style="color:rgb(221, 17, 68);">'thumbnail.jpg'</span>, <span style="color:rgb(221, 17, 68);">'jpeg'</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">其他功能如切片、旋转、滤镜、输出文字、调色板等一应俱全。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">比如，模糊效果也只需几行代码：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> PIL <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> Image, ImageFilter
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 打开一个jpg图像文件，注意是当前路径:</span>
+im = Image.open(<span style="color:rgb(221, 17, 68);">'test.jpg'</span>)
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 应用模糊滤镜:</span>
+im2 = im.filter(ImageFilter.BLUR)
+im2.save(<span style="color:rgb(221, 17, 68);">'blur.jpg'</span>, <span style="color:rgb(221, 17, 68);">'jpeg'</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">效果如下：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="Pillow_files/966760155050624" type="image/jpeg" data-filename="966760155050624" height="300" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="500"/></p>
+<p style="margin:0px 0px 15px;margin-top:15px;">PIL的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">ImageDraw</code>提供了一系列绘图方法，让我们可以直接绘图。比如要生成字母验证码图片：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> PIL <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> Image, ImageDraw, ImageFont, ImageFilter
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> random
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 随机字母:</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">rndChar</span><span>()</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> chr(random.randint(<span style="color:rgb(0, 153, 153);">65</span>, <span style="color:rgb(0, 153, 153);">90</span>))
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 随机颜色1:</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">rndColor</span><span>()</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> (random.randint(<span style="color:rgb(0, 153, 153);">64</span>, <span style="color:rgb(0, 153, 153);">255</span>), random.randint(<span style="color:rgb(0, 153, 153);">64</span>, <span style="color:rgb(0, 153, 153);">255</span>), random.randint(<span style="color:rgb(0, 153, 153);">64</span>, <span style="color:rgb(0, 153, 153);">255</span>))
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 随机颜色2:</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">rndColor2</span><span>()</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> (random.randint(<span style="color:rgb(0, 153, 153);">32</span>, <span style="color:rgb(0, 153, 153);">127</span>), random.randint(<span style="color:rgb(0, 153, 153);">32</span>, <span style="color:rgb(0, 153, 153);">127</span>), random.randint(<span style="color:rgb(0, 153, 153);">32</span>, <span style="color:rgb(0, 153, 153);">127</span>))
+
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 240 x 60:</span>
+width = <span style="color:rgb(0, 153, 153);">60</span> * <span style="color:rgb(0, 153, 153);">4</span>
+height = <span style="color:rgb(0, 153, 153);">60</span>
+image = Image.new(<span style="color:rgb(221, 17, 68);">'RGB'</span>, (width, height), (<span style="color:rgb(0, 153, 153);">255</span>, <span style="color:rgb(0, 153, 153);">255</span>, <span style="color:rgb(0, 153, 153);">255</span>))
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 创建Font对象:</span>
+font = ImageFont.truetype(<span style="color:rgb(221, 17, 68);">'Arial.ttf'</span>, <span style="color:rgb(0, 153, 153);">36</span>)
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 创建Draw对象:</span>
+draw = ImageDraw.Draw(image)
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 填充每个像素:</span>
+<span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> x <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(width):
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> y <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(height):
+        draw.point((x, y), fill=rndColor())
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 输出文字:</span>
+<span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> t <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> range(<span style="color:rgb(0, 153, 153);">4</span>):
+    draw.text((<span style="color:rgb(0, 153, 153);">60</span> * t + <span style="color:rgb(0, 153, 153);">10</span>, <span style="color:rgb(0, 153, 153);">10</span>), rndChar(), font=font, fill=rndColor2())
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 模糊:</span>
+image = image.filter(ImageFilter.BLUR)
+image.save(<span style="color:rgb(221, 17, 68);">'code.jpg'</span>, <span style="color:rgb(221, 17, 68);">'jpeg'</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们用随机颜色填充背景，再画上文字，最后对图像进行模糊，得到验证码图片如下：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><img src="Pillow_files/966760380198752" type="image/jpeg" data-filename="966760380198752" height="60" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="240"/></p>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果运行的时候报错：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">IOError: cannot open resource
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">这是因为PIL无法定位到字体文件的位置，可以根据操作系统提供绝对路径，比如：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">'/Library/Fonts/Arial.ttf'
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">要详细了解PIL的强大功能，请请参考Pillow官方文档：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://pillow.readthedocs.org/" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">https://pillow.readthedocs.org/</a></p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">PIL提供了操作图像的强大功能，可以通过简单的代码完成复杂的图像处理。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">https://github.com/michaelliao/learn-python3/blob/master/samples/packages/pil/use_pil_resize.py</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">https://github.com/michaelliao/learn-python3/blob/master/samples/packages/pil/use_pil_blur.py</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">https://github.com/michaelliao/learn-python3/blob/master/samples/packages/pil/use_pil_draw.py</p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="Pillow_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="Pillow_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017785454949568#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017785364772448" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1183249464292448" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

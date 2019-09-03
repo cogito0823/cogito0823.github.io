@@ -1,0 +1,136 @@
+<html>
+<head>
+  <title>文档测试</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="1934"/>
+<h1>文档测试</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 3:05</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div><div><p style="margin:0px 0px 15px;">如果你经常阅读Python的官方文档，可以看到很多文档都有示例代码。比如<a href="https://docs.python.org/3/library/re.html" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">re模块</a>就带了很多示例代码：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> re
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>m = re.search(<span style="color:rgb(221, 17, 68);">'(?&lt;=abc)def'</span>, <span style="color:rgb(221, 17, 68);">'abcdef'</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>m.group(<span style="color:rgb(0, 153, 153);">0</span>)
+<span style="color:rgb(221, 17, 68);">'def'</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">可以把这些示例代码在Python的交互式环境下输入并执行，结果与文档中的示例代码显示的一致。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">这些代码与其他说明可以写在注释中，然后，由一些工具来自动生成文档。既然这些代码本身就可以粘贴出来直接运行，那么，可不可以自动执行写在注释中的这些代码呢？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">答案是肯定的。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">当我们编写注释时，如果写上这样的注释：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">abs</span><span>(n)</span>:</span>
+    <span style="color:rgb(221, 17, 68);">'''
+    Function to get absolute value of number.
+    
+    Example:
+    
+    &gt;&gt;&gt; abs(1)
+    1
+    &gt;&gt;&gt; abs(-1)
+    1
+    &gt;&gt;&gt; abs(0)
+    0
+    '''</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> n <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> n &gt;= <span style="color:rgb(0, 153, 153);">0</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">else</span> (-n)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">无疑更明确地告诉函数的调用者该函数的期望输入和输出。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">并且，Python内置的“文档测试”（doctest）模块可以直接提取注释中的代码并执行测试。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">doctest严格按照Python交互式命令行的输入和输出来判断测试结果是否正确。只有测试异常的时候，可以用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">...</code>表示中间一大段烦人的输出。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">让我们用doctest来测试上次编写的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Dict</code>类：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 153, 136);font-style:italic;"># mydict2.py</span>
+<span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">Dict</span><span>(dict)</span>:</span>
+    <span style="color:rgb(221, 17, 68);">'''
+    Simple dict but also support access as x.y style.
+
+    &gt;&gt;&gt; d1 = Dict()
+    &gt;&gt;&gt; d1['x'] = 100
+    &gt;&gt;&gt; d1.x
+    100
+    &gt;&gt;&gt; d1.y = 200
+    &gt;&gt;&gt; d1['y']
+    200
+    &gt;&gt;&gt; d2 = Dict(a=1, b=2, c='3')
+    &gt;&gt;&gt; d2.c
+    '3'
+    &gt;&gt;&gt; d2['empty']
+    Traceback (most recent call last):
+        ...
+    KeyError: 'empty'
+    &gt;&gt;&gt; d2.empty
+    Traceback (most recent call last):
+        ...
+    AttributeError: 'Dict' object has no attribute 'empty'
+    '''</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__init__</span><span>(self, **kw)</span>:</span>
+        super(Dict, self).__init__(**kw)
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__getattr__</span><span>(self, key)</span>:</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">try</span>:
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> self[key]
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">except</span> KeyError:
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">raise</span> AttributeError(<span style="color:rgb(221, 17, 68);">r&quot;'Dict' object has no attribute '%s'&quot;</span> % key)
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__setattr__</span><span>(self, key, value)</span>:</span>
+        self[key] = value
+
+<span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> __name__==<span style="color:rgb(221, 17, 68);">'__main__'</span>:
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> doctest
+    doctest.testmod()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">运行<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">python mydict2.py</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 128, 128);">$ </span>python mydict2.py
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">什么输出也没有。这说明我们编写的doctest运行都是正确的。如果程序有问题，比如把<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__getattr__()</code>方法注释掉，再运行就会报错：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">$ python mydict2.py
+**********************************************************************
+File &quot;/Users/michael/Github/learn-python3/samples/debug/mydict2.py&quot;, line 10, in __main__.Dict
+Failed example:
+    d1.x
+Exception raised:
+    Traceback (most recent <span><span style="color:rgb(51, 51, 51);font-weight:bold;">call</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">last</span>):
+      ...
+    AttributeError: <span style="color:rgb(221, 17, 68);">'Dict'</span> object has <span style="color:rgb(51, 51, 51);font-weight:bold;">no</span> attribute <span style="color:rgb(221, 17, 68);">'x'</span>
+**********************************************************************
+File <span style="color:rgb(221, 17, 68);">&quot;/Users/michael/Github/learn-python3/samples/debug/mydict2.py&quot;</span>, line <span style="color:rgb(0, 153, 153);">16</span>, <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> __main__.Dict
+Failed example:
+    d2.c
+<span style="color:rgb(51, 51, 51);font-weight:bold;">Exception</span> raised:
+    Traceback (most recent <span style="color:rgb(51, 51, 51);font-weight:bold;">call</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">last</span>):
+      ...
+    AttributeError: <span style="color:rgb(221, 17, 68);">'Dict'</span> object has <span style="color:rgb(51, 51, 51);font-weight:bold;">no</span> attribute <span style="color:rgb(221, 17, 68);">'c'</span>
+**********************************************************************
+<span style="color:rgb(0, 153, 153);">1</span> items had failures:
+   <span style="color:rgb(0, 153, 153);">2</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">of</span>   <span style="color:rgb(0, 153, 153);">9</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> __main__.Dict
+***Test Failed*** <span style="color:rgb(0, 153, 153);">2</span> failures.
+</span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意到最后3行代码。当模块正常导入时，doctest不会被执行。只有在命令行直接运行时，才执行doctest。所以，不必担心doctest会在非测试环境下执行。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">练习</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">对函数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">fact(n)</code>编写doctest并执行：</p>
+<div style="margin-top:15px;margin-bottom:15px;"><pre style="margin:0px 0px 15px;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;margin-bottom:0px;border-bottom:none;border-bottom-left-radius:0px;border-bottom-right-radius:0px;"># -*- coding: utf-8 -*-
+</pre><pre style="margin:0px 0px 15px;margin-top:0;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;">if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
+</pre></div>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">doctest非常有用，不但可以用来测试，还可以直接作为示例代码。通过某些文档生成工具，就可以自动把包含doctest的注释提取出来。用户看文档的时候，同时也看到了doctest。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/debug/mydict2.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">mydict2.py</a></p>
+</div></div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

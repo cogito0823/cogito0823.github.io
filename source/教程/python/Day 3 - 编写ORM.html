@@ -1,0 +1,276 @@
+<html>
+<head>
+  <title>Day 3 - 编写ORM</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2230"/>
+<h1>Day 3 - 编写ORM</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:35</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">Day 3 - 编写ORM</h4>
+    <div>
+    	<span>阅读: 1123391</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">在一个Web App中，所有数据，包括用户信息、发布的日志、评论等，都存储在数据库中。在awesome-python3-webapp中，我们选择MySQL作为数据库。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">Web App里面有很多地方都要访问数据库。访问数据库需要创建数据库连接、游标对象，然后执行SQL语句，最后处理异常，清理资源。这些访问数据库的代码如果分散到各个函数中，势必无法维护，也不利于代码复用。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">所以，我们要首先把常用的SELECT、INSERT、UPDATE和DELETE操作用函数封装起来。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">由于Web框架使用了基于asyncio的aiohttp，这是基于协程的异步模型。在协程中，不能调用普通的同步IO操作，因为所有用户都是由一个线程服务的，协程的执行速度必须非常快，才能处理大量用户的请求。而耗时的IO操作不能在协程中以同步的方式调用，否则，等待一个IO操作时，系统无法响应任何其他用户。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">这就是异步编程的一个原则：一旦决定使用异步，则系统每一层都必须是异步，“开弓没有回头箭”。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">幸运的是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">aiomysql</code>为MySQL数据库提供了异步IO的驱动。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">创建连接池</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们需要创建一个全局的连接池，每个HTTP请求都可以从连接池中直接获取数据库连接。使用连接池的好处是不必频繁地打开和关闭数据库连接，而是能复用就尽量复用。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">连接池由全局变量<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__pool</code>存储，缺省情况下将编码设置为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">utf8</code>，自动提交事务：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@asyncio.coroutine</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">create_pool</span><span>(loop, **kw)</span>:</span>
+    logging.info(<span style="color:rgb(221, 17, 68);">'create database connection pool...'</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">global</span> __pool
+    __pool = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> aiomysql.create_pool(
+        host=kw.get(<span style="color:rgb(221, 17, 68);">'host'</span>, <span style="color:rgb(221, 17, 68);">'localhost'</span>),
+        port=kw.get(<span style="color:rgb(221, 17, 68);">'port'</span>, <span style="color:rgb(0, 153, 153);">3306</span>),
+        user=kw[<span style="color:rgb(221, 17, 68);">'user'</span>],
+        password=kw[<span style="color:rgb(221, 17, 68);">'password'</span>],
+        db=kw[<span style="color:rgb(221, 17, 68);">'db'</span>],
+        charset=kw.get(<span style="color:rgb(221, 17, 68);">'charset'</span>, <span style="color:rgb(221, 17, 68);">'utf8'</span>),
+        autocommit=kw.get(<span style="color:rgb(221, 17, 68);">'autocommit'</span>, <span style="color:rgb(0, 134, 179);">True</span>),
+        maxsize=kw.get(<span style="color:rgb(221, 17, 68);">'maxsize'</span>, <span style="color:rgb(0, 153, 153);">10</span>),
+        minsize=kw.get(<span style="color:rgb(221, 17, 68);">'minsize'</span>, <span style="color:rgb(0, 153, 153);">1</span>),
+        loop=loop
+    )
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">Select</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">要执行SELECT语句，我们用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">select</code>函数执行，需要传入SQL语句和SQL参数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@asyncio.coroutine</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">select</span><span>(sql, args, size=None)</span>:</span>
+    log(sql, args)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">global</span> __pool
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">with</span> (<span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> __pool) <span style="color:rgb(51, 51, 51);font-weight:bold;">as</span> conn:
+        cur = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> conn.cursor(aiomysql.DictCursor)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> cur.execute(sql.replace(<span style="color:rgb(221, 17, 68);">'?'</span>, <span style="color:rgb(221, 17, 68);">'%s'</span>), args <span style="color:rgb(51, 51, 51);font-weight:bold;">or</span> ())
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> size:
+            rs = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> cur.fetchmany(size)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">else</span>:
+            rs = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> cur.fetchall()
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> cur.close()
+        logging.info(<span style="color:rgb(221, 17, 68);">'rows returned: %s'</span> % len(rs))
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> rs
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">SQL语句的占位符是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">?</code>，而MySQL的占位符是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">%s</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">select()</code>函数在内部自动替换。注意要始终坚持使用带参数的SQL，而不是自己拼接SQL字符串，这样可以防止SQL注入攻击。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">yield from</code>将调用一个子协程（也就是在一个协程中调用另一个协程）并直接获得子协程的返回结果。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果传入<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">size</code>参数，就通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">fetchmany()</code>获取最多指定数量的记录，否则，通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">fetchall()</code>获取所有记录。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">Insert, Update, Delete</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">要执行INSERT、UPDATE、DELETE语句，可以定义一个通用的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">execute()</code>函数，因为这3种SQL的执行都需要相同的参数，以及返回一个整数表示影响的行数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@asyncio.coroutine</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">execute</span><span>(sql, args)</span>:</span>
+    log(sql)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">with</span> (<span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> __pool) <span style="color:rgb(51, 51, 51);font-weight:bold;">as</span> conn:
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">try</span>:
+            cur = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> conn.cursor()
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> cur.execute(sql.replace(<span style="color:rgb(221, 17, 68);">'?'</span>, <span style="color:rgb(221, 17, 68);">'%s'</span>), args)
+            affected = cur.rowcount
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> cur.close()
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">except</span> BaseException <span style="color:rgb(51, 51, 51);font-weight:bold;">as</span> e:
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">raise</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> affected
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">execute()</code>函数和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">select()</code>函数所不同的是，cursor对象不返回结果集，而是通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">rowcount</code>返回结果数。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">ORM</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">有了基本的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">select()</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">execute()</code>函数，我们就可以开始编写一个简单的ORM了。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">设计ORM需要从上层调用者角度来设计。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们先考虑如何定义一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">User</code>对象，然后把数据库表<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">users</code>和它关联起来。</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> orm <span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> Model, StringField, IntegerField
+
+<span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">User</span><span>(Model)</span>:</span>
+    __table__ = <span style="color:rgb(221, 17, 68);">'users'</span>
+
+    id = IntegerField(primary_key=<span style="color:rgb(0, 134, 179);">True</span>)
+    name = StringField()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意到定义在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">User</code>类中的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__table__</code>、<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">id</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">name</code>是类的属性，不是实例的属性。所以，在类级别上定义的属性用来描述<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">User</code>对象和表的映射关系，而实例属性必须通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__init__()</code>方法去初始化，所以两者互不干扰：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"># 创建实例:
+user = User(id=123, name='Michael')
+# 存入数据库:
+user.<span><span style="color:rgb(51, 51, 51);font-weight:bold;">insert</span>()
+# 查询所有<span style="color:rgb(51, 51, 51);font-weight:bold;">User</span>对象:
+users = <span style="color:rgb(51, 51, 51);font-weight:bold;">User</span>.findAll()
+</span></code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">定义Model</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">首先要定义的是所有ORM映射的基类<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Model</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">Model</span><span>(dict, metaclass=ModelMetaclass)</span>:</span>
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__init__</span><span>(self, **kw)</span>:</span>
+        super(Model, self).__init__(**kw)
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__getattr__</span><span>(self, key)</span>:</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">try</span>:
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> self[key]
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">except</span> KeyError:
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">raise</span> AttributeError(<span style="color:rgb(221, 17, 68);">r&quot;'Model' object has no attribute '%s'&quot;</span> % key)
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__setattr__</span><span>(self, key, value)</span>:</span>
+        self[key] = value
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">getValue</span><span>(self, key)</span>:</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> getattr(self, key, <span style="color:rgb(0, 134, 179);">None</span>)
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">getValueOrDefault</span><span>(self, key)</span>:</span>
+        value = getattr(self, key, <span style="color:rgb(0, 134, 179);">None</span>)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> value <span style="color:rgb(51, 51, 51);font-weight:bold;">is</span> <span style="color:rgb(0, 134, 179);">None</span>:
+            field = self.__mappings__[key]
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> field.default <span style="color:rgb(51, 51, 51);font-weight:bold;">is</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">not</span> <span style="color:rgb(0, 134, 179);">None</span>:
+                value = field.default() <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> callable(field.default) <span style="color:rgb(51, 51, 51);font-weight:bold;">else</span> field.default
+                logging.debug(<span style="color:rgb(221, 17, 68);">'using default value for %s: %s'</span> % (key, str(value)))
+                setattr(self, key, value)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> value
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Model</code>从<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">dict</code>继承，所以具备所有<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">dict</code>的功能，同时又实现了特殊方法<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__getattr__()</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__setattr__()</code>，因此又可以像引用普通字段那样写：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>user[<span style="color:rgb(221, 17, 68);">'id'</span>]
+<span style="color:rgb(0, 153, 153);">123</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>user.id
+<span style="color:rgb(0, 153, 153);">123</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">以及<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Field</code>和各种<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Field</code>子类：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">Field</span><span>(object)</span>:</span>
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__init__</span><span>(self, name, column_type, primary_key, default)</span>:</span>
+        self.name = name
+        self.column_type = column_type
+        self.primary_key = primary_key
+        self.default = default
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__str__</span><span>(self)</span>:</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> <span style="color:rgb(221, 17, 68);">'&lt;%s, %s:%s&gt;'</span> % (self.__class__.__name__, self.column_type, self.name)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">映射<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">varchar</code>的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">StringField</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">StringField</span><span>(Field)</span>:</span>
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__init__</span><span>(self, name=None, primary_key=False, default=None, ddl=<span style="color:rgb(221, 17, 68);">'varchar(100)'</span>)</span>:</span>
+        super().__init__(name, ddl, primary_key, default)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">注意到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Model</code>只是一个基类，如何将具体的子类如<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">User</code>的映射信息读取出来呢？答案就是通过metaclass：<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">ModelMetaclass</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">ModelMetaclass</span><span>(type)</span>:</span>
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__new__</span><span>(cls, name, bases, attrs)</span>:</span>
+        <span style="color:rgb(153, 153, 136);font-style:italic;"># 排除Model类本身:</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> name==<span style="color:rgb(221, 17, 68);">'Model'</span>:
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> type.__new__(cls, name, bases, attrs)
+        <span style="color:rgb(153, 153, 136);font-style:italic;"># 获取table名称:</span>
+        tableName = attrs.get(<span style="color:rgb(221, 17, 68);">'__table__'</span>, <span style="color:rgb(0, 134, 179);">None</span>) <span style="color:rgb(51, 51, 51);font-weight:bold;">or</span> name
+        logging.info(<span style="color:rgb(221, 17, 68);">'found model: %s (table: %s)'</span> % (name, tableName))
+        <span style="color:rgb(153, 153, 136);font-style:italic;"># 获取所有的Field和主键名:</span>
+        mappings = dict()
+        fields = []
+        primaryKey = <span style="color:rgb(0, 134, 179);">None</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> k, v <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> attrs.items():
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> isinstance(v, Field):
+                logging.info(<span style="color:rgb(221, 17, 68);">'  found mapping: %s ==&gt; %s'</span> % (k, v))
+                mappings[k] = v
+                <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> v.primary_key:
+                    <span style="color:rgb(153, 153, 136);font-style:italic;"># 找到主键:</span>
+                    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> primaryKey:
+                        <span style="color:rgb(51, 51, 51);font-weight:bold;">raise</span> RuntimeError(<span style="color:rgb(221, 17, 68);">'Duplicate primary key for field: %s'</span> % k)
+                    primaryKey = k
+                <span style="color:rgb(51, 51, 51);font-weight:bold;">else</span>:
+                    fields.append(k)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">not</span> primaryKey:
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">raise</span> RuntimeError(<span style="color:rgb(221, 17, 68);">'Primary key not found.'</span>)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> k <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> mappings.keys():
+            attrs.pop(k)
+        escaped_fields = list(map(<span style="color:rgb(51, 51, 51);font-weight:bold;">lambda</span> f: <span style="color:rgb(221, 17, 68);">'`%s`'</span> % f, fields))
+        attrs[<span style="color:rgb(221, 17, 68);">'__mappings__'</span>] = mappings <span style="color:rgb(153, 153, 136);font-style:italic;"># 保存属性和列的映射关系</span>
+        attrs[<span style="color:rgb(221, 17, 68);">'__table__'</span>] = tableName
+        attrs[<span style="color:rgb(221, 17, 68);">'__primary_key__'</span>] = primaryKey <span style="color:rgb(153, 153, 136);font-style:italic;"># 主键属性名</span>
+        attrs[<span style="color:rgb(221, 17, 68);">'__fields__'</span>] = fields <span style="color:rgb(153, 153, 136);font-style:italic;"># 除主键外的属性名</span>
+        <span style="color:rgb(153, 153, 136);font-style:italic;"># 构造默认的SELECT, INSERT, UPDATE和DELETE语句:</span>
+        attrs[<span style="color:rgb(221, 17, 68);">'__select__'</span>] = <span style="color:rgb(221, 17, 68);">'select `%s`, %s from `%s`'</span> % (primaryKey, <span style="color:rgb(221, 17, 68);">', '</span>.join(escaped_fields), tableName)
+        attrs[<span style="color:rgb(221, 17, 68);">'__insert__'</span>] = <span style="color:rgb(221, 17, 68);">'insert into `%s` (%s, `%s`) values (%s)'</span> % (tableName, <span style="color:rgb(221, 17, 68);">', '</span>.join(escaped_fields), primaryKey, create_args_string(len(escaped_fields) + <span style="color:rgb(0, 153, 153);">1</span>))
+        attrs[<span style="color:rgb(221, 17, 68);">'__update__'</span>] = <span style="color:rgb(221, 17, 68);">'update `%s` set %s where `%s`=?'</span> % (tableName, <span style="color:rgb(221, 17, 68);">', '</span>.join(map(<span style="color:rgb(51, 51, 51);font-weight:bold;">lambda</span> f: <span style="color:rgb(221, 17, 68);">'`%s`=?'</span> % (mappings.get(f).name <span style="color:rgb(51, 51, 51);font-weight:bold;">or</span> f), fields)), primaryKey)
+        attrs[<span style="color:rgb(221, 17, 68);">'__delete__'</span>] = <span style="color:rgb(221, 17, 68);">'delete from `%s` where `%s`=?'</span> % (tableName, primaryKey)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> type.__new__(cls, name, bases, attrs)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">这样，任何继承自Model的类（比如User），会自动通过ModelMetaclass扫描映射关系，并存储到自身的类属性如<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__table__</code>、<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__mappings__</code>中。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">然后，我们往Model类添加class方法，就可以让所有子类调用class方法：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">Model</span><span>(dict)</span>:</span>
+
+    ...
+
+    <span>@classmethod</span>
+    <span>@asyncio.coroutine</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">find</span><span>(cls, pk)</span>:</span>
+        <span style="color:rgb(221, 17, 68);">' find object by primary key. '</span>
+        rs = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> select(<span style="color:rgb(221, 17, 68);">'%s where `%s`=?'</span> % (cls.__select__, cls.__primary_key__), [pk], <span style="color:rgb(0, 153, 153);">1</span>)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> len(rs) == <span style="color:rgb(0, 153, 153);">0</span>:
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> <span style="color:rgb(0, 134, 179);">None</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> cls(**rs[<span style="color:rgb(0, 153, 153);">0</span>])
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">User类现在就可以通过类方法实现主键查找：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">user = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> User.find(<span style="color:rgb(221, 17, 68);">'123'</span>)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">往Model类添加实例方法，就可以让所有子类调用实例方法：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">Model</span><span>(dict)</span>:</span>
+
+    ...
+
+    <span>@asyncio.coroutine</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">save</span><span>(self)</span>:</span>
+        args = list(map(self.getValueOrDefault, self.__fields__))
+        args.append(self.getValueOrDefault(self.__primary_key__))
+        rows = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> execute(self.__insert__, args)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> rows != <span style="color:rgb(0, 153, 153);">1</span>:
+            logging.warn(<span style="color:rgb(221, 17, 68);">'failed to insert record: affected rows: %s'</span> % rows)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">这样，就可以把一个User实例存入数据库：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">user = User(id=<span style="color:rgb(0, 153, 153);">123</span>, name=<span style="color:rgb(221, 17, 68);">'Michael'</span>)
+<span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> user.save()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">最后一步是完善ORM，对于查找，我们可以实现以下方法：</p>
+<ul style="margin:0px 0px 15px;margin-top:15px;padding-left:30px;">
+<li>
+<p style="margin:0px 0px 15px;">findAll() - 根据WHERE条件查找；</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">findNumber() - 根据WHERE条件查找，但返回的是整数，适用于<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">select count(*)</code>类型的SQL。</p>
+</li>
+</ul>
+<p style="margin:0px 0px 15px;margin-top:15px;">以及<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">update()</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">remove()</code>方法。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">所有这些方法都必须用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">@asyncio.coroutine</code>装饰，变成一个协程。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">调用时需要特别注意：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">user.save()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">没有任何效果，因为调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">save()</code>仅仅是创建了一个协程，并没有执行它。一定要用：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> user.save()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">才真正执行了INSERT操作。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">最后看看我们实现的ORM模块一共多少行代码？累计不到300多行。用Python写一个ORM是不是很容易呢？</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/awesome-python3-webapp/tree/day-03" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">day-03</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="Day 3 - 编写ORM_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="Day 3 - 编写ORM_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018490605531840#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018139060027680" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018490658464544" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

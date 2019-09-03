@@ -1,0 +1,134 @@
+<html>
+<head>
+  <title>itertools</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2054"/>
+<h1>itertools</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:22</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">itertools</h4>
+    <div>
+    	<span>阅读: 198935</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">Python的内建模块<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">itertools</code>提供了非常有用的用于操作迭代对象的函数。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">首先，我们看看<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">itertools</code>提供的几个“无限”迭代器：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> itertools
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>natuals = itertools.count(<span style="color:rgb(0, 153, 153);">1</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> n <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> natuals:
+<span style="color:rgb(153, 0, 115);">... </span>    print(n)
+...
+<span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(0, 153, 153);">2</span>
+<span style="color:rgb(0, 153, 153);">3</span>
+...
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">因为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">count()</code>会创建一个无限的迭代器，所以上述代码会打印出自然数序列，根本停不下来，只能按<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Ctrl+C</code>退出。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">cycle()</code>会把传入的一个序列无限重复下去：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> itertools
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cs = itertools.cycle(<span style="color:rgb(221, 17, 68);">'ABC'</span>) <span style="color:rgb(153, 153, 136);font-style:italic;"># 注意字符串也是序列的一种</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> c <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> cs:
+<span style="color:rgb(153, 0, 115);">... </span>    print(c)
+...
+<span style="color:rgb(221, 17, 68);">'A'</span>
+<span style="color:rgb(221, 17, 68);">'B'</span>
+<span style="color:rgb(221, 17, 68);">'C'</span>
+<span style="color:rgb(221, 17, 68);">'A'</span>
+<span style="color:rgb(221, 17, 68);">'B'</span>
+<span style="color:rgb(221, 17, 68);">'C'</span>
+...
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">同样停不下来。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">repeat()</code>负责把一个元素无限重复下去，不过如果提供第二个参数就可以限定重复次数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>ns = itertools.repeat(<span style="color:rgb(221, 17, 68);">'A'</span>, <span style="color:rgb(0, 153, 153);">3</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> n <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> ns:
+<span style="color:rgb(153, 0, 115);">... </span>    print(n)
+...
+A
+A
+A
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">无限序列只有在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>迭代时才会无限地迭代下去，如果只是创建了一个迭代对象，它不会事先把无限个元素生成出来，事实上也不可能在内存中创建无限多个元素。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">无限序列虽然可以无限迭代下去，但是通常我们会通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">takewhile()</code>等函数根据条件判断来截取出一个有限的序列：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>natuals = itertools.count(<span style="color:rgb(0, 153, 153);">1</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>ns = itertools.takewhile(<span style="color:rgb(51, 51, 51);font-weight:bold;">lambda</span> x: x &lt;= <span style="color:rgb(0, 153, 153);">10</span>, natuals)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>list(ns)
+[<span style="color:rgb(0, 153, 153);">1</span>, <span style="color:rgb(0, 153, 153);">2</span>, <span style="color:rgb(0, 153, 153);">3</span>, <span style="color:rgb(0, 153, 153);">4</span>, <span style="color:rgb(0, 153, 153);">5</span>, <span style="color:rgb(0, 153, 153);">6</span>, <span style="color:rgb(0, 153, 153);">7</span>, <span style="color:rgb(0, 153, 153);">8</span>, <span style="color:rgb(0, 153, 153);">9</span>, <span style="color:rgb(0, 153, 153);">10</span>]
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">itertools</code>提供的几个迭代器操作函数更加有用：</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">chain()</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">chain()</code>可以把一组迭代对象串联起来，形成一个更大的迭代器：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> c <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> itertools.chain(<span style="color:rgb(221, 17, 68);">'ABC'</span>, <span style="color:rgb(221, 17, 68);">'XYZ'</span>):
+<span style="color:rgb(153, 0, 115);">... </span>    print(c)
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 迭代效果：'A' 'B' 'C' 'X' 'Y' 'Z'</span>
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">groupby()</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">groupby()</code>把迭代器中相邻的重复元素挑出来放在一起：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> key, group <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> itertools.groupby(<span style="color:rgb(221, 17, 68);">'AAABBBCCAAA'</span>):
+<span style="color:rgb(153, 0, 115);">... </span>    print(key, list(group))
+...
+A [<span style="color:rgb(221, 17, 68);">'A'</span>, <span style="color:rgb(221, 17, 68);">'A'</span>, <span style="color:rgb(221, 17, 68);">'A'</span>]
+B [<span style="color:rgb(221, 17, 68);">'B'</span>, <span style="color:rgb(221, 17, 68);">'B'</span>, <span style="color:rgb(221, 17, 68);">'B'</span>]
+C [<span style="color:rgb(221, 17, 68);">'C'</span>, <span style="color:rgb(221, 17, 68);">'C'</span>]
+A [<span style="color:rgb(221, 17, 68);">'A'</span>, <span style="color:rgb(221, 17, 68);">'A'</span>, <span style="color:rgb(221, 17, 68);">'A'</span>]
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">实际上挑选规则是通过函数完成的，只要作用于函数的两个元素返回的值相等，这两个元素就被认为是在一组的，而函数返回值作为组的key。如果我们要忽略大小写分组，就可以让元素<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'A'</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">'a'</code>都返回相同的key：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> key, group <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> itertools.groupby(<span style="color:rgb(221, 17, 68);">'AaaBBbcCAAa'</span>, <span style="color:rgb(51, 51, 51);font-weight:bold;">lambda</span> c: c.upper()):
+<span style="color:rgb(153, 0, 115);">... </span>    print(key, list(group))
+...
+A [<span style="color:rgb(221, 17, 68);">'A'</span>, <span style="color:rgb(221, 17, 68);">'a'</span>, <span style="color:rgb(221, 17, 68);">'a'</span>]
+B [<span style="color:rgb(221, 17, 68);">'B'</span>, <span style="color:rgb(221, 17, 68);">'B'</span>, <span style="color:rgb(221, 17, 68);">'b'</span>]
+C [<span style="color:rgb(221, 17, 68);">'c'</span>, <span style="color:rgb(221, 17, 68);">'C'</span>]
+A [<span style="color:rgb(221, 17, 68);">'A'</span>, <span style="color:rgb(221, 17, 68);">'A'</span>, <span style="color:rgb(221, 17, 68);">'a'</span>]
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">练习</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">计算圆周率可以根据公式：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">利用Python提供的itertools模块，我们来计算这个序列的前N项和：</p>
+<div style="margin-top:15px;margin-bottom:15px;"><pre style="margin:0px 0px 15px;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;margin-bottom:0px;border-bottom:none;border-bottom-left-radius:0px;border-bottom-right-radius:0px;"># -*- coding: utf-8 -*-
+import itertools
+</pre><pre style="margin:0px 0px 15px;margin-top:0;padding:6px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;font-size:14px;border-top:0;border-top-left-radius:0;border-top-right-radius:0;"># 测试:
+print(pi(10))
+print(pi(100))
+print(pi(1000))
+print(pi(10000))
+assert 3.04 &lt; pi(10) &lt; 3.05
+assert 3.13 &lt; pi(100) &lt; 3.14
+assert 3.140 &lt; pi(1000) &lt; 3.141
+assert 3.1414 &lt; pi(10000) &lt; 3.1415
+print('ok')
+</pre></div>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">itertools</code>模块提供的全部是处理迭代功能的函数，它们的返回值不是list，而是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Iterator</code>，只有用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">for</code>循环迭代的时候才真正计算。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/commonlib/use_itertools.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">use_itertools.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="itertools_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="itertools_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017783145987360#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1183198304823296" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1115615597164000" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

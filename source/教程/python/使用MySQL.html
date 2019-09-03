@@ -1,0 +1,127 @@
+<html>
+<head>
+  <title>使用MySQL</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2121"/>
+<h1>使用MySQL</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:29</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">使用MySQL</h4>
+    <div>
+    	<span>阅读: 1478122</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">MySQL是Web世界中使用最广泛的数据库服务器。SQLite的特点是轻量级、可嵌入，但不能承受高并发访问，适合桌面和移动应用。而MySQL是为服务器端设计的数据库，能承受高并发访问，同时占用的内存也远远大于SQLite。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">此外，MySQL内部有多种数据库引擎，最常用的引擎是支持数据库事务的InnoDB。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">安装MySQL</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">可以直接从MySQL官方网站下载最新的<a href="http://dev.mysql.com/downloads/mysql/5.6.html" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">Community Server 5.6.x</a>版本。MySQL是跨平台的，选择对应的平台下载安装文件，安装即可。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">安装时，MySQL会提示输入<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">root</code>用户的口令，请务必记清楚。如果怕记不住，就把口令设置为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">password</code>。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">在Windows上，安装时请选择<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">UTF-8</code>编码，以便正确地处理中文。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">在Mac或Linux上，需要编辑MySQL的配置文件，把数据库默认的编码全部改为UTF-8。MySQL的配置文件默认存放在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">/etc/my.cnf</code>或者<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">/etc/mysql/my.cnf</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 0, 0);font-weight:bold;">[client]</span>
+<span>default-character-set = <span>utf8</span></span>
+
+<span style="color:rgb(153, 0, 0);font-weight:bold;">[mysqld]</span>
+<span>default-storage-engine = <span>INNODB</span></span>
+<span>character-set-server = <span>utf8</span></span>
+<span>collation-server = <span>utf8_general_ci</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">重启MySQL后，可以通过MySQL的客户端命令行检查编码：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor...
+...
+
+mysql&gt; <span><span style="color:rgb(51, 51, 51);font-weight:bold;">show</span> variables <span style="color:rgb(51, 51, 51);font-weight:bold;">like</span> <span style="color:rgb(221, 17, 68);">'%char%'</span>;</span>
++<span style="color:rgb(153, 153, 136);font-style:italic;">--------------------------+--------------------------------------------------------+</span>
+| Variable_name            | Value                                                  |
++<span style="color:rgb(153, 153, 136);font-style:italic;">--------------------------+--------------------------------------------------------+</span>
+| character_set_client     | utf8                                                   |
+| character_set_connection | utf8                                                   |
+| character_set_database   | utf8                                                   |
+| character_set_filesystem | binary                                                 |
+| character_set_results    | utf8                                                   |
+| character_set_server     | utf8                                                   |
+| character_set_system     | utf8                                                   |
+| character_sets_dir       | /usr/local/mysql-5.1.65-osx10.6-x86_64/share/charsets/ |
++<span style="color:rgb(153, 153, 136);font-style:italic;">--------------------------+--------------------------------------------------------+</span>
+8 rows in <span><span style="color:rgb(51, 51, 51);font-weight:bold;">set</span> (<span style="color:rgb(0, 153, 153);">0.00</span> sec)
+</span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">看到<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">utf8</code>字样就表示编码设置正确。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><em style="color:rgb(221, 0, 85);font-style:normal;">注</em>：如果MySQL的版本≥5.5.3，可以把编码设置为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">utf8mb4</code>，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">utf8mb4</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">utf8</code>完全兼容，但它支持最新的Unicode标准，可以显示emoji字符。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">安装MySQL驱动</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">由于MySQL服务器以独立的进程运行，并通过网络对外服务，所以，需要支持Python的MySQL驱动来连接到MySQL服务器。MySQL官方提供了mysql-connector-python驱动，但是安装的时候需要给pip命令加上参数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">--allow-external</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 128, 128);">$ </span>pip install mysql-connector-python --allow-external mysql-connector-python
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果上面的命令安装失败，可以试试另一个驱动：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(0, 128, 128);">$ </span>pip install mysql-connector
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">我们演示如何连接到MySQL服务器的test数据库：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(153, 153, 136);font-style:italic;"># 导入MySQL驱动:</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span><span style="color:rgb(51, 51, 51);font-weight:bold;">import</span> mysql.connector
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 注意把password设为你的root口令:</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>conn = mysql.connector.connect(user=<span style="color:rgb(221, 17, 68);">'root'</span>, password=<span style="color:rgb(221, 17, 68);">'password'</span>, database=<span style="color:rgb(221, 17, 68);">'test'</span>)
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cursor = conn.cursor()
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 创建user表:</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cursor.execute(<span style="color:rgb(221, 17, 68);">'create table user (id varchar(20) primary key, name varchar(20))'</span>)
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 插入一行记录，注意MySQL的占位符是%s:</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cursor.execute(<span style="color:rgb(221, 17, 68);">'insert into user (id, name) values (%s, %s)'</span>, [<span style="color:rgb(221, 17, 68);">'1'</span>, <span style="color:rgb(221, 17, 68);">'Michael'</span>])
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cursor.rowcount
+<span style="color:rgb(0, 153, 153);">1</span>
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 提交事务:</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>conn.commit()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cursor.close()
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 运行查询:</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cursor = conn.cursor()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cursor.execute(<span style="color:rgb(221, 17, 68);">'select * from user where id = %s'</span>, (<span style="color:rgb(221, 17, 68);">'1'</span>,))
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>values = cursor.fetchall()
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>values
+[(<span style="color:rgb(221, 17, 68);">'1'</span>, <span style="color:rgb(221, 17, 68);">'Michael'</span>)]
+<span style="color:rgb(153, 153, 136);font-style:italic;"># 关闭Cursor和Connection:</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>cursor.close()
+<span style="color:rgb(0, 134, 179);">True</span>
+<span style="color:rgb(153, 0, 115);">&gt;&gt;&gt; </span>conn.close()
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">由于Python的DB-API定义都是通用的，所以，操作MySQL的数据库代码和SQLite类似。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">小结</h3>
+<ul style="margin:0px 0px 15px;margin-top:15px;padding-left:30px;">
+<li>
+<p style="margin:0px 0px 15px;">执行INSERT等操作后要调用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">commit()</code>提交事务；</p>
+</li>
+<li>
+<p style="margin:0px 0px 15px;">MySQL的SQL占位符是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">%s</code>。</p>
+</li>
+</ul>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/learn-python3/blob/master/samples/db/do_mysql.py" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">do_mysql.py</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="使用MySQL_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="使用MySQL_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017802264972000#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017801751919456" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017803857459008" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 

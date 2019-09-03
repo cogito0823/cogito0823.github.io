@@ -1,0 +1,196 @@
+<html>
+<head>
+  <title>Day 5 - 编写Web框架</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+<a name="2224"/>
+<h1>Day 5 - 编写Web框架</h1>
+<div>
+<table bgcolor="#D4DDE5" border="0">
+<tr><td><b>创建时间：</b></td><td><i>2019/9/3 21:36</i></td></tr>
+</table>
+</div>
+<br/>
+
+<div><span>
+  <div style="--en-clipped-content:article">
+<div><br/></div><div style="font-size: 16px; display:block; min-width: 100%; position: relative;"> <div style="font:14px/20px &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;text-size-adjust:100%;background:rgb(255, 255, 255);color:rgb(68, 68, 68);"><div style="font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;color:rgb(102, 102, 102);background-color:rgb(255, 255, 255);"><div><div style="box-sizing:border-box;"><div style="list-style:none;"><div style="box-sizing:border-box;"><div><div><div>
+								    <h4 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;font-size:16px;line-height:22px;">Day 5 - 编写Web框架</h4>
+    <div>
+    	<span>阅读: 314438</span>
+    	</div>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div><p style="margin:0px 0px 15px;">在正式开始Web开发前，我们需要编写一个Web框架。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">aiohttp</code>已经是一个Web框架了，为什么我们还需要自己封装一个？</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">原因是从使用者的角度来说，<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">aiohttp</code>相对比较底层，编写一个URL的处理函数需要这么几步：</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">第一步，编写一个用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">@asyncio.coroutine</code>装饰的函数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@asyncio.coroutine</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">handle_url_xxx</span><span>(request)</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">pass</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">第二步，传入的参数需要自己从<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">request</code>中获取：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>url_param = <span>request.match_info['key']</span></span>
+<span>query_params = <span>parse_qs(request.query_string)</span></span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">最后，需要自己构造<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">Response</code>对象：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">text = render(<span style="color:rgb(221, 17, 68);">'template'</span>, data)
+<span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> web.<span style="color:rgb(0, 153, 153);">Response</span>(text.encode(<span style="color:rgb(221, 17, 68);">'utf-8'</span>))
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">这些重复的工作可以由框架完成。例如，处理带参数的URL<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">/blog/{id}</code>可以这么写：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@get('/blog/{id}')</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">get_blog</span><span>(id)</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">pass</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">处理<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">query_string</code>参数可以通过关键字参数<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">**kw</code>或者命名关键字参数接收：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@get('/api/comments')</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">api_comments</span><span>(*, page=<span style="color:rgb(221, 17, 68);">'1'</span>)</span>:</span>
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">pass</span>
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">对于函数的返回值，不一定是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">web.Response</code>对象，可以是<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">str</code>、<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">bytes</code>或<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">dict</code>。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">如果希望渲染模板，我们可以这么返回一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">dict</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> {
+    <span style="color:rgb(221, 17, 68);">'__template__'</span><span style="color:rgb(153, 0, 115);">:</span> <span style="color:rgb(221, 17, 68);">'index.html'</span>,
+    <span style="color:rgb(221, 17, 68);">'data'</span><span style="color:rgb(153, 0, 115);">:</span> <span style="color:rgb(221, 17, 68);">'...'</span>
+}
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">因此，Web框架的设计是完全从使用者出发，目的是让使用者编写尽可能少的代码。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">编写简单的函数而非引入<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">request</code>和<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">web.Response</code>还有一个额外的好处，就是可以单独测试，否则，需要模拟一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">request</code>才能测试。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">@get和@post</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">要把一个函数映射为一个URL处理函数，我们先定义<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">@get()</code>：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">get</span><span>(path)</span>:</span>
+    <span style="color:rgb(221, 17, 68);">'''
+    Define decorator @get('/path')
+    '''</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">decorator</span><span>(func)</span>:</span>
+        <span>@functools.wraps(func)</span>
+        <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">wrapper</span><span>(*args, **kw)</span>:</span>
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> func(*args, **kw)
+        wrapper.__method__ = <span style="color:rgb(221, 17, 68);">'GET'</span>
+        wrapper.__route__ = path
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> wrapper
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> decorator
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">这样，一个函数通过<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">@get()</code>的装饰就附带了URL信息。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">@post</code>与<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">@get</code>定义类似。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">定义RequestHandler</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;">URL处理函数不一定是一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">coroutine</code>，因此我们用<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">RequestHandler()</code>来封装一个URL处理函数。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">RequestHandler</code>是一个类，由于定义了<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">__call__()</code>方法，因此可以将其实例视为函数。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">RequestHandler</code>目的就是从URL函数中分析其需要接收的参数，从<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">request</code>中获取必要的参数，调用URL函数，然后把结果转换为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">web.Response</code>对象，这样，就完全符合<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">aiohttp</code>框架的要求：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span style="color:rgb(68, 85, 136);font-weight:bold;"><span style="color:rgb(51, 51, 51);font-weight:bold;">class</span> <span style="color:rgb(68, 85, 136);font-weight:bold;">RequestHandler</span><span>(object)</span>:</span>
+
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__init__</span><span>(self, app, fn)</span>:</span>
+        self._app = app
+        self._func = fn
+        ...
+
+    <span>@asyncio.coroutine</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">__call__</span><span>(self, request)</span>:</span>
+        kw = ... 获取参数
+        r = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> self._func(**kw)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> r
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">再编写一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">add_route</code>函数，用来注册一个URL处理函数：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">add_route</span><span>(app, fn)</span>:</span>
+    method = getattr(fn, <span style="color:rgb(221, 17, 68);">'__method__'</span>, <span style="color:rgb(0, 134, 179);">None</span>)
+    path = getattr(fn, <span style="color:rgb(221, 17, 68);">'__route__'</span>, <span style="color:rgb(0, 134, 179);">None</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> path <span style="color:rgb(51, 51, 51);font-weight:bold;">is</span> <span style="color:rgb(0, 134, 179);">None</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">or</span> method <span style="color:rgb(51, 51, 51);font-weight:bold;">is</span> <span style="color:rgb(0, 134, 179);">None</span>:
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">raise</span> ValueError(<span style="color:rgb(221, 17, 68);">'@get or @post not defined in %s.'</span> % str(fn))
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">not</span> asyncio.iscoroutinefunction(fn) <span style="color:rgb(51, 51, 51);font-weight:bold;">and</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">not</span> inspect.isgeneratorfunction(fn):
+        fn = asyncio.coroutine(fn)
+    logging.info(<span style="color:rgb(221, 17, 68);">'add route %s %s =&gt; %s(%s)'</span> % (method, path, fn.__name__, <span style="color:rgb(221, 17, 68);">', '</span>.join(inspect.signature(fn).parameters.keys())))
+    app.router.add_route(method, path, RequestHandler(app, fn))
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">最后一步，把很多次<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">add_route()</code>注册的调用：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">add_route(app, handles.index)
+add_route(app, handles.blog)
+add_route(app, handles.create_comment)
+...
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">变成自动扫描：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"># 自动把<span><span style="color:rgb(51, 51, 51);font-weight:bold;">handler</span>模块的所有符合条件的函数注册了:
+add_routes(app, <span style="color:rgb(221, 17, 68);">'handlers'</span>)
+</span></code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">add_routes()</code>定义如下：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">add_routes</span><span>(app, module_name)</span>:</span>
+    n = module_name.rfind(<span style="color:rgb(221, 17, 68);">'.'</span>)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> n == (-<span style="color:rgb(0, 153, 153);">1</span>):
+        mod = __import__(module_name, globals(), locals())
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">else</span>:
+        name = module_name[n+<span style="color:rgb(0, 153, 153);">1</span>:]
+        mod = getattr(__import__(module_name[:n], globals(), locals(), [name]), name)
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">for</span> attr <span style="color:rgb(51, 51, 51);font-weight:bold;">in</span> dir(mod):
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> attr.startswith(<span style="color:rgb(221, 17, 68);">'_'</span>):
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">continue</span>
+        fn = getattr(mod, attr)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> callable(fn):
+            method = getattr(fn, <span style="color:rgb(221, 17, 68);">'__method__'</span>, <span style="color:rgb(0, 134, 179);">None</span>)
+            path = getattr(fn, <span style="color:rgb(221, 17, 68);">'__route__'</span>, <span style="color:rgb(0, 134, 179);">None</span>)
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> method <span style="color:rgb(51, 51, 51);font-weight:bold;">and</span> path:
+                add_route(app, fn)
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">最后，在<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">app.py</code>中加入<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">middleware</code>、<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">jinja2</code>模板和自注册的支持：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;">app = web.Application(loop=loop, middlewares=[
+    logger_factory, response_factory
+])
+init_jinja2(app, filters=dict(datetime=datetime_filter))
+add_routes(app, 'handlers')
+add_static(app)
+</code></pre>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">middleware</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">middleware</code>是一种拦截器，一个URL在被某个函数处理前，可以经过一系列的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">middleware</code>的处理。</p>
+<p style="margin:0px 0px 15px;margin-top:15px;">一个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">middleware</code>可以改变URL的输入、输出，甚至可以决定不继续处理而直接返回。middleware的用处就在于把通用的功能从每个URL处理函数中拿出来，集中放到一个地方。例如，一个记录URL日志的<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">logger</code>可以简单定义如下：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@asyncio.coroutine</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">logger_factory</span><span>(app, handler)</span>:</span>
+    <span>@asyncio.coroutine</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">logger</span><span>(request)</span>:</span>
+        <span style="color:rgb(153, 153, 136);font-style:italic;"># 记录日志:</span>
+        logging.info(<span style="color:rgb(221, 17, 68);">'Request: %s %s'</span> % (request.method, request.path))
+        <span style="color:rgb(153, 153, 136);font-style:italic;"># 继续处理请求:</span>
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> (<span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> handler(request))
+    <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> logger
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">而<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">response</code>这个<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">middleware</code>把返回值转换为<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">web.Response</code>对象再返回，以保证满足<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">aiohttp</code>的要求：</p>
+<pre style="margin:0px 0px 15px;margin-top:15px;padding:10px;background:rgb(250, 250, 250);font:12px/18px Consolas, monospace, serif;color:rgb(68, 68, 68);tab-size:4;overflow:auto;border:1px solid rgb(221, 221, 221);border-radius:3px;"><code style="white-space:pre-wrap;"><span>@asyncio.coroutine</span>
+<span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">response_factory</span><span>(app, handler)</span>:</span>
+    <span>@asyncio.coroutine</span>
+    <span><span style="color:rgb(51, 51, 51);font-weight:bold;">def</span> <span style="color:rgb(153, 0, 0);font-weight:bold;">response</span><span>(request)</span>:</span>
+        <span style="color:rgb(153, 153, 136);font-style:italic;"># 结果:</span>
+        r = <span style="color:rgb(51, 51, 51);font-weight:bold;">yield</span> <span style="color:rgb(51, 51, 51);font-weight:bold;">from</span> handler(request)
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> isinstance(r, web.StreamResponse):
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> r
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> isinstance(r, bytes):
+            resp = web.Response(body=r)
+            resp.content_type = <span style="color:rgb(221, 17, 68);">'application/octet-stream'</span>
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> resp
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> isinstance(r, str):
+            resp = web.Response(body=r.encode(<span style="color:rgb(221, 17, 68);">'utf-8'</span>))
+            resp.content_type = <span style="color:rgb(221, 17, 68);">'text/html;charset=utf-8'</span>
+            <span style="color:rgb(51, 51, 51);font-weight:bold;">return</span> resp
+        <span style="color:rgb(51, 51, 51);font-weight:bold;">if</span> isinstance(r, dict):
+            ...
+</code></pre>
+<p style="margin:0px 0px 15px;margin-top:15px;">有了这些基础设施，我们就可以专注地往<code style="font-size:12px;font-family:Consolas, monospace, serif;color:rgb(221, 0, 85);padding:0px 4px;border:1px solid rgb(221, 221, 221);border-radius:3px;background:rgb(250, 250, 250);white-space:normal;">handlers</code>模块不断添加URL处理函数了，可以极大地提高开发效率。</p>
+<h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">参考源码</h3>
+<p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://github.com/michaelliao/awesome-python3-webapp/tree/day-05" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;" target="_blank">day-05</a></p>
+</div><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">读后有收获可以支付宝请作者喝咖啡，读后有疑问请加微信群讨论：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><img src="Day 5 - 编写Web框架_files/0" type="image/png" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/> <img src="Day 5 - 编写Web框架_files/0 [1]" type="image/jpeg" data-filename="0" height="220" style="vertical-align:middle;max-width:100%;height:auto;box-sizing:border-box;border:0px;" width="220"/></p><h3 style="margin:0px 0px 15px;font-family:&quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;font-weight:normal;color:rgb(68, 68, 68);text-transform:none;margin-top:25px;font-size:18px;line-height:24px;">还可以分享给朋友：</h3><p style="margin:0px 0px 15px;margin-top:15px;"><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018490695712544#0" style="-webkit-appearance:none;margin:0px;overflow:visible;font-style:inherit;font-variant:inherit;font-weight:inherit;font-stretch:inherit;font-family:inherit;text-transform:none;display:inline-block;box-sizing:border-box;padding:0px 12px;vertical-align:middle;line-height:28px;min-height:30px;font-size:14px;text-align:center;border:1px solid rgba(0, 0, 0, 0.06);border-radius:4px;background:rgb(245, 245, 245);text-decoration:none;background-color:rgb(218, 49, 75);color:rgb(255, 255, 255);box-shadow:rgba(0, 0, 0, 0.05) 0px 0px 5px inset;text-shadow:rgba(0, 0, 0, 0.1) 0px -1px 0px;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 分享到微博</a></p>
+
+    <hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="padding-left:15px;padding-right:15px;"><span style="display:table-cell;"></span><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018490658464544" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;"><i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i> 上一页</a><a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1018490750237280" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;float:right;max-width:100%;">下一页 <i style="font-family:FontAwesome;display:inline-block;font-weight:normal;font-style:normal;line-height:1;-webkit-font-smoothing:antialiased;text-decoration:none;"><span style="font-family:FontAwesome;font-weight:normal;font-style:normal;line-height:1;"></span></i></a><span style="display:table;clear:both;"></span></div><hr style="box-sizing:content-box;height:0px;margin:15px 0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(221, 221, 221);"/>
+
+    <div style="position:relative;"><a name="comments" style="background:transparent;color:rgb(5, 147, 211);text-decoration:none;cursor:pointer;position:absolute;top:-65px;"></a></div>
+							</div></div></div></div></div></div></div></div></div></div>
+</div>
+</span>
+</div></body></html> 
