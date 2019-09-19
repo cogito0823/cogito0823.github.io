@@ -1,4 +1,26 @@
 // Custom styles.
+a,
+span.exturl {
+    color: #000;
+}
+.post-nav-item a{
+    color: #000;
+}
+.post-toc ol a {
+    color: #000;
+}
+
+.sidebar-nav li {
+    color: #000;
+}
+
+body {
+    color: #000;
+}
+.post-body {
+    color: #000;
+    font-size: 16px;
+}
 .mjpage__block {
     display: inline-block;
     text-align: center;
@@ -11,18 +33,18 @@
 // 自定义的页脚微信订阅号样式
 .weixin-box {
     position: absolute;
-    bottom: 43px;
-    left: 10px;
+    bottom: 60px;
+    left: 100px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.35);
 }
 .weixin-menu {
     position: relative;
-    height: 24px;
-    width: 24px;
+    height: 48px;
+    width: 48px;
     cursor: pointer;
-    background: url(https://raw.githubusercontent.com/cogito0823/photos/master/img/wechat.png);
-    background-size: 24px 24px;
+    background: url(https://raw.githubusercontent.com/cogito0823/photos/master/img/wechatt.svg?sanitize=true);
+    background-size: 48px 48px;
 }
 .weixin-hover {
     position: absolute;
@@ -76,12 +98,123 @@ summary {
 
 //自己定义的
 @media (min-width: 1200px){
-.container .main-inner {
-  width: 75%;
+  .container .main-inner {
+    width: 75%;
+  }
+  .header {
+    position: relative;
+    margin: 0 auto;
+    width: 75%;
+  }
 }
-.header {
-  position: relative;
-  margin: 0 auto;
-  width: 75%;
+
+
+// 移动端样式
+@media (max-width: 1023px) {
+    .container {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    .sidebar {
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+    .feed-link {
+        display: none !important;
+    }
 }
+@media (max-width: 767px) {
+
+    .weixin-box {
+        bottom: 60px;
+        left: 30px;
+    }
+    .main {
+        padding-bottom: 120px;
+    }
+    .post-toc ol a {
+        color: #000;
+    }
+    .sidebar-nav li {
+        color: #000;
+    }
+    body {
+        color: #000;
+    }
+    .posts-expand {
+        margin: 0px;
+    }
+    .posts-expand .post-title {
+        font-size: 22px;
+    }
+    .posts-expand .post-meta {
+        font-size: 10px;
+	margin: 3px 0 30px 0;
+    }
+    .post {
+        margin-bottom: 30px !important;
+	margin-top: 0px;
+        padding: 20px 15px 15px 15px !important;
+    }
+    .post-body {
+        color: #000;
+    }
+    .post-body h2, h3, h4, h5, h6 {
+        margin-left: -15px;
+        padding-left: 11px;
+    }
+    .posts-expand .post-tags {
+        margin-top: 10px;
+    }
+    .post-widgets {
+        margin-top: 10px;
+    }
+    .comments {
+        margin: 40px 0px 40px 0px !important;
+    }
+    .footer {
+        box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+    }
+}
+.sidebar-active #sidebar-dimmer {
+    opacity: 0;
+}
+// 移动端左上角菜单按钮
+.site-nav-toggle {
+    top: 50%;
+    left: 20px;
+}
+.btn-bar {
+    background-color: rgb(255, 255, 255);
+}
+// 移动端菜单
+@media (max-width: 767px) {
+    .menu {
+        text-align: center;
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+    }
+    .site-nav {
+        top: initial;
+        background-color: rgba(255, 255, 255, 0.75);
+        border-top: none;
+        border-bottom: none;
+        position: relative;
+        z-index: 1024;
+    }
+}
+// 移动端顶部
+@media (max-width: 767px) {
+    .site-title {
+        letter-spacing: 0px !important;
+    }
+    .site-subtitle{
+        letter-spacing: 0px !important;
+        padding-bottom: 0px !important;
+    }
+    .site-meta {
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+    }
+    .menu .menu-item {
+        margin: 0px 10px !important;
+    }
 }
