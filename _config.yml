@@ -103,3 +103,6 @@ deploy:
   type: git
   repository: git@github.com:cogito0823/cogito0823.github.io.git
   branch: master
+
+admin:
+  deployCommand: './hexo-deploy.sh'

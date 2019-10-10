@@ -636,13 +636,13 @@ changyan:
 # You can get your appid and appkey from https://leancloud.cn
 # More info available at https://valine.js.org
 valine:
-  enable: false # When enable is set to be true, leancloud_visitors is recommended to be closed for the re-initialization problem within different leancloud adk version.
-  appid:  # your leancloud application appid
-  appkey:  # your leancloud application appkey
-  notify: false # mail notifier, See: https://github.com/xCss/Valine/wiki
+  enable: true # When enable is set to be true, leancloud_visitors is recommended to be closed for the re-initialization problem within different leancloud adk version.
+  appid:  CLs8qmXMTgB6i6SYX1IllsLT-MdYXbMMI
+  appkey:  Yr1i52pJp024ByrgceoX6mr5
+  notify: true
   verify: false # Verification code
-  placeholder: Just go go # comment box placeholder
-  avatar: mm # gravatar style
+  placeholder: Good luck. 
+  avatar: wavatar # gravatar style
   guest_info: nick,mail,link # custom comment header
   pageSize: 10 # pagination size
   language: # language, available values: en, zh-cn
@@ -774,7 +774,7 @@ facebook_comments_plugin:
 # VKontakte API Support
 # To get your AppID visit https://vk.com/editapp?act=create
 vkontakte_api:
-  enable:       true
+  enable:       false
   app_id:       7048541
   like:         true
   comments:     true

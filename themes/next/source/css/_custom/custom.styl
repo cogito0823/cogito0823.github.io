@@ -1,4 +1,10 @@
 // Custom styles.
+.has-jax {
+    font-size: large;
+}
+table{
+    font-size: 15px;
+}
 a,
 span.exturl {
     color: #000;
@@ -29,6 +35,9 @@ body {
     vertical-align: bottom;
 }
 
+.posts-expand .post-title-link {
+    color: #000;
+}
 
 // 自定义的页脚微信订阅号样式
 .weixin-box {
@@ -97,7 +106,19 @@ summary {
 }
 
 //自己定义的
-@media (min-width: 1200px){
+
+@media (min-width: 1441px){
+  .container .main-inner {
+    width: 67%;
+  }
+  .header {
+    position: relative;
+    margin: 0 auto;
+    width: 67%;
+  }
+}
+
+@media (max-width: 1440px){
   .container .main-inner {
     width: 75%;
   }
@@ -107,7 +128,6 @@ summary {
     width: 75%;
   }
 }
-
 
 // 移动端样式
 @media (max-width: 1023px) {
@@ -146,6 +166,10 @@ summary {
     }
     .posts-expand .post-title {
         font-size: 22px;
+        color: #000;
+    }
+    .posts-expand .post-title-link {
+        color: #000;
     }
     .posts-expand .post-meta {
         font-size: 10px;
