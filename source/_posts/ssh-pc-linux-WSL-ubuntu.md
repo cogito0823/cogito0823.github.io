@@ -1,4 +1,5 @@
 ---
+title: 用ssh从外部连接到寝室个人电脑的Ubuntu系统或win10下的WSL--Linux子系统
 date: 2019-10-27 18:35:47
 mathjax: false
 tags: [ubuntu,WSL,ssh]
