@@ -3,9 +3,9 @@ title: 用ssh从外部连接到寝室个人电脑的Ubuntu系统或win10下的WS
 date: 2019-10-27 18:35:47
 mathjax: false
 tags: [ubuntu,WSL,ssh]
+description: 当你懒得下床，电脑在床下的桌上，却想用手机来coding，或者你需要在实验室远程连接在寝室的电脑的时候，你可以阅读这篇文章，试试把你的电脑武装成一台远程服务器~
 categories: tips
 ---
-当你懒得下床，电脑在床下的桌上，却想用手机来coding，或者你需要在实验室远程连接在寝室的电脑的时候，你可以阅读这篇文章，试试把你的电脑武装成一台远程服务器~
 ![](https://raw.githubusercontent.com/cogito0823/photos/master/img/blur-communication-computer-2148217.jpg)
 <!--more-->
 这篇文章我将以WSL（Windows下的linux子系统）为例演示一遍工作流程。
@@ -13,11 +13,13 @@ categories: tips
 - 知道啥是ssh、Linux
 - 知道怎么用ssh连接服务器（不知道的话网上有很多教程可供学习）
 - 会简单使用linux系统
+
 ## 步骤
 - 开启WSL的ssh服务（linux系统也是）
 - 设置防火墙以允许ssh端口的连接
 - 找到你的公网ip(知道了这个ip才能在互联网上找到你的电脑)
 - 用ssh连接你的电脑
+
 ## 开启WSL的ssh服务
 进入WSL的命令行界面
 键入命令`vi /etc/ssh/sshd_config`来修改ssh的配置文件

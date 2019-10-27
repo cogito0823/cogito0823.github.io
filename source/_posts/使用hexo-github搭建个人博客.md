@@ -19,6 +19,7 @@ kewords: [hexo,gitub,blog,hexo版本控制,nodejs,npm]
 在开始之前，你已经：
 - **有一个github账号，账号配置了SSH Key**	
 - **本机操作系统git客户端与GitHub有ssh连接**
+
 ## 安装Nodejs
 去 [nodejs官网](https://nodejs.org/en/download/current/ "nodejs")  查看最新版本的nodejs，根据你的操作系统类型，在该页面选择合适的版本，并右键复制该版本的下载连接，如：https://nodejs.org/dist/v12.5.0/node-v12.5.0-linux-x64.tar.xz
 目前最新：v12.5.0
