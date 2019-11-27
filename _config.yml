@@ -102,7 +102,7 @@ avatar: https://raw.githubusercontent.com/cogito0823/photos/master/img/6e.png
 deploy:
   type: git
   repository: 
-    ubuntu@123.207.90.132:/var/repo/hexo_static.git
+    re: ubuntu@123.207.90.132:/var/repo/hexo_static.git
     github: git@github.com:cogito0823/cogito0823.github.io.git
   branch: master
 
