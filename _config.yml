@@ -101,7 +101,9 @@ avatar: https://raw.githubusercontent.com/cogito0823/photos/master/img/6e.png
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@github.com:cogito0823/cogito0823.github.io.git
+  repository: 
+    ubuntu@123.207.90.132:/var/repo/hexo_static.git
+    github: git@github.com:cogito0823/cogito0823.github.io.git
   branch: master
 
 admin:
