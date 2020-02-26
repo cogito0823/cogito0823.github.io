@@ -104,6 +104,7 @@ deploy:
   repository: 
     re: root@123.207.90.132:/var/repo/hexo_static.git
     github: git@github.com:cogito0823/cogito0823.github.io.git
+    coding: git@e.coding.net:cogito0823/blog.git
   branch: master
 
 admin:
