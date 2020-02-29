@@ -143,7 +143,7 @@ bing_site_verification: 1539C35F24049A7FA072D5DAD40C4659
 
 # Baidu Webmaster tools verification.
 # See: https://ziyuan.baidu.com/site
-baidu_site_verification: omVZT6qaFf
+baidu_site_verification: AM8XTm4pYr
 
 # Enable baidu push so that the blog will push the url to baidu automatically which is very helpful for SEO.
 baidu_push: false
