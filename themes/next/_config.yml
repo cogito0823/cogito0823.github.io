@@ -742,7 +742,7 @@ baidu_analytics: 29edc97ccad896a3cb1d7ad0517fa829
 # Google Analytics
 google_analytics:
   tracking_id: UA-143349147-1
-  localhost_ignored: true
+  localhost_ignored: false
 
 # CNZZ count
 #cnzz_siteid:
