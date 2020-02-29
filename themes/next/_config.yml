@@ -639,7 +639,7 @@ valine:
   appid:  CLs8qmXMTgB6i6SYX1IllsLT-MdYXbMMI
   appkey:  Yr1i52pJp024ByrgceoX6mr5
   notify: true
-  verify: false # Verification code
+  verify: true # Verification code
   placeholder: Good luck. 
   avatar: wavatar # gravatar style
   guest_info: nick,mail,link # custom comment header
