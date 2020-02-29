@@ -5,7 +5,8 @@ tags: [linux,github,ssh,win10,scp,pscp]
 mathjax: false
 categories: linux
 ---
-![](http://q02jx5v1h.bkt.clouddn.com/picgo/beach-beachlife-salt-water-21859.jpg)
+平时能用上的一些小技巧
+![](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/sea-nature-beach-sand-21859.jpg)
 <!--more-->
 ## 服务器间传文件
 
