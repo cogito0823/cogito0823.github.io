@@ -10,7 +10,6 @@
   </script>
 {% endif %}
 
-
 {% if theme.baidu_push %}
 <script>
 (function(){
