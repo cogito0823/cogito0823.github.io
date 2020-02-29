@@ -19,7 +19,7 @@ search:
         
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://cogito0823.github.io
+url: https://blog.ccogito.xyz
 root: /
 
 #permalink: :year/:month/:day/:title/
