@@ -89,8 +89,8 @@ time_format: HH:mm:ss
 
 lazyload:
   enable: true
-  onlypost: false
-  loadingImg: /images/loading.png
+  onlypost: true
+  loadingImg:
 
 # Pagination
 ## Set per_page to 0 to disable pagination
