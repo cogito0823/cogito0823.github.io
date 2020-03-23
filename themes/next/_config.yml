@@ -58,7 +58,7 @@ footer:
   icon:
     # Icon name in fontawesome, see: https://fontawesome.com/v4.7.0/icons/
     # `heart` is recommended with animation in red (#ff0000).
-    name: 个人经验记录-COGITO
+    name: dot-circle-o
     # If you want to animate the icon, set it to true.
     animated: false
     # Change the color of icon, using Hex Code.
