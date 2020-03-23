@@ -6,8 +6,9 @@ tags: [hexo,github,blog]
 kewords: [hexo,gitub,blog,hexo版本控制,nodejs,npm]
 ---
 *平台：ubuntu18.04*
-![](https://raw.githubusercontent.com/cogito0823/photos/master/img/blog.jpg)
+![](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/blog.jpg)
 <!--more-->
+
 ## 步骤
 - 准备
 - Nodejs 的安装

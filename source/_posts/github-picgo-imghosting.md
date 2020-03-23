@@ -6,7 +6,7 @@ tags: [picgo,github,images,hosting]
 categories: web
 ---
 利用 picgo + github 建立一个私人图床 ~
-![](https://raw.githubusercontent.com/cogito0823/photos/master/img/picgo.jpg)
+![](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/picgo.jpg)
 <!--more-->
 ## 基本步骤
 - 注册 GitHub 账号

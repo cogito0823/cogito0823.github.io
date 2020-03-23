@@ -6,7 +6,7 @@ tags: [ubuntu,WSL,ssh]
 categories: tips
 ---
 当你懒得下床，电脑在床下的桌上，却想用手机来coding，或者你需要在实验室远程连接在寝室的电>脑的时候，你可以阅读这篇文章，试试把你的电脑武装成一台远程服务器~
-![](https://raw.githubusercontent.com/cogito0823/photos/master/img/blur-communication-computer-2148217.jpg)
+![](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/blur-communication-computer-2148217.jpg)
 <!--more-->
 这篇文章我将以WSL（Windows下的linux子系统）为例演示一遍工作流程。
 ## 你需要提前了解的知识

@@ -7,7 +7,7 @@ categories:
 date: 2019-09-20 18:02:00
 ---
 😁
-![](https://raw.githubusercontent.com/cogito0823/photos/master/img/mathjax.svg?sanitize=true)
+![](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/mathjax.svg)
 
 <!--more-->
 
@@ -413,7 +413,7 @@ TEX能够自动处理大多数的空格，但是有时候需要自己来控制�
 
 ### 小型数学公式
 
-10 的 $\displaystyle f(x)=5+{\frac {1}{5}}​$ 是 2。
+10 的 $\displaystyle f(x)=5+{\frac {1}{5}}$ 是 2。
 
 - 🙁**并不好看。**
 
