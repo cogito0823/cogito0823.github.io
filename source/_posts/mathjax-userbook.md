@@ -73,7 +73,7 @@ date: 2019-09-20 18:02:00
 | \prime, \backprime, f^\prime, f', f'', f^{(3)}, \dot y, \ddot y | ${\displaystyle \prime ,\backprime ,f^{\prime     },f',f'',f^{(3)}\!,{\dot {y}},{\ddot {y}}}$ |
 | **类字母符号及常数**                                         |                                                              |
 | \infty, \aleph, \complement, \backepsilon, \eth, \Finv, \hbar | ${\displaystyle \infty ,\aleph ,\complement     ,\backepsilon ,\eth ,\Finv ,\hbar }$ |
-| \Im, \imath, \jmath, \Bbbk, \ell, \mho, \wp, \Re, \circledS, \S,   \P, \AA | ${\displaystyle \Im ,\imath ,\jmath ,\Bbbk ,\ell ,\mho   ,\wp ,\Re ,\circledS ,\S ,\P ,\mathrm {\AA} }$ |
+| \Im, \imath, \jmath, \Bbbk, \ell, \mho, \wp, \Re, \circledS, \S,   \P, \AA | ${\displaystyle \Im ,\imath ,\jmath ,\Bbbk ,\ell ,\mho   ,\wp ,\Re ,\circledS ,\S ,\P ,\unicode{x212B} }$ |
 | **模算数**                                                   |                                                              |
 | s_k \equiv 0 \pmod{m}                                        | ${\displaystyle s_{k}\equiv 0{\pmod {m}}}$                   |
 | a \bmod b                                                    | ${\displaystyle a{\bmod {b}}}$                               |
@@ -198,7 +198,7 @@ date: 2019-09-20 18:02:00
 |                  | `\begin{matrix} \sum_{k=1}^N k^2 \end{matrix}` | $\displaystyle \begin{matrix}\sum   _{k=1}^{N}k^{2}\end{matrix}$ |
 | 求积                                                         | `\prod_{i=1}^N   x_i`                                          |             $\displaystyle \prod_{i=1}^N x_i$ |
 |                 | `\begin{matrix} \prod_{i=1}^N x_i \end{matrix}` | \begin{matrix} \prod_{i=1}^N x_i \end{matrix} |
-| 上积                                                         | `\coprod_{i=1}^N   x_i`                                        |             $\displaystyle \coprod_{i=1}^{N} x_{i}$ |
+| 上积                                                         | `\coprod_{i=1}^N   x_i`                                        |             $\displaystyle \coprod_{i=1}^N x_i$ |
 |               | `\begin{matrix} \coprod_{i=1}^N x_i \end{matrix}` | \begin{matrix} \coprod_{i=1}^N x_i \end{matrix} |
 | [极限](https://zh.wikipedia.org/wiki/%E6%9E%81%E9%99%90)     | `\lim_{n   \to \infty}x_n`                                     |             $\displaystyle \lim_{n   \to \infty}x_n$ |
 |     | `\begin{matrix} \lim_{n \to \infty}x_n \end{matrix}`|\begin{matrix} \lim_{n \to \infty}x_n \end{matrix} |
