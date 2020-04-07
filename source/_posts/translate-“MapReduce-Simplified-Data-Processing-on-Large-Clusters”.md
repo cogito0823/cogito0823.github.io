@@ -45,7 +45,7 @@ MapReduce是用于处理和生成大型数据集的编程模型及实现。用�
 #### 示例
 
 考虑计算大量文件组成的文件集合中每个单词出现的总次数的问题。用户将编写类似于以下伪代码的代码：
-```c#
+```java
 map(String key, String value):
 	// key: document name
 	// value: document contents
@@ -234,7 +234,7 @@ MapReduce库支持读取几种不同格式的输入数据。 例如，“文本�
 MapReduce库提供了一个计数器工具，用于对各种事件的发生情况进行计数。 例如，用户代码可能想要计算处理的单词总数或索引的德语文档的数量等。
  要使用此功能，用户代码创建一个命名的计数器对象，然后在Map和/或Reduce函数中适当地递增计数器。 例如：
 
-```c#
+```java
 Counter* uppercase;
 uppercase = GetCounter("uppercase");
 map(String name, String contents):
