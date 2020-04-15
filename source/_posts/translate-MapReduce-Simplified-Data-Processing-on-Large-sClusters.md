@@ -1,5 +1,5 @@
 ---
-title: 译“MapReduce:Simplified Data Processing on Large Clusters”
+title: 译"MapReduce:Simplified Data Processing on Large Clusters"
 date: 
 mathjax: true
 tags: [map,reduce,cluster,mapreduce]
