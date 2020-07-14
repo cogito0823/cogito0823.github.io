@@ -31,8 +31,8 @@ apt-get install openssh-server
 ```
 Port = 22 # 默认是22端口，如果和windows端口冲突或你想换成其他的否则不用动
 #ListenAddress 0.0.0.0 # 如果需要指定监听的IP则去除最左侧的井号，并配置对应IP，默认即监听PC所有IP
-PermitRootLogin yes # 如果你需要禁用 root 直接登录系统则此处改为 yes
-PasswordAuthentication yes# 将 no 改为 yes 表示使用密码方式而非密钥登录
+PermitRootLogin yes # 允许使用root账号登录
+PasswordAuthentication yes# 允许使用密码登录
 ```
 更改完上述属性后键入`service ssh start`启用ssh服务
 如果提示`sshd error: could not load host key`则重新生成密钥，然后再次启动：
