@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ccogito.xyz/ssh-pc-linux-WSL-ubuntu.html</loc>
+    
+    <lastmod>2020-07-14T19:37:11.281Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ccogito.xyz/tags/index.html</loc>
     
     <lastmod>2020-07-14T19:04:16.466Z</lastmod>
@@ -38,13 +45,6 @@
   
   <url>
     <loc>https://blog.ccogito.xyz/scp-github-git-screenshot-ssh-rsa.html</loc>
-    
-    <lastmod>2020-07-14T19:04:16.458Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ccogito.xyz/ssh-pc-linux-WSL-ubuntu.html</loc>
     
     <lastmod>2020-07-14T19:04:16.458Z</lastmod>
     

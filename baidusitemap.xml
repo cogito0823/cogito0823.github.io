@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://blog.ccogito.xyz/ssh-pc-linux-WSL-ubuntu.html</loc>
+    <lastmod>2020-07-14</lastmod>
+  </url>  <url>
     <loc>https://blog.ccogito.xyz/Typora-PicGo-tencentCOS-imagehosting.html</loc>
     <lastmod>2020-07-14</lastmod>
   </url>  <url>
@@ -14,9 +17,6 @@
     <lastmod>2020-07-14</lastmod>
   </url>  <url>
     <loc>https://blog.ccogito.xyz/scp-github-git-screenshot-ssh-rsa.html</loc>
-    <lastmod>2020-07-14</lastmod>
-  </url>  <url>
-    <loc>https://blog.ccogito.xyz/ssh-pc-linux-WSL-ubuntu.html</loc>
     <lastmod>2020-07-14</lastmod>
   </url>  <url>
     <loc>https://blog.ccogito.xyz/translate-MapReduce-Simplified-Data-Processing-on-Large-sClusters.html</loc>
