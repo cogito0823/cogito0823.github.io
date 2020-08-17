@@ -35,9 +35,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render: 
-  - 'README.md'
-  - 'DomainVerification/**'
+skip_render: README.md
 
 symbols_count_time:
   symbols: true
