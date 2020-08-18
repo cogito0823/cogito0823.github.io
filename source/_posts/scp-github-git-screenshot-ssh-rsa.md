@@ -116,7 +116,10 @@ scp -rP 22 <file> <server>:dir
 
   ```
   cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
-  chmod 600 id_rsa	#没改权限在以后连接git时会报Permissions xxx for 									#'/root/.ssh/id_rsa' are too open.It is required that 							  #your private key files are NOT accessible by 								#others.This private key will be ignored.错
+  chmod 600 id_rsa	#没改权限在以后连接git时会报”Permissions xxx for 
+			#'/root/.ssh/id_rsa' are too open.It is required that 
+			#your private key files are NOT accessible by 	
+			#others.This private key will be ignored.“的错误
   ```
 
 -  重启ssh服务
