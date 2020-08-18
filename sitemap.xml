@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ccogito.xyz/scp-github-git-screenshot-ssh-rsa.html</loc>
+    
+    <lastmod>2020-08-18T08:03:56.807Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ccogito.xyz/ssh-pc-linux-WSL-ubuntu.html</loc>
     
     <lastmod>2020-07-14T19:37:11.281Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>https://blog.ccogito.xyz/tags/index.html</loc>
     
     <lastmod>2020-07-14T19:04:16.466Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ccogito.xyz/Typora-PicGo-tencentCOS-imagehosting.html</loc>
-    
-    <lastmod>2020-07-14T19:04:16.458Z</lastmod>
     
   </url>
   
@@ -44,13 +44,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/scp-github-git-screenshot-ssh-rsa.html</loc>
-    
-    <lastmod>2020-07-14T19:04:16.458Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.ccogito.xyz/translate-MapReduce-Simplified-Data-Processing-on-Large-sClusters.html</loc>
     
     <lastmod>2020-07-14T19:04:16.458Z</lastmod>
@@ -59,6 +52,13 @@
   
   <url>
     <loc>https://blog.ccogito.xyz/%E4%BD%BF%E7%94%A8hexo-github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2.html</loc>
+    
+    <lastmod>2020-07-14T19:04:16.458Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ccogito.xyz/Typora-PicGo-tencentCOS-imagehosting.html</loc>
     
     <lastmod>2020-07-14T19:04:16.458Z</lastmod>
     
