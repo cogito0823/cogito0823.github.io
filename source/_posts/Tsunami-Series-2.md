@@ -1,5 +1,5 @@
 ---
-title: Tsunami系列（一） 介绍
+title: Tsunami系列（二）：Tsunami Scan 是怎么工作的
 date: 
 categories: software_testing
 tags: [tsunami,安全,测试]
