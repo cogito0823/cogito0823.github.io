@@ -5,7 +5,7 @@ categories: software_testing
 tags: [tsunami,安全,测试]
 kewords: [tsunami,testing]
 ---
-![](http://cos.ccogito.xyz/img/pexels-emiliano-arano-1298684.jpg)
+![](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/pexels-emiliano-arano-1298684.jpg)
 <!--more-->
 
 ## 概览

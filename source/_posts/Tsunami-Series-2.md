@@ -5,7 +5,7 @@ categories: software_testing
 tags: [tsunami,安全,测试]
 kewords: [tsunami,testing]
 ---
-![](http://cos.ccogito.xyz/img/pexels-george-desipris-753619.jpg)
+![](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/pexels-george-desipris-753619.jpg)
 <!--more-->
 
 ## 总览
@@ -19,7 +19,7 @@ Tsunami 的总体工作流如下图所示：
 
 
 
-![image-20200818084534803](http://cos.ccogito.xyz/img/image-20200818084534803.png)
+![image-20200818084534803](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/image-20200818084534803.png)
 
 
 
