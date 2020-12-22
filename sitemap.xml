@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ccogito.xyz/Java-WhiteBox-Auto-Test.html</loc>
+    
+    <lastmod>2020-12-22T16:37:52.738Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ccogito.xyz/Tsunami-Series-3.html</loc>
     
     <lastmod>2020-10-21T13:25:54.702Z</lastmod>
@@ -51,14 +58,21 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/markdown-complex-table.html</loc>
+    <loc>https://blog.ccogito.xyz/Typora-PicGo-tencentCOS-imagehosting.html</loc>
     
     <lastmod>2020-07-14T19:04:16.458Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/mathjax-userbook.html</loc>
+    <loc>https://blog.ccogito.xyz/github-picgo-imghosting.html</loc>
+    
+    <lastmod>2020-07-14T19:04:16.458Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ccogito.xyz/markdown-complex-table.html</loc>
     
     <lastmod>2020-07-14T19:04:16.458Z</lastmod>
     
@@ -72,7 +86,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/Typora-PicGo-tencentCOS-imagehosting.html</loc>
+    <loc>https://blog.ccogito.xyz/mathjax-userbook.html</loc>
     
     <lastmod>2020-07-14T19:04:16.458Z</lastmod>
     
@@ -80,13 +94,6 @@
   
   <url>
     <loc>https://blog.ccogito.xyz/categories/index.html</loc>
-    
-    <lastmod>2020-07-14T19:04:16.458Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ccogito.xyz/github-picgo-imghosting.html</loc>
     
     <lastmod>2020-07-14T19:04:16.458Z</lastmod>
     
