@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ccogito.xyz/Using-of-MinIO.html</loc>
+    
+    <lastmod>2020-12-23T14:16:13.311Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ccogito.xyz/Java-WhiteBox-Auto-Test.html</loc>
     
     <lastmod>2020-12-22T16:37:52.738Z</lastmod>
