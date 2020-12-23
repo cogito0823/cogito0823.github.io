@@ -4,6 +4,7 @@ date:
 mathjax: false
 tags: [测试]
 categories: 测试
+
 ---
 
 ![java](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/java.png)
@@ -146,7 +147,7 @@ SonarQube平台中支持整合各种静态代码扫描检测工具。SonarQube�
 
 ##### 与gitlab 集成
 
-![使用SonarQube从GitLab发出的拉取请求](http://cos.ccogito.xyz/img/gitlab-gq-failed.png)
+![使用SonarQube从GitLab发出的拉取请求](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/gitlab-gq-failed.png)
 
 
 
@@ -197,7 +198,7 @@ SonarQube 不能查看历史数据,需要每次扫描完成后,把扫描结果�
 
 - **SonarQube 中添加 webhook**
 
-  ![img](http://cos.ccogito.xyz/img/82BD0842A2ED4565BE7CEA78FEFAF0F1)
+  ![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/82BD0842A2ED4565BE7CEA78FEFAF0F1)
 
   
 
@@ -205,13 +206,13 @@ SonarQube 不能查看历史数据,需要每次扫描完成后,把扫描结果�
 
   会用到 SonarQube 的一些 api 接口：
 
-  ![img](http://cos.ccogito.xyz/img/CC5804FC4CB3472A846401E09B90EC69)
+  ![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/CC5804FC4CB3472A846401E09B90EC69)
 
   
 
 - **前端展示报告**
 
-  ![img](http://cos.ccogito.xyz/img/C8C80FC47BE845CA831E20039C12C80B)
+  ![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/C8C80FC47BE845CA831E20039C12C80B)
 
 
 
@@ -219,7 +220,7 @@ SonarQube 不能查看历史数据,需要每次扫描完成后,把扫描结果�
 
 每次静态代码扫描完成后都会把结果发到企业微信群中。
 
-![img](http://cos.ccogito.xyz/img/FCB78FCDE6994EE29E934ACF22CE6B1A)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/FCB78FCDE6994EE29E934ACF22CE6B1A)
 
 
 
@@ -257,7 +258,7 @@ SonarQube 不能查看历史数据,需要每次扫描完成后,把扫描结果�
 
 #### 技术架构
 
-![img](http://cos.ccogito.xyz/img/8980b234-f972-4534-a6d8-7029bfd121a7.!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/8980b234-f972-4534-a6d8-7029bfd121a7.!large)
 
 #### 统一度量
 
@@ -281,15 +282,15 @@ SonarQube 不能查看历史数据,需要每次扫描完成后,把扫描结果�
 
 代码质量趋势图，以业务组维度，度量研发周期内的代码质量趋势。
 
-![img](http://cos.ccogito.xyz/img/a6eae4d9-4d48-441d-8ae7-cca23a591687.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/a6eae4d9-4d48-441d-8ae7-cca23a591687.png!large)
 
-![img](http://cos.ccogito.xyz/img/d8f86236-66b5-488e-bcdc-b201361b4800.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/d8f86236-66b5-488e-bcdc-b201361b4800.png!large)
 
 
 
 单测Top红黑榜排名，通过代码质量通晒的方式来督促研发质量提升
 
-![img](http://cos.ccogito.xyz/img/929460ad-6006-421e-8abb-b7ffa7ca81d0.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/929460ad-6006-421e-8abb-b7ffa7ca81d0.png!large)
 
 
 
@@ -299,25 +300,25 @@ SonarQube 不能查看历史数据,需要每次扫描完成后,把扫描结果�
 
 各业务线可自定义应用质量红线，形成业务线质量公约。
 
-![img](http://cos.ccogito.xyz/img/c85f19ac-ee56-495e-b224-a851b9498537.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/c85f19ac-ee56-495e-b224-a851b9498537.png!large)
 
 
 
 应用每次CD进行质量检测，显示质量分析报告，质量报告包含(接口测试，代码扫描，二方包检查，sql预检)四部分内容，全部指标达标才可发布。
 
-![img](http://cos.ccogito.xyz/img/e401a437-c192-4995-868c-e3759c3b28a9.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/e401a437-c192-4995-868c-e3759c3b28a9.png!large)
 
 
 
 超过阈值的应用质量将显示不达标状态，质量检测不达标的应用限制流转，如需紧急发布，需申请上级Owner审批。
 
-![img](http://cos.ccogito.xyz/img/fd29dd7b-4c0f-40db-85af-af91da96df46.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/fd29dd7b-4c0f-40db-85af-af91da96df46.png!large)
 
 
 
 正常流转
 
-![img](http://cos.ccogito.xyz/img/48965458-e38b-444f-9720-84a8c98f2c6c.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/48965458-e38b-444f-9720-84a8c98f2c6c.png!large)
 
 
 
@@ -401,7 +402,7 @@ SonarQube 不能查看历史数据,需要每次扫描完成后,把扫描结果�
 
 其中 AFrameSDK 作为移动端侧模块，集成到优酷 app，其余 4 个模块均可脱离移动端，支持单独部署，各模块通过 WebSocket 或者 Http 进行交互，整体交互关系如下：
 
-![s](http://cos.ccogito.xyz/img/c425e480eaf01190386a49c05404071a.png)
+![s](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/c425e480eaf01190386a49c05404071a.png)
 
 1. AFrameSDK：自动化测试的移动端入口模块，该模块包含与 AFrameServer 长连的 WebSocket Client，用于接收和解析 AFrameServer 下发的测试指令、调度执行、过程同步、数据收集和转发；
 2. CaseClient：通过改造 JUnit 测试框架为每个用例创建一个 WebSocket Client，向 AFrameServer 发送执行指令，并接收其中转的测试结果，完成行为分析和数据判断；
@@ -519,38 +520,38 @@ AFrameService 作为测试启动入口，承担着“大管家”的角色，该
 
 **业务信息**
 
-![img](http://cos.ccogito.xyz/img/94259e71-1248-4656-a323-ae06bd9be240.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/94259e71-1248-4656-a323-ae06bd9be240.png!large)
 
 **新增业务**
 
-![img](http://cos.ccogito.xyz/img/6a2b4740-d171-4fbb-8356-0315547ca8d4.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/6a2b4740-d171-4fbb-8356-0315547ca8d4.png!large)
 
 **业务代码质量度量**
 
-![img](http://cos.ccogito.xyz/img/e401a437-c192-4995-868c-e3759c3b28a9.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/e401a437-c192-4995-868c-e3759c3b28a9.png!large)
 
-![img](http://cos.ccogito.xyz/img/b5411751-3390-44b6-b48c-dc0d721366e1.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/b5411751-3390-44b6-b48c-dc0d721366e1.png!large)
 
 **趋势图**
 
 ![img](https://testerhome.com/uploads/photo/2020/a6eae4d9-4d48-441d-8ae7-cca23a591687.png!large)
 
-![img](http://cos.ccogito.xyz/img/d8f86236-66b5-488e-bcdc-b201361b4800.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/d8f86236-66b5-488e-bcdc-b201361b4800.png!large)
 
 **度量指标**
 
-![img](http://cos.ccogito.xyz/img/c85f19ac-ee56-495e-b224-a851b9498537.png!large)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/c85f19ac-ee56-495e-b224-a851b9498537.png!large)
 
 **配置扫描规则（SonarQube 页面）**
 
-![img](http://cos.ccogito.xyz/img/44905F7ADB974D96848F23DFE862749A)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/44905F7ADB974D96848F23DFE862749A)
 
-![img](http://cos.ccogito.xyz/img/4DEA5DB32C2545F893EDC0B4FA6B9688)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/4DEA5DB32C2545F893EDC0B4FA6B9688)
 
-![img](http://cos.ccogito.xyz/img/733A3352BE6245258A1650D2F4467D6A)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/733A3352BE6245258A1650D2F4467D6A)
 
 **结果报告**
 
-![img](http://cos.ccogito.xyz/img/20784029-b2990f54872c15ce.png)
+![img](https://imgbed-1258201753.cos.ap-guangzhou.myqcloud.com/img/20784029-b2990f54872c15ce.png)
 
 https://www.sourcebrella.com/static/vid/tur/report/report_zh.mp4
