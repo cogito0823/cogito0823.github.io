@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://blog.ccogito.xyz/Java-WhiteBox-Auto-Test.html</loc>
-    <lastmod>2020-12-23</lastmod>
-  </url>  <url>
     <loc>https://blog.ccogito.xyz/Using-of-InfluxDB.html</loc>
+    <lastmod>2020-12-24</lastmod>
+  </url>  <url>
+    <loc>https://blog.ccogito.xyz/Java-WhiteBox-Auto-Test.html</loc>
     <lastmod>2020-12-23</lastmod>
   </url>  <url>
     <loc>https://blog.ccogito.xyz/Using-of-MinIO.html</loc>
@@ -31,6 +31,9 @@
     <loc>https://blog.ccogito.xyz/Typora-PicGo-tencentCOS-imagehosting.html</loc>
     <lastmod>2020-07-14</lastmod>
   </url>  <url>
+    <loc>https://blog.ccogito.xyz/github-picgo-imghosting.html</loc>
+    <lastmod>2020-07-14</lastmod>
+  </url>  <url>
     <loc>https://blog.ccogito.xyz/markdown-complex-table.html</loc>
     <lastmod>2020-07-14</lastmod>
   </url>  <url>
@@ -38,9 +41,6 @@
     <lastmod>2020-07-14</lastmod>
   </url>  <url>
     <loc>https://blog.ccogito.xyz/translate-MapReduce-Simplified-Data-Processing-on-Large-sClusters.html</loc>
-    <lastmod>2020-07-14</lastmod>
-  </url>  <url>
-    <loc>https://blog.ccogito.xyz/github-picgo-imghosting.html</loc>
     <lastmod>2020-07-14</lastmod>
   </url>
 </urlset>
