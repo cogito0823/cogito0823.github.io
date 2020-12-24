@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://blog.ccogito.xyz/Python-daemon.html</loc>
+    <lastmod>2020-12-24</lastmod>
+  </url>  <url>
     <loc>https://blog.ccogito.xyz/The-meaning-of-scalability-and-extensibility.html</loc>
     <lastmod>2020-12-24</lastmod>
   </url>  <url>
@@ -40,10 +43,10 @@
     <loc>https://blog.ccogito.xyz/markdown-complex-table.html</loc>
     <lastmod>2020-07-14</lastmod>
   </url>  <url>
-    <loc>https://blog.ccogito.xyz/translate-MapReduce-Simplified-Data-Processing-on-Large-sClusters.html</loc>
+    <loc>https://blog.ccogito.xyz/mathjax-userbook.html</loc>
     <lastmod>2020-07-14</lastmod>
   </url>  <url>
-    <loc>https://blog.ccogito.xyz/mathjax-userbook.html</loc>
+    <loc>https://blog.ccogito.xyz/translate-MapReduce-Simplified-Data-Processing-on-Large-sClusters.html</loc>
     <lastmod>2020-07-14</lastmod>
   </url>
 </urlset>
