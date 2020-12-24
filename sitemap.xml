@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ccogito.xyz/The-meaning-of-scalability-and-extensibility.html</loc>
+    
+    <lastmod>2020-12-24T08:58:55.341Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ccogito.xyz/Using-of-InfluxDB.html</loc>
     
     <lastmod>2020-12-24T06:29:50.649Z</lastmod>
