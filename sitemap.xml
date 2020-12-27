@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ccogito.xyz/Using-of-Jmeter.html</loc>
+    
+    <lastmod>2020-12-27T06:15:06.362Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ccogito.xyz/Python-daemon.html</loc>
     
     <lastmod>2020-12-24T11:27:52.190Z</lastmod>
@@ -107,14 +114,14 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/mathjax-userbook.html</loc>
+    <loc>https://blog.ccogito.xyz/translate-MapReduce-Simplified-Data-Processing-on-Large-sClusters.html</loc>
     
     <lastmod>2020-07-14T19:04:16.458Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/translate-MapReduce-Simplified-Data-Processing-on-Large-sClusters.html</loc>
+    <loc>https://blog.ccogito.xyz/mathjax-userbook.html</loc>
     
     <lastmod>2020-07-14T19:04:16.458Z</lastmod>
     
