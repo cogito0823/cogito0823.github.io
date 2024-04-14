@@ -5,10 +5,10 @@ categories: web
 tags: [OMSCS,blog]
 kewords: [OMSCS,online master]
 ---
-![Georgia Tech | ](https://www.gatech.edu/themes/contrib/gt_theme/logo.svg)
+![Georgia Tech | ](/Users/cogito/Data/cogito0823.github.io/source/_posts/my-application-process-for-OMSCS.assets/logo.svg)
 <!--more-->
 
-![截屏2024-04-13 23.00.29](/Users/cogito/Desktop/截屏2024-04-13 23.00.29.png)
+![image-20240414174749198](/Users/cogito/Data/cogito0823.github.io/source/_posts/my-application-process-for-OMSCS.assets/image-20240414174749198.png)
 
 24 年初打算申请香港的硕士项目，看了港校申请条件，都要求 GPA 3.0 以上，而我的平均学分绩点只有 2.17，于是作罢。后来刷社交平台发现有些学校开设了线上硕士项目，其中一些学校还提供后期转 on compus 的机会（这样可以走 OPT 拿三年实习签证），于是又兴致勃勃的了解了在线硕士项目。
 
