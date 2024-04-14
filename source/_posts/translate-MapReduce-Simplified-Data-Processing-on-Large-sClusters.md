@@ -1,6 +1,6 @@
 ---
 title: 译"MapReduce:Simplified Data Processing on Large Clusters"
-date: 
+date: 2023-04-14 18:12:00
 mathjax: true
 tags: [map,reduce,cluster,mapreduce]
 kewords: [map,reduce,cluster,mapreduce]
