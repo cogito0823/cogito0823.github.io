@@ -1,6 +1,6 @@
 ---
 title: Step-by-Step My Application Process for OMSCS
-date: 
+date: 2024-04-14 18:12:00
 categories: web
 tags: [OMSCS,blog]
 kewords: [OMSCS,online master]
