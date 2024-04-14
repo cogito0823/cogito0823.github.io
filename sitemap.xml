@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.ccogito.xyz/translate-MapReduce-Simplified-Data-Processing-on-Large-sClusters.html</loc>
+    <loc>https://blog.ccogito.xyz/my-application-process-for-OMSCS.html</loc>
     
     <lastmod>2024-04-14</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/my-application-process-for-OMSCS.html</loc>
+    <loc>https://blog.ccogito.xyz/translate-MapReduce-Simplified-Data-Processing-on-Large-sClusters.html</loc>
     
     <lastmod>2024-04-14</lastmod>
     
@@ -51,14 +51,14 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/github-picgo-imghosting.html</loc>
+    <loc>https://blog.ccogito.xyz/markdown-complex-table.html</loc>
     
     <lastmod>2024-04-14</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/markdown-complex-table.html</loc>
+    <loc>https://blog.ccogito.xyz/github-picgo-imghosting.html</loc>
     
     <lastmod>2024-04-14</lastmod>
     
@@ -72,14 +72,14 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/Tsunami-Series-1.html</loc>
+    <loc>https://blog.ccogito.xyz/Tsunami-Series-2.html</loc>
     
     <lastmod>2024-04-14</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/Tsunami-Series-2.html</loc>
+    <loc>https://blog.ccogito.xyz/Tsunami-Series-1.html</loc>
     
     <lastmod>2024-04-14</lastmod>
     
@@ -128,14 +128,14 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/Java-WhiteBox-Auto-Test.html</loc>
+    <loc>https://blog.ccogito.xyz/Python-daemon.html</loc>
     
     <lastmod>2024-04-14</lastmod>
     
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/Python-daemon.html</loc>
+    <loc>https://blog.ccogito.xyz/Java-WhiteBox-Auto-Test.html</loc>
     
     <lastmod>2024-04-14</lastmod>
     
@@ -151,14 +151,14 @@
 
   
   <url>
-    <loc>https://blog.ccogito.xyz/tags/%E6%B5%8B%E8%AF%95/</loc>
+    <loc>https://blog.ccogito.xyz/tags/python/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/tags/python/</loc>
+    <loc>https://blog.ccogito.xyz/tags/%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -228,6 +228,20 @@
   </url>
   
   <url>
+    <loc>https://blog.ccogito.xyz/tags/markdown/</loc>
+    <lastmod>2024-04-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.ccogito.xyz/tags/table/</loc>
+    <lastmod>2024-04-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.ccogito.xyz/tags/picgo/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
@@ -249,14 +263,14 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/tags/markdown/</loc>
+    <loc>https://blog.ccogito.xyz/tags/OMSCS/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/tags/table/</loc>
+    <loc>https://blog.ccogito.xyz/tags/blog/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -298,13 +312,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/tags/MinIO/</loc>
-    <lastmod>2024-04-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.ccogito.xyz/tags/ubuntu/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
@@ -319,21 +326,7 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/tags/OMSCS/</loc>
-    <lastmod>2024-04-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ccogito.xyz/tags/blog/</loc>
-    <lastmod>2024-04-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.ccogito.xyz/tags/mathjax/</loc>
+    <loc>https://blog.ccogito.xyz/tags/MinIO/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -374,17 +367,24 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://blog.ccogito.xyz/tags/mathjax/</loc>
+    <lastmod>2024-04-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
-    <loc>https://blog.ccogito.xyz/categories/%E6%B5%8B%E8%AF%95/</loc>
+    <loc>https://blog.ccogito.xyz/categories/python/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/categories/python/</loc>
+    <loc>https://blog.ccogito.xyz/categories/%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -405,14 +405,14 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/categories/web/</loc>
+    <loc>https://blog.ccogito.xyz/categories/%E6%8E%92%E7%89%88/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/categories/%E6%8E%92%E7%89%88/</loc>
+    <loc>https://blog.ccogito.xyz/categories/web/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -433,14 +433,14 @@
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/categories/math/</loc>
+    <loc>https://blog.ccogito.xyz/categories/cloud-computing/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://blog.ccogito.xyz/categories/cloud-computing/</loc>
+    <loc>https://blog.ccogito.xyz/categories/math/</loc>
     <lastmod>2024-04-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
